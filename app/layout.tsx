@@ -1,11 +1,19 @@
-import { ThemeProvider } from "@/components/themes/theme-provider"
 import "./globals.css"
+import { Inter, Domine } from "next/font/google"
+import { ThemeProvider } from "@/components/themes/theme-provider"
+import { NavbarDesktop } from "@/components/navbar/navbar-desktop"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 
 const inter = Inter({
   variable: "--font-inter",
   weight: ["200", "300", "400", "500", "600", "700", "800"],
+  display: "swap",
+  subsets: ["latin"],
+})
+
+const domine = Domine({
+  variable: "--font-domine",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   subsets: ["latin"],
 })
@@ -17,9 +25,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
-      <body className="font-rubik min-h-screen bg-background antialiased">
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${domine.variable}`}>
+      <body className="min-h-screen bg-background font-inter antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NavbarDesktop />
           {children}
         </ThemeProvider>
       </body>
