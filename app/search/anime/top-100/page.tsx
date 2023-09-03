@@ -2,6 +2,7 @@ import { AnimeCard } from "@/components/anime/anime-card"
 import { AnimeSearchHeader } from "@/components/anime/anime-search-header"
 import { MainContainer } from "@/components/layout/main"
 import { ITopAnime } from "@/types/typeTopAnime"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import React, { Suspense } from "react"
 
 interface IMinMax {
@@ -59,13 +60,29 @@ export default async function AnimePage({ searchParams }: { searchParams: IMinMa
   return (
     <MainContainer>
       <AnimeSearchHeader />
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:gap-8 md:gap-y-12 lg:grid-cols-3 xl:grid-cols-4">
-        {data.data.map((item) => (
-          <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>
-            <AnimeCard key={item.mal_id} data={item} />
-          </Suspense>
-        ))}
-      </section>
+
+      {data.data.length > 0 ? (
+        data.data.map((item) => (
+          <section
+            className="relative grid grid-cols-1 sm:grid-cols-2 md:gap-8 md:gap-y-12 lg:grid-cols-3 xl:grid-cols-4"
+            key={item.mal_id}
+          >
+            <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>
+              <AnimeCard key={item.mal_id} data={item} />
+            </Suspense>
+          </section>
+        ))
+      ) : (
+        <div className="grid min-h-[25rem] place-items-center  xl:min-h-[35rem]">
+          <p className="flex flex-col items-center justify-center gap-2 tracking-tight">
+            <MagnifyingGlassIcon className="h-20 w-20" />
+            <span className="text-xl font-medium">No Results</span>
+            <span className="text-muted-foreground">
+              We couldn't find what you were looking for.
+            </span>
+          </p>
+        </div>
+      )}
     </MainContainer>
   )
 }
