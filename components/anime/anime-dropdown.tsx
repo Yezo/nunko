@@ -11,8 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { ANIME_MAIN_GENRES_DATA } from "@/lib/search-filter-data"
 
 type Props = {
   title: string
@@ -22,7 +23,6 @@ type Props = {
 }
 
 export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
-  const [selected, setSelected] = useState<string | number>(title)
   const BASE_URL = usePathname() // /search/anime/top-100
   const BASE_TYPE = type.toLowerCase() // order_by, sort, type
   const searchParams = useSearchParams()
@@ -50,9 +50,17 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
       type: x[0],
       value: x[1],
     }))
+
     //Find the param that matches the dropdown TYPE
     const filtered = obj.filter((item) => item.type === BASE_TYPE)
+    console.log(filtered)
 
+    //Display the genre title instead of accidentally displaying the genre's ID
+    if (filtered[0]?.type === "genres") {
+      const list = ANIME_MAIN_GENRES_DATA
+      const filterMatch = list.filter((item) => item.id.toLowerCase() === filtered[0]?.value)
+      return renameParameters(filterMatch[0]?.genre)
+    }
     //Rename the value if it has a wonky parameter name beforehand
     const result = renameParameters(filtered[0]?.value)
 
@@ -77,10 +85,18 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
           : params.set("sort", "desc")
       }
 
+      //Remove extra text from parameter when displayed to the user
       if (name.toString().toLowerCase() === "start_date") {
         const sliced = value.slice(0, 5)
         const yes = sliced + "12-31"
         params.set("end_date", yes)
+      }
+
+      //Transform the current genre into an ID that the API takes in
+      if (name.toString().toLowerCase() === "genres") {
+        const list = ANIME_MAIN_GENRES_DATA
+        const filtered = list.filter((item) => item.genre.toLowerCase() === value)
+        params.set("genres", filtered[0]?.id)
       }
 
       return params.toString()

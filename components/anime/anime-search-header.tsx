@@ -1,58 +1,52 @@
 import { AnimeFilterDropdown } from "@/components/anime/anime-dropdown"
 import { Input } from "@/components/ui/input"
+import {
+  ANIME_MAIN_GENRES_ARR_DATA,
+  ORDERS_DATA,
+  TYPES_DATA,
+  YEARS_DATA,
+} from "@/lib/search-filter-data"
 
-type Props = {}
-export const AnimeSearchHeader = ({}: Props) => {
-  const years = [
-    "1999-01-01",
-    "2000-01-01",
-    "2001-01-01",
-    "2002-01-01",
-    "2003-01-01",
-    "2004-01-01",
-    "2005-01-01",
-    "2006-01-01",
-    "2007-01-01",
-    "2008-01-01",
-    "2009-01-01",
-    "2010-01-01",
-    "2011-01-01",
-    "2023-01-01",
-  ]
+export const AnimeSearchHeader = () => {
   return (
     <div className="space-y-4 px-4">
       <h1 className="font-domine text-2xl font-semibold tracking-tight">Top Anime</h1>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        <div className="flex flex-col gap-2">
-          <p className="text-sm">Search</p>
+        <FilterItem title="Search">
           <Input />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm">Order</p>
+        </FilterItem>
+
+        <FilterItem title="Sort">
+          <AnimeFilterDropdown title="All" type="Order_by" data={ORDERS_DATA} />
+        </FilterItem>
+
+        <FilterItem title="Release Date">
+          <AnimeFilterDropdown title="All" type="start_date" data={YEARS_DATA} scrollable={true} />
+        </FilterItem>
+
+        <FilterItem title="Format">
+          <AnimeFilterDropdown title="All" type="Type" data={TYPES_DATA} />
+        </FilterItem>
+
+        <FilterItem title="Genres">
           <AnimeFilterDropdown
             title="All"
-            type="Order_by"
-            data={["Favorites", "Score", "Rank", "Start_date", "Popularity"]}
+            type="Genres"
+            data={ANIME_MAIN_GENRES_ARR_DATA}
+            scrollable={true}
           />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm">Page</p>
-          <AnimeFilterDropdown title="All" type="Page" data={["1", "2", "3", "4", "5"]} />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm">Year</p>
-          <AnimeFilterDropdown title="All" type="start_date" data={years} scrollable={true} />
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-sm">Type</p>
-          <AnimeFilterDropdown
-            title="All"
-            type="Type"
-            data={["TV", "Movie", "Special", "OVA", "ONA", "Music"]}
-          />
-        </div>
+        </FilterItem>
       </div>
+    </div>
+  )
+}
+
+const FilterItem = ({ children, title }: { children: React.ReactNode; title: string }) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-medium">{title}</p>
+      {children}
     </div>
   )
 }

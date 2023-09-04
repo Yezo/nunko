@@ -8,7 +8,6 @@ type Props = {
 }
 
 export const AnimeCard = ({ data }: Props) => {
-  // console.log(data)
   return (
     <div className="grid place-items-center gap-4 py-8">
       <div className="relative h-[250px] w-[250px]">
