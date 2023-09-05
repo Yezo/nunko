@@ -9,7 +9,7 @@ import Link from "next/link"
 
 export const NavbarDesktop = () => {
   return (
-    <div className="hidden h-20 border-b sm:block ">
+    <div className="h-20 border-b ">
       <div className="container min-h-full items-center justify-between px-20 sm:flex">
         <Link href="/" className="font-domine text-xl font-semibold tracking-tight">
           Nunko.
