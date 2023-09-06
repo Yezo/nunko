@@ -12,7 +12,7 @@ import { IAnimeEpisodes } from "@/types/typeEpisodes"
 
 async function getData(id: string) {
   try {
-    const data: IAnimeEpisodes = await jikanjs.loadAnime(id, "episodes", { page: 2 })
+    const data: IAnimeEpisodes = await jikanjs.loadAnime(id, "episodes")
     return data
   } catch (error) {
     return "error"
