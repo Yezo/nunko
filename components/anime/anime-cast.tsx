@@ -27,7 +27,7 @@ export const AnimeCast = ({ data }: Props) => {
   return (
     <div>
       <div className="mb-8 flex justify-end">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"

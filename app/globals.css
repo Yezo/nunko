@@ -74,11 +74,13 @@
     @apply bg-background text-foreground;
   }
   /* Prevents scrollbar from pushing content to the left */
+  /* You can disable this as long as you put "modal={false}" on things that cause layoutshift */
   /* html,
   body {
     max-width: 100vw;
     overflow-x: hidden;
   } */
+
   /* Prevents layout shift when using Radix UI Components */
   /* https://github.com/radix-ui/primitives/issues/1925#issuecomment-1658633583 */
   /* temporarily commented for sticky sidebar? */

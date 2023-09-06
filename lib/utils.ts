@@ -6,7 +6,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const getMonthName = (monthNumber: number | null) => {
+export const transformDate = (date: Date) => {
+  if (date) {
+    const day = date.getDate().toString()
+    const month = date.getMonth()
+    const year = date.getFullYear().toString()
+    const fullDate = getMonthName(month + 1) + " " + day + ", " + year
+    return fullDate
+  }
+  return date
+}
+
+export const getMonthName = (monthNumber: number | undefined) => {
   if (monthNumber) {
     const date = new Date()
     date.setMonth(monthNumber - 1)
