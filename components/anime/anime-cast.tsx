@@ -10,15 +10,16 @@ import {
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import Jikan from "jikan4.js"
+import { IIndividualAnimeCharactersData } from "@/types/typeIndividualAnimeChars"
 
 type Props = {
-  data: Jikan.AnimeCharacterReference[] | undefined
+  data: IIndividualAnimeCharactersData[]
 }
 
 export const AnimeCast = ({ data }: Props) => {
   const [language, setLanguage] = useState("English")
   const uniqueLanguages = [
-    ...new Set(data?.map((item) => item.voiceActors.map((item) => item.language))),
+    ...new Set(data?.map((item) => item.voice_actors.map((item) => item.language))),
   ].flat()
   const set = [...new Set(uniqueLanguages)]
   const a = set.filter((item) => item !== "English" && item !== "Japanese")

@@ -1,3 +1,4 @@
+const jikanjs = require("@mateoaranda/jikanjs")
 import { transformDate } from "@/lib/utils"
 import {
   Table,
@@ -7,40 +8,52 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Jikan from "jikan4.js"
+import { IAnimeEpisodes } from "@/types/typeEpisodes"
+
+export async function getData(id: string) {
+  try {
+    const data: IAnimeEpisodes = await jikanjs.loadAnime(id, "episodes", { page: 2 })
+    return data
+  } catch (error) {
+    return "error"
+  }
+}
 
 export default async function EpisodesPage({ params }: { params: { id: string } }) {
-  //States
-  const parsedID = parseInt(params.id)
-  const client = new Jikan.Client({ secure: true })
-  const episodes = await client.anime.getEpisodes(parsedID)
+  const episodes = await getData(params.id)
 
   return (
     <>
-      {episodes && episodes.length > 0 ? (
-        <section className="space-y-4">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[75px] text-center">#</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead className="w-[150px] text-right">Aired On</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {episodes.map((item) => (
-                <TableRow key={item.episodeId}>
-                  <TableCell className="text-center font-medium">{item.episodeId}</TableCell>
-                  <TableCell>{item.title.default}</TableCell>
-                  <TableCell className="text-right">
-                    {item.aired && transformDate(item.aired)}
-                  </TableCell>
+      {typeof episodes === "string" ? (
+        <div className="flex">
+          <div className="container mx-auto flex-1 px-4">There was an error.</div>
+        </div>
+      ) : (
+        <>
+          <section className="space-y-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[75px] text-center">#</TableHead>
+                  <TableHead>Title</TableHead>
+                  <TableHead className="w-[100px] text-center">Score</TableHead>
+                  <TableHead className="w-[175px] text-right">Aired On</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </section>
-      ) : null}
+              </TableHeader>
+              <TableBody>
+                {episodes.data.map((item) => (
+                  <TableRow key={item.mal_id}>
+                    <TableCell className="text-center font-medium">{item.mal_id}</TableCell>
+                    <TableCell>{item.title}</TableCell>
+                    <TableCell className="text-center">{item.score}</TableCell>
+                    <TableCell className="text-right">{transformDate(item.aired)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </section>
+        </>
+      )}
     </>
   )
 }

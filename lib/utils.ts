@@ -1,20 +1,20 @@
 import { getAllAnimeProp } from "@/lib/fetchJikan"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import moment from "moment"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const transformDate = (date: Date) => {
-  if (date) {
-    const day = date.getDate().toString()
-    const month = date.getMonth()
-    const year = date.getFullYear().toString()
-    const fullDate = getMonthName(month + 1) + " " + day + ", " + year
-    return fullDate
+export const transformDate = (date: unknown) => {
+  if (date instanceof Date) {
+    return "ERROR"
   }
-  return date
+  if (typeof date === "string") {
+    const d = moment(date).utc().format("MMMM D[,] YYYY")
+    return d
+  }
 }
 
 export const getMonthName = (monthNumber: number | undefined) => {

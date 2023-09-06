@@ -1,11 +1,30 @@
+const jikanjs = require("@mateoaranda/jikanjs")
 import { AnimeCast } from "@/components/anime/anime-cast"
-import Jikan from "jikan4.js"
+import { Dummy } from "@/components/dummy"
+import { IIndividualAnimeCharacters } from "@/types/typeIndividualAnimeChars"
 
+export async function getData(id: string) {
+  try {
+    const { data }: IIndividualAnimeCharacters = await jikanjs.loadAnime(id, "characters")
+    return data
+  } catch (error) {
+    return "error"
+  }
+}
 export default async function CharactersPage({ params }: { params: { id: string } }) {
-  //States
-  const parsedID = parseInt(params.id)
-  const client = new Jikan.Client({ secure: true })
-  const characters = await client.anime.getCharacters(parsedID)
-
-  return <>{characters && <AnimeCast data={characters} />}</>
+  const characters = await getData(params.id)
+  return (
+    <>
+      {typeof characters === "string" ? (
+        <div className="flex">
+          <div className="container mx-auto flex-1 px-4">There was an error.</div>
+        </div>
+      ) : (
+        <>
+          {characters && <AnimeCast data={characters.sort((a, b) => b.favorites - a.favorites)} />}
+          <Dummy data={characters} />
+        </>
+      )}
+    </>
+  )
 }

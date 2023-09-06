@@ -1,15 +1,16 @@
 "use client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { IIndividualAnimeCharactersData } from "@/types/typeIndividualAnimeChars"
 import Jikan from "jikan4.js"
 
 type Props = {
-  data: Jikan.AnimeCharacterReference
+  data: IIndividualAnimeCharactersData
   language: string
 }
 
 export const AnimeCastItem = ({ data, language }: Props) => {
-  const currentSetOfVoiceActors = data.voiceActors.filter((item) => item.language === language)
-  const img = currentSetOfVoiceActors.map((item) => item.person.image?.jpg?.default)
+  const currentSetOfVoiceActors = data.voice_actors.filter((item) => item.language === language)
+  const img = currentSetOfVoiceActors.map((item) => item.person.images?.jpg?.image_url)
   const actor_name = currentSetOfVoiceActors.map((item) => item.person.name)
 
   return (
@@ -18,10 +19,10 @@ export const AnimeCastItem = ({ data, language }: Props) => {
         <Avatar className="h-[85px] w-16 rounded-none rounded-l">
           {data &&
             data.character &&
-            data.character.image.webp &&
-            data.character.image.webp.default && (
+            data.character.images.webp &&
+            data.character.images.webp.image_url && (
               <AvatarImage
-                src={data.character.image.webp.default.toString()}
+                src={data.character.images.webp.image_url.toString()}
                 className="rounded-l object-cover object-top"
               />
             )}
