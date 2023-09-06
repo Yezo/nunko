@@ -3,7 +3,7 @@ import { AnimeCast } from "@/components/anime/anime-cast"
 import { Dummy } from "@/components/dummy"
 import { IIndividualAnimeCharacters } from "@/types/typeIndividualAnimeChars"
 
-export async function getData(id: string) {
+async function getData(id: string) {
   try {
     const { data }: IIndividualAnimeCharacters = await jikanjs.loadAnime(id, "characters")
     return data
@@ -11,6 +11,7 @@ export async function getData(id: string) {
     return "error"
   }
 }
+
 export default async function CharactersPage({ params }: { params: { id: string } }) {
   const characters = await getData(params.id)
   return (

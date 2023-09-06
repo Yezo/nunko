@@ -4,7 +4,7 @@ import Image from "next/image"
 import { Dummy } from "@/components/dummy"
 import { IRecommendation } from "@/types/typeRecommendations"
 
-export async function getData(id: string) {
+async function getData(id: string) {
   try {
     const { data }: IRecommendation = await jikanjs.loadAnime(id, "recommendations")
     return data

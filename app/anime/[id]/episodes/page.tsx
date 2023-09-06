@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import { IAnimeEpisodes } from "@/types/typeEpisodes"
 
-export async function getData(id: string) {
+async function getData(id: string) {
   try {
     const data: IAnimeEpisodes = await jikanjs.loadAnime(id, "episodes", { page: 2 })
     return data
