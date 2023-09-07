@@ -1,19 +1,9 @@
-const jikanjs = require("@mateoaranda/jikanjs")
+import { getIndividualAnimeRecommendations } from "@/lib/fetchJikan"
 import Link from "next/link"
 import Image from "next/image"
-import { Dummy } from "@/components/dummy"
-import { IRecommendation } from "@/types/typeRecommendations"
 
-async function getData(id: string) {
-  try {
-    const { data }: IRecommendation = await jikanjs.loadAnime(id, "recommendations")
-    return data
-  } catch (error) {
-    return "error"
-  }
-}
 export default async function RecommendationsPage({ params }: { params: { id: string } }) {
-  const recommendations = await getData(params.id)
+  const { data: recommendations } = await getIndividualAnimeRecommendations(params)
 
   return (
     <>

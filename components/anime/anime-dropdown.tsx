@@ -105,7 +105,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
   )
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
           <p className="flex min-w-full items-center justify-between">

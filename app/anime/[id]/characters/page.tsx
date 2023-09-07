@@ -1,19 +1,10 @@
-const jikanjs = require("@mateoaranda/jikanjs")
 import { AnimeCast } from "@/components/anime/anime-cast"
 import { Dummy } from "@/components/dummy"
-import { IIndividualAnimeCharacters } from "@/types/typeIndividualAnimeChars"
-
-async function getData(id: string) {
-  try {
-    const { data }: IIndividualAnimeCharacters = await jikanjs.loadAnime(id, "characters")
-    return data
-  } catch (error) {
-    return "error"
-  }
-}
+import { getIndividualAnimeCharacters } from "@/lib/fetchJikan"
 
 export default async function CharactersPage({ params }: { params: { id: string } }) {
-  const characters = await getData(params.id)
+  const { data: characters } = await getIndividualAnimeCharacters(params)
+
   return (
     <>
       {typeof characters === "string" ? (

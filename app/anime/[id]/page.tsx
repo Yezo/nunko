@@ -1,7 +1,7 @@
-import { getData } from "@/app/anime/[id]/layout"
+import { getIndividualAnime } from "@/lib/fetchJikan"
 
 export default async function IndividualAnimePage({ params }: { params: { id: string } }) {
-  const data = await getData(params.id)
+  const { data } = await getIndividualAnime(params)
 
   return (
     <>

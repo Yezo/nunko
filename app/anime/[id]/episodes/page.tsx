@@ -1,4 +1,3 @@
-const jikanjs = require("@mateoaranda/jikanjs")
 import { transformDate } from "@/lib/utils"
 import {
   Table,
@@ -8,19 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { IAnimeEpisodes } from "@/types/typeEpisodes"
-
-async function getData(id: string) {
-  try {
-    const data: IAnimeEpisodes = await jikanjs.loadAnime(id, "episodes")
-    return data
-  } catch (error) {
-    return "error"
-  }
-}
+import { getIndividualAnimeEpisodes } from "@/lib/fetchJikan"
 
 export default async function EpisodesPage({ params }: { params: { id: string } }) {
-  const episodes = await getData(params.id)
+  const episodes = await getIndividualAnimeEpisodes(params)
 
   return (
     <>

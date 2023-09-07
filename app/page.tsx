@@ -1,17 +1,18 @@
 import { MainContainer } from "@/components/layout/main"
+import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { ThemeToggle } from "@/components/themes/theme-toggle"
 import { Button } from "@/components/ui/button"
 
 export default function Home() {
   return (
-    <MainContainer>
-      <Button>Hi</Button>
-      <p className="font-inter text-2xl tracking-tight">Nunko</p>
-      <p className="font-domine text-2xl tracking-tight">Nunko</p>
-      <p className="font-inter text-2xl tracking-tight">The co-op bookstore for avid readers</p>
-      <p className="font-domine text-2xl tracking-tight">The co-op bookstore for avid readers</p>
+    <div className="flex">
+      <Sidebar />
 
-      <ThemeToggle />
-    </MainContainer>
+      <main className="container mx-auto flex-1 px-4">
+        <div className="text-[16px] font-light">Product</div>
+        <div className="text-[16px] font-light">Pricing</div>
+        <div className="text-[16px] font-light">Company</div>
+      </main>
+    </div>
   )
 }

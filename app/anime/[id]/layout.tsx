@@ -1,26 +1,11 @@
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { BookmarkSVG, CheckmarkSVG, EyeSVG, ReadingBookSVG } from "@/lib/icons"
 import { Separator } from "@/components/ui/separator"
-import Image from "next/image"
 import { AnimeLinksHeader } from "@/components/anime/anime-links-header"
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
-const jikanjs = require("@mateoaranda/jikanjs")
-import { IIndividualAnime } from "@/types/typeIndividualAnime"
-
-type PromiseFulfilledResult<T> = {
-  status: "fulfilled"
-  value: T
-}
-
-export async function getData(id: string) {
-  try {
-    const { data }: IIndividualAnime = await jikanjs.loadAnime(id)
-    return data
-  } catch (error) {
-    return "error"
-  }
-}
+import Image from "next/image"
+import { getIndividualAnime } from "@/lib/fetchJikan"
 
 export default async function IndividualAnimePageLayout({
   params,
@@ -29,29 +14,7 @@ export default async function IndividualAnimePageLayout({
   params: { id: string }
   children: React.ReactNode
 }) {
-  //States
-  // const parsedID = parseInt(params.id)
-  // const { data }: IIndividualAnime = await jikanjs.loadAnime(parsedID)
-  const data = await getData(params.id)
-
-  // const client = new Jikan.Client({ secure: true })
-
-  //Initialize promises
-  // const getData = client.anime.get(parsedID)
-  // const getRecommendations = client.anime.getRecommendations(parsedID)
-
-  //Fetch data
-  // const [dataPromise, recommendationsPromise] = (await Promise.allSettled([
-  //   getData,
-  //   getRecommendations,
-  // ])) as [
-  //   PromiseFulfilledResult<Jikan.Anime | undefined>,
-  //   PromiseFulfilledResult<Jikan.AnimeRecommendation[] | undefined>
-  // ]
-
-  //Destructure into usable variables
-  // const { value: data } = dataPromise
-  // const { value: recommendations } = recommendationsPromise
+  const { data } = await getIndividualAnime(params)
 
   return (
     <>
