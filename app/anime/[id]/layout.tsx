@@ -1,5 +1,5 @@
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
-import { AnimeLinksHeader } from "@/components/anime/anime-links-header"
+import { AnimeLinksHeader } from "@/components/anime/single/anime-links-header"
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
 import { getIndividualAnime } from "@/lib/fetchJikan"
@@ -34,12 +34,13 @@ export default async function IndividualAnimePageLayout({
           </div>
 
           {data.images.webp.image_url && (
-            <div className="relative h-60 w-full md:h-[240px] md:w-[160px]">
+            <div className="relative h-60 w-full md:h-[295px] md:w-[215px]">
               <Image
                 src={data.images.webp.image_url.toString()}
                 alt={data.title?.toString()}
                 fill
-                className="h-full w-full object-cover object-center shadow-xl ring-1 ring-[#131314]/80 dark:ring-foreground/80"
+                className="h-full w-full rounded border object-cover object-center shadow-xl"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           )}
