@@ -9,7 +9,7 @@ import {
 
 export const AnimeSearchHeader = () => {
   return (
-    <div className="space-y-4 px-4">
+    <div className="space-y-4 px-4 py-20">
       <h1 className="font-domine text-2xl font-semibold tracking-tight">Top Anime</h1>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

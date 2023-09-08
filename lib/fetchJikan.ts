@@ -1,9 +1,13 @@
 import { transformString, wait } from "@/lib/utils"
-import { IAnimeEpisodes } from "@/types/typeEpisodes"
-import { IIndividualAnime } from "@/types/typeIndividualAnime"
-import { IIndividualAnimeCharacters } from "@/types/typeIndividualAnimeChars"
-import { IIndividualAnimeRecommendations } from "@/types/typeIndividualAnimeRecommendations"
-import { ITopAnime } from "@/types/typeTopAnime"
+import { IAnime } from "@/types/anime/type-anime"
+import { IAnimeCharacters } from "@/types/anime/type-anime-characters"
+import { IAnimeEpisodes } from "@/types/anime/type-anime-episodes"
+import { IAnimeNews } from "@/types/anime/type-anime-news"
+import { IAnimeRecommendations } from "@/types/anime/type-anime-recommendations"
+import { IAnimeReviews } from "@/types/anime/type-anime-reviews"
+import { IAnimeStaffs } from "@/types/anime/type-anime-staff"
+
+import { ITopAnime } from "@/types/anime/type-top-anime"
 
 export type paramProps = {
   id: string
@@ -44,7 +48,7 @@ export async function getAllAnime(param: getAllAnimeProp): Promise<ITopAnime> {
   return res.json()
 }
 
-export async function getIndividualAnime(param: paramProps): Promise<IIndividualAnime> {
+export async function getIndividualAnime(param: paramProps): Promise<IAnime> {
   const url = `https://api.jikan.moe/v4/anime/${param.id}`
   const res = await fetch(url)
   await wait(MS)
@@ -53,9 +57,7 @@ export async function getIndividualAnime(param: paramProps): Promise<IIndividual
   return res.json()
 }
 
-export async function getIndividualAnimeCharacters(
-  param: paramProps
-): Promise<IIndividualAnimeCharacters> {
+export async function getIndividualAnimeCharacters(param: paramProps): Promise<IAnimeCharacters> {
   const url = `https://api.jikan.moe/v4/anime/${param.id}/characters`
   const res = await fetch(url)
   await wait(MS)
@@ -66,7 +68,7 @@ export async function getIndividualAnimeCharacters(
 
 export async function getIndividualAnimeRecommendations(
   param: paramProps
-): Promise<IIndividualAnimeRecommendations> {
+): Promise<IAnimeRecommendations> {
   const url = `https://api.jikan.moe/v4/anime/${param.id}/recommendations`
   const res = await fetch(url)
   await wait(MS)
@@ -75,7 +77,7 @@ export async function getIndividualAnimeRecommendations(
   return res.json()
 }
 
-export async function getIndividualAnimeStaff(param: paramProps) {
+export async function getIndividualAnimeStaff(param: paramProps): Promise<IAnimeStaffs> {
   const url = `https://api.jikan.moe/v4/anime/${param.id}/staff`
   const res = await fetch(url)
   await wait(MS)
@@ -86,6 +88,24 @@ export async function getIndividualAnimeStaff(param: paramProps) {
 
 export async function getIndividualAnimeEpisodes(param: paramProps): Promise<IAnimeEpisodes> {
   const url = `https://api.jikan.moe/v4/anime/${param.id}/episodes`
+  const res = await fetch(url)
+  await wait(MS)
+  handleResponseError(res)
+
+  return res.json()
+}
+
+export async function getIndividualAnimeReviews(param: paramProps): Promise<IAnimeReviews> {
+  const url = `https://api.jikan.moe/v4/anime/${param.id}/reviews`
+  const res = await fetch(url)
+  await wait(MS)
+  handleResponseError(res)
+
+  return res.json()
+}
+
+export async function getIndividualAnimeNews(param: paramProps): Promise<IAnimeNews> {
+  const url = `https://api.jikan.moe/v4/anime/${param.id}/news`
   const res = await fetch(url)
   await wait(MS)
   handleResponseError(res)

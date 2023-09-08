@@ -1,9 +1,12 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
+import { useCallback } from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { ANIME_MAIN_GENRES_DATA } from "@/lib/search-filter-data"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,18 +14,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useCallback } from "react"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { ANIME_MAIN_GENRES_DATA } from "@/lib/search-filter-data"
 
-type Props = {
+type AnimeFilterDropdownProps = {
   title: string
   type: string
   data: string[] | number[]
   scrollable?: boolean
 }
 
-export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
+export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilterDropdownProps) {
   const BASE_URL = usePathname() // /search/anime/top-100
   const BASE_TYPE = type.toLowerCase() // order_by, sort, type
   const searchParams = useSearchParams()
@@ -53,7 +53,6 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: Props) {
 
     //Find the param that matches the dropdown TYPE
     const filtered = obj.filter((item) => item.type === BASE_TYPE)
-    console.log(filtered)
 
     //Display the genre title instead of accidentally displaying the genre's ID
     if (filtered[0]?.type === "genres") {

@@ -1,8 +1,8 @@
-export interface IIndividualAnimeCharacters {
-  data: IIndividualAnimeCharactersData[]
+export interface IAnimeCharacters {
+  data: IAnimeCharacter[]
 }
 
-export interface IIndividualAnimeCharactersData {
+export interface IAnimeCharacter {
   character: Character
   role: Role
   favorites: number

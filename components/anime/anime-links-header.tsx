@@ -1,11 +1,12 @@
 "use client"
+
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-type Props = {
+type AnimeLinksHeaderProps = {
   id: string
 }
-export const AnimeLinksHeader = ({ id }: Props) => {
+export const AnimeLinksHeader = ({ id }: AnimeLinksHeaderProps) => {
   const path = usePathname()
 
   return (

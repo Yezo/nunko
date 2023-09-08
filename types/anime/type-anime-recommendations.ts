@@ -1,8 +1,8 @@
-export interface IRecommendation {
-  data: IRecommendationData[]
+export interface IAnimeRecommendations {
+  data: IAnimeRecommendation[]
 }
 
-export interface IRecommendationData {
+export interface IAnimeRecommendation {
   entry: Entry
   url: string
   votes: number

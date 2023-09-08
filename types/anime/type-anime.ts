@@ -1,24 +1,24 @@
-export interface IIndividualAnime {
-  data: IIndividualAnimeData
+export interface IAnime {
+  data: IAnimeData
 }
 
-export interface IIndividualAnimeData {
-  mal_id: number | null
-  url: string | null
-  images: Image
+export interface IAnimeData {
+  mal_id: number
+  url: string
+  images: Images
   trailer: Trailer | null
   approved: boolean
-  titles: Title[] | null
-  title: string | null
+  titles: Title[]
+  title: string
   title_english: string | null
   title_japanese: string | null
   title_synonyms: string[] | null
   type: string | null
   source: string | null
   episodes: number | null
-  status: string | null
+  status: string
   airing: boolean
-  aired: Aired | null
+  aired: Aired
   duration: string | null
   rating: string | null
   score: number | null
@@ -42,8 +42,8 @@ export interface IIndividualAnimeData {
 }
 
 export interface Aired {
-  from: Date
-  to: null
+  from: Date | null
+  to: Date | null
   prop: Prop
   string: string
 }
@@ -60,10 +60,10 @@ export interface From {
 }
 
 export interface Broadcast {
-  day: string
-  time: string
-  timezone: string
-  string: string
+  day: string | null
+  time: string | null
+  timezone: string | null
+  string: string | null
 }
 
 export interface Demographic {
@@ -77,12 +77,12 @@ export enum Type {
   Anime = "anime",
 }
 
-export interface Image {
-  jpg: Images
-  webp: Images
+export interface Images {
+  jpg: Image
+  webp: Image
 }
 
-export interface Images {
+export interface Image {
   image_url: string
   small_image_url: string
   large_image_url: string
@@ -94,8 +94,16 @@ export interface Title {
 }
 
 export interface Trailer {
-  youtube_id: string
-  url: string
-  embed_url: string
+  youtube_id: string | null
+  url: string | null
+  embed_url: string | null
   images: Images
+}
+
+export interface TrailerImages {
+  image_url: string | null
+  small_image_url: string | null
+  large_image_url: string | null
+  maximum_image_url: string | null
+  medium_image_url: string | null
 }

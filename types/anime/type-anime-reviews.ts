@@ -1,9 +1,9 @@
 export interface IAnimeReviews {
   pagination: Pagination
-  data: IAnimeReviewData[]
+  data: IAnimeReview[]
 }
 
-export interface IAnimeReviewData {
+export interface IAnimeReview {
   mal_id: number
   url: string
   type: Type

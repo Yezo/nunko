@@ -6,22 +6,22 @@ export interface ITopAnime {
 export interface ITopAnimeData {
   mal_id: number
   url: string
-  images: Image
-  trailer: Trailer
+  images: Images
+  trailer: Trailer | null
   approved: boolean
   titles: Title[]
   title: string
-  title_english: null | string
-  title_japanese: string
-  title_synonyms: any[]
-  type: string
-  source: string
+  title_english: string | null
+  title_japanese: string | null
+  title_synonyms: string[] | null
+  type: string | null
+  source: string | null
   episodes: number | null
   status: string
   airing: boolean
   aired: Aired
-  duration: string
-  rating: string
+  duration: string | null
+  rating: string | null
   score: number | null
   scored_by: number | null
   rank: number | null
@@ -32,14 +32,20 @@ export interface ITopAnimeData {
   background: string | null
   season: string | null
   year: number | null
-  broadcast: Broadcast
+  broadcast: Broadcast | null
   producers: Producer[]
-  licensors: any[]
+  licensors: Producer[]
   studios: Producer[]
-  genres: any[]
+  genres: Producer[]
   explicit_genres: any[]
   themes: Producer[]
-  demographics: any[]
+  demographics: Producer[]
+}
+export interface Genres {
+  mal_id: number
+  type: string
+  name: string
+  url: string
 }
 
 export interface Aired {
@@ -67,12 +73,12 @@ export interface Broadcast {
   string: string | null
 }
 
-export interface Image {
-  jpg: Images
-  webp: Images
+export interface Images {
+  jpg: Image
+  webp: Image
 }
 
-export interface Images {
+export interface Image {
   image_url: string
   small_image_url: string
   large_image_url: string

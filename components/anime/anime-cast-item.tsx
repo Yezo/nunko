@@ -1,14 +1,14 @@
 "use client"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { IIndividualAnimeCharactersData } from "@/types/typeIndividualAnimeChars"
-import Jikan from "jikan4.js"
 
-type Props = {
-  data: IIndividualAnimeCharactersData
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { IAnimeCharacter } from "@/types/anime/type-anime-characters"
+
+type AnimeCastItemProps = {
+  data: IAnimeCharacter
   language: string
 }
 
-export const AnimeCastItem = ({ data, language }: Props) => {
+export const AnimeCastItem = ({ data, language }: AnimeCastItemProps) => {
   const currentSetOfVoiceActors = data.voice_actors.filter((item) => item.language === language)
   const img = currentSetOfVoiceActors.map((item) => item.person.images?.jpg?.image_url)
   const actor_name = currentSetOfVoiceActors.map((item) => item.person.name)

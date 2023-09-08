@@ -1,22 +1,22 @@
 "use client"
+
 import { AnimeCastItem } from "@/components/anime/anime-cast-item"
 import { Button } from "@/components/ui/button"
+import { CaretSortIcon } from "@radix-ui/react-icons"
+import { useState } from "react"
+import { IAnimeCharacter } from "@/types/anime/type-anime-characters"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CaretSortIcon } from "@radix-ui/react-icons"
-import { useState } from "react"
-import Jikan from "jikan4.js"
-import { IIndividualAnimeCharactersData } from "@/types/typeIndividualAnimeChars"
 
-type Props = {
-  data: IIndividualAnimeCharactersData[]
+type AnimeCastProps = {
+  data: IAnimeCharacter[]
 }
 
-export const AnimeCast = ({ data }: Props) => {
+export const AnimeCast = ({ data }: AnimeCastProps) => {
   const [language, setLanguage] = useState("English")
   const uniqueLanguages = [
     ...new Set(data?.map((item) => item.voice_actors.map((item) => item.language))),
