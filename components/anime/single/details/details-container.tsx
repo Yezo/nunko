@@ -2,9 +2,9 @@
 
 import { DetailsHeader } from "@/components/anime/single/details/details-header"
 import { IAnimeData } from "@/types/anime/type-anime"
-import { Separator } from "@radix-ui/react-separator"
 import { DetailItem } from "@/components/anime/single/details/details-item"
 import { getMonthName } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
 
 type AnimeDetailsContainerProps = {
   data: IAnimeData
