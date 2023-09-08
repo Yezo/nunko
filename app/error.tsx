@@ -39,7 +39,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
               <path d="m13.41 10.59 5.66-5.66" />
             </svg>
             <div>
-              <h2 className="text-lg font-medium">Something went wrong!</h2>
+              <h2 className="font-domine text-lg font-medium">Something went wrong!</h2>
               <p className="text-sm text-muted-foreground">
                 {statusCode === 400 && "The developer did something incorrect with his code."}
                 {statusCode === 404 && "The resource could be not be found or does not exist."}
