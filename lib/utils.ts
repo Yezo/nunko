@@ -21,7 +21,7 @@ export const transformDate = (date: unknown) => {
   }
 }
 
-export const getMonthName = (monthNumber: number | undefined) => {
+export const getMonthName = (monthNumber: number | null) => {
   if (monthNumber) {
     const date = new Date()
     date.setMonth(monthNumber - 1)
