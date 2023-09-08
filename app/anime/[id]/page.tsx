@@ -1,3 +1,4 @@
+import { Dummy } from "@/components/dummy"
 import { getIndividualAnime } from "@/lib/fetchJikan"
 
 export default async function IndividualAnimePage({ params }: { params: { id: string } }) {
@@ -5,15 +6,11 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
 
   return (
     <>
-      {typeof data === "string" ? (
-        <div className="flex">
-          <div className="container mx-auto flex-1 px-4">There was an error.</div>
-        </div>
-      ) : (
-        <section className="space-y-4">
-          <div className="mt-4 text-sm leading-7">{data?.synopsis}</div>
-        </section>
-      )}
+      <section className="space-y-4">
+        <div className="mt-4 text-sm leading-7">{data?.synopsis}</div>
+      </section>
+
+      <Dummy data={data} />
     </>
   )
 }
