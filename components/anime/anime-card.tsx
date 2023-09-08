@@ -25,6 +25,7 @@ export const AnimeCard = ({ data }: AnimeCardProps) => {
                 fill
                 className="h-full w-full rounded border object-cover object-top shadow-xl"
                 quality={100}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
 
