@@ -46,7 +46,7 @@ export default async function IndividualAnimePageLayout({
           )}
         </div>
 
-        <section className="flex flex-col gap-28 py-8 lg:flex-row">
+        <section className="flex flex-col gap-12 py-8 lg:flex-row xl:gap-28">
           <div className="space-y-8 lg:basis-2/4 xl:basis-3/4">
             <AnimeLinksHeader id={params.id} />
             <Suspense fallback={<Loading />}>{children}</Suspense>

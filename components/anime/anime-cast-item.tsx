@@ -6,9 +6,10 @@ import { IAnimeCharacter } from "@/types/anime/type-anime-characters"
 type AnimeCastItemProps = {
   data: IAnimeCharacter
   language: string
+  disableVoiceActors?: boolean
 }
 
-export const AnimeCastItem = ({ data, language }: AnimeCastItemProps) => {
+export const AnimeCastItem = ({ data, language, disableVoiceActors }: AnimeCastItemProps) => {
   const currentSetOfVoiceActors = data.voice_actors.filter((item) => item.language === language)
   const img = currentSetOfVoiceActors.map((item) => item.person.images?.jpg?.image_url)
   const actor_name = currentSetOfVoiceActors.map((item) => item.person.name)
@@ -35,24 +36,26 @@ export const AnimeCastItem = ({ data, language }: AnimeCastItemProps) => {
           </span>
         </div>
       </div>
-      <div className="flex flex-row-reverse">
-        <Avatar className="h-[85px] w-16 rounded-none rounded-r">
-          <AvatarImage
-            src={img[0]?.toString()}
-            className="object-cover object-top ring-1 ring-black/10"
-          />
-          <NoImageFallback />
-        </Avatar>
+      {disableVoiceActors ? null : (
+        <div className="flex flex-row-reverse">
+          <Avatar className="h-[85px] w-16 rounded-none rounded-r">
+            <AvatarImage
+              src={img[0]?.toString()}
+              className="object-cover object-top ring-1 ring-black/10"
+            />
+            <NoImageFallback />
+          </Avatar>
 
-        <div className="flex flex-col items-end justify-between p-2 text-xs ">
-          <span className="max-w-[15ch] text-right font-semibold">
-            {actor_name && actor_name.length > 0 ? actor_name[0] : null}
-          </span>
-          <span className=" text-right text-[0.7rem] font-light tracking-tight text-muted-foreground">
-            {actor_name && actor_name.length > 0 ? language : null}
-          </span>
+          <div className="flex flex-col items-end justify-between p-2 text-xs ">
+            <span className="max-w-[15ch] text-right font-semibold">
+              {actor_name && actor_name.length > 0 ? actor_name[0] : null}
+            </span>
+            <span className=" text-right text-[0.7rem] font-light tracking-tight text-muted-foreground">
+              {actor_name && actor_name.length > 0 ? language : null}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

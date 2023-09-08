@@ -14,9 +14,10 @@ import {
 
 type AnimeCastProps = {
   data: IAnimeCharacter[]
+  disableVoiceActors?: boolean
 }
 
-export const AnimeCast = ({ data }: AnimeCastProps) => {
+export const AnimeCast = ({ data, disableVoiceActors }: AnimeCastProps) => {
   const [language, setLanguage] = useState("English")
   const uniqueLanguages = [
     ...new Set(data?.map((item) => item.voice_actors.map((item) => item.language))),
@@ -48,7 +49,12 @@ export const AnimeCast = ({ data }: AnimeCastProps) => {
       </div>
       <div className="grid grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-2">
         {data?.map((item, index) => (
-          <AnimeCastItem key={index} data={item} language={language} />
+          <AnimeCastItem
+            key={index}
+            data={item}
+            language={language}
+            disableVoiceActors={disableVoiceActors}
+          />
         ))}
       </div>
     </div>
