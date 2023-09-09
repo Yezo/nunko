@@ -18,7 +18,7 @@ type AnimeCastProps = {
 }
 
 export const AnimeCast = ({ data, disableVoiceActors }: AnimeCastProps) => {
-  const [language, setLanguage] = useState("English")
+  const [language, setLanguage] = useState("Japanese")
   const uniqueLanguages = [
     ...new Set(data?.map((item) => item.voice_actors.map((item) => item.language))),
   ].flat()
