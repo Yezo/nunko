@@ -11,14 +11,12 @@ export const AnimeLinksHeader = ({ id }: AnimeLinksHeaderProps) => {
   const path = usePathname()
 
   return (
-    <div className="mb-8 grid auto-cols-min grid-cols-2 gap-2 rounded-md border p-1 text-center text-[0.8rem] font-medium text-muted-foreground sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-7">
+    <div className="mb-8 grid auto-cols-min grid-cols-2 gap-2 rounded-md border p-1 text-center text-[0.8rem] font-medium text-muted-foreground sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-6">
       <Item title="Overview" url={`/anime/${id}`} path={path}></Item>
       <Item title="Characters" url={`/anime/${id}/characters`} path={path}></Item>
       <Item title="Staff" url={`/anime/${id}/staff`} path={path}></Item>
-      <Item title="News" url={`/anime/${id}/news`} path={path}></Item>
-      <Item title="Episodes" url={`/anime/${id}/episodes`} path={path}></Item>
       <Item title="Recommendations" url={`/anime/${id}/recommendations`} path={path}></Item>
-
+      <Item title="Episodes" url={`/anime/${id}/episodes`} path={path}></Item>
       <Item title="Reviews" url={`/anime/${id}/reviews`} path={path}></Item>
     </div>
   )
