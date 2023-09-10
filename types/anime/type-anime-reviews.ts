@@ -33,6 +33,7 @@ export enum Tag {
   MixedFeelings = "Mixed Feelings",
   NotRecommended = "Not Recommended",
   Recommended = "Recommended",
+  Preliminary = "Preliminary",
 }
 
 export enum Type {
