@@ -96,7 +96,7 @@ export async function getIndividualAnimeEpisodes(param: paramProps): Promise<IAn
 }
 
 export async function getIndividualAnimeReviews(param: paramProps): Promise<IAnimeReviews> {
-  const url = `https://api.jikan.moe/v4/anime/${param.id}/reviews`
+  const url = `https://api.jikan.moe/v4/anime/${param.id}/reviews?preliminary=true`
   const res = await fetch(url)
   await wait(MS)
   handleResponseError(res)
