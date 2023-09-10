@@ -9,11 +9,11 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import moment from "moment"
 
-type ReviewContainerProps = {
+type AnimeReviewContainerProps = {
   reviews: IAnimeReview[]
   params: { id: string }
 }
-export const ReviewContainer = ({ reviews, params }: ReviewContainerProps) => {
+export const AnimeReviewContainer = ({ reviews, params }: AnimeReviewContainerProps) => {
   const [data, setData] = useState(reviews)
   const [spoilerData, setSpoilerData] = useState<IAnimeReview[] | null>(null)
   const [toggleSpoiler, setToggleSpoiler] = useState(false)
