@@ -1,18 +1,21 @@
-import { Dummy } from "@/components/dummy"
-import { getIndividualAnimeStaff } from "@/lib/fetchJikan"
+import { ReviewContainer } from "@/components/anime/single/reviews/review-container"
+import { NoDataFound } from "@/components/layout/no-data"
+import { getIndividualAnimeReviews } from "@/lib/fetchJikan"
+import { Suspense } from "react"
+import { Loading } from "@/components/ui/loading"
 
 export default async function StaffPage({ params }: { params: { id: string } }) {
-  const { data: staff } = await getIndividualAnimeStaff(params)
+  const { data: reviews } = await getIndividualAnimeReviews(params)
 
   return (
-    <div>
-      <Dummy data={staff} />
-      Staff
-      {/* <iframe
-        width="650"
-        height="400"
-        src={episodes?.promos[4].trailer.embedUrl.toString()}
-      ></iframe> */}
-    </div>
+    <>
+      {reviews.length > 0 ? (
+        <Suspense fallback={<Loading />}>
+          <ReviewContainer reviews={reviews} params={params} />
+        </Suspense>
+      ) : (
+        <NoDataFound type={"reviews"} />
+      )}
+    </>
   )
 }
