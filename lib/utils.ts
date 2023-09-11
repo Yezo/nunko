@@ -39,10 +39,9 @@ export const formatDuration = (totalSeconds: number) => {
   return result
 }
 
-export const transformString = (searchParams: getAllAnimeProp) => {
-  let url = new URL("https://api.jikan.moe/v4/anime")
+export const transformString = (searchParams: getAllAnimeProp, typeOfData: "anime" | "manga") => {
+  let url = new URL(`https://api.jikan.moe/v4/${typeOfData}`)
   let params = url.searchParams
-
   //Set new value
   if (searchParams.limit) params.set("limit", searchParams.limit)
   if (searchParams.page) params.set("page", searchParams.page)

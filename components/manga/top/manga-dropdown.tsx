@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { useCallback } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ANIME_MAIN_GENRES_DATA } from "@/components/anime/top/anime-data"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,15 +13,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { MANGA_MAIN_GENRES_DATA } from "@/components/manga/top/manga-data"
 
-type AnimeFilterDropdownProps = {
+type MangaFilterDropdownProps = {
   title: string
   type: string
   data: string[] | number[]
   scrollable?: boolean
 }
 
-export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilterDropdownProps) {
+export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilterDropdownProps) {
   const BASE_URL = usePathname() // /search/anime/top-100
   const BASE_TYPE = type.toLowerCase() // order_by, sort, type
   const searchParams = useSearchParams()
@@ -33,6 +33,8 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
     if (val === "start_date") return "Release Date"
     if (val === "ova") return "OVA"
     if (val === "ona") return "ONA"
+    if (val === "lightnovel") return "Light Novel"
+    if (val === "oneshot") return "One-shot"
     if (val && val.toString().startsWith("20")) return val.slice(0, 4)
     if (val && val.toString().startsWith("19")) return val.slice(0, 4)
     else return val
@@ -56,7 +58,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
 
     //Display the genre title instead of accidentally displaying the genre's ID
     if (filtered[0]?.type === "genres") {
-      const list = ANIME_MAIN_GENRES_DATA
+      const list = MANGA_MAIN_GENRES_DATA
       const filterMatch = list.filter((item) => item.id.toLowerCase() === filtered[0]?.value)
       return renameParameters(filterMatch[0]?.genre)
     }
@@ -93,7 +95,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
 
       //Transform the current genre into an ID that the API takes in
       if (name.toString().toLowerCase() === "genres") {
-        const list = ANIME_MAIN_GENRES_DATA
+        const list = MANGA_MAIN_GENRES_DATA
         const filtered = list.filter((item) => item.genre.toLowerCase() === value)
         params.set("genres", filtered[0]?.id)
       }

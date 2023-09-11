@@ -164,7 +164,7 @@ export const ANIME_MAIN_GENRES_DATA = [
   },
   {
     genre: "Sports",
-    id: "29",
+    id: "30",
   },
   {
     genre: "Slice of Life",

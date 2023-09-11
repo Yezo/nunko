@@ -8,6 +8,7 @@ import { IAnimeReviews } from "@/types/anime/type-anime-reviews"
 import { IAnimeStaffs } from "@/types/anime/type-anime-staff"
 import { ITopAnime } from "@/types/anime/type-top-anime"
 import { IManga } from "@/types/manga/type-manga"
+import { ITopMangas } from "@/types/manga/type-manga-all"
 import { IMangaCharacters } from "@/types/manga/type-manga-characters"
 import { IMangaPictures } from "@/types/manga/type-manga-pictures"
 import { IMangaRecommendations } from "@/types/manga/type-manga-recommendations"
@@ -48,7 +49,7 @@ export const handleResponseError = (res: Response) => {
 //! ======== ANIME SECTION ========
 
 export async function getAllAnime(param: getAllAnimeProp): Promise<ITopAnime> {
-  const url = transformString(param)
+  const url = transformString(param, "anime")
   const res = await fetch(url)
   handleResponseError(res)
 
@@ -164,6 +165,14 @@ export async function getIndividualMangaPictures(param: paramProps): Promise<IMa
   const url = `https://api.jikan.moe/v4/manga/${param.id}/pictures`
   const res = await fetch(url)
   await wait(MS)
+  handleResponseError(res)
+
+  return res.json()
+}
+
+export async function getAllManga(param: getAllAnimeProp): Promise<ITopMangas> {
+  const url = transformString(param, "manga")
+  const res = await fetch(url)
   handleResponseError(res)
 
   return res.json()

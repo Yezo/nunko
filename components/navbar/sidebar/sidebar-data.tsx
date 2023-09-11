@@ -25,7 +25,7 @@ export const SIDEBAR_EXPLORE_NAV_LINKS = {
     name: "anime",
     icon: <DesktopIcon />,
   },
-  "/manga": {
+  "/search/manga": {
     name: "manga",
     icon: <ImageIcon />,
   },
