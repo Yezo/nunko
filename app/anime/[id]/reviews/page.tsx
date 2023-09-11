@@ -1,4 +1,4 @@
-import { ReviewContainer } from "@/components/anime/single/reviews/review-container"
+import { AnimeReviewContainer } from "@/components/anime/single/reviews/review-container"
 import { NoDataFound } from "@/components/layout/no-data"
 import { getIndividualAnimeReviews } from "@/lib/fetchJikan"
 import { Suspense } from "react"
@@ -11,7 +11,7 @@ export default async function StaffPage({ params }: { params: { id: string } }) 
     <>
       {reviews.length > 0 ? (
         <Suspense fallback={<Loading />}>
-          <ReviewContainer reviews={reviews} params={params} />
+          <AnimeReviewContainer reviews={reviews} params={params} />
         </Suspense>
       ) : (
         <NoDataFound type={"reviews"} />

@@ -1,7 +1,8 @@
 import { Demographic } from "@/types/anime/type-anime"
+import { Author } from "@/types/manga/type-manga"
 
 type DetailItemProps = {
-  data: string | number | Demographic[] | null
+  data: string | number | Demographic[] | Author[] | null
   title: string
 }
 

@@ -2,23 +2,25 @@ import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { IndividualLinksHeader } from "@/components/shared/individual-links-header"
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
-import { getIndividualAnime } from "@/lib/fetchJikan"
-import { AnimeDetailsContainer } from "@/components/anime/single/details/details-container"
+import { getIndividualManga } from "@/lib/fetchJikan"
 import { FeatureContainer } from "@/components/anime/single/features/feature-container"
 import Image from "next/image"
+import { MangaDetailsContainer } from "@/components/manga/single/details/details-container"
+import { Dummy } from "@/components/dummy"
 
-export default async function IndividualAnimePageLayout({
+export default async function IndividualMangaPageLayout({
   params,
   children,
 }: {
   params: { id: string }
   children: React.ReactNode
 }) {
-  const { data } = await getIndividualAnime(params)
+  const { data } = await getIndividualManga(params)
 
   return (
     <div className="flex">
       <Sidebar />
+      <Dummy data={data} />
 
       <main className="container mx-auto flex-1 px-4">
         <div className="flex flex-col-reverse justify-between border-b py-12 md:flex-row lg:py-20">
@@ -48,11 +50,11 @@ export default async function IndividualAnimePageLayout({
 
         <section className="flex flex-col gap-12 py-8 lg:flex-row xl:gap-28">
           <div className="space-y-8 lg:basis-2/4 xl:basis-3/4">
-            <IndividualLinksHeader id={params.id} type="anime" />
+            <IndividualLinksHeader id={params.id} type="manga" />
             <Suspense fallback={<Loading />}>{children}</Suspense>
           </div>
 
-          <AnimeDetailsContainer data={data} />
+          <MangaDetailsContainer data={data} />
         </section>
       </main>
     </div>
