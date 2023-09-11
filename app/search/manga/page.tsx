@@ -1,4 +1,4 @@
-import { AnimeCard } from "@/components/anime/anime-card"
+import { AnimeCard } from "@/components/anime/top/anime-card"
 import { Dummy } from "@/components/dummy"
 import { NoResults } from "@/components/layout/no-results"
 import { MangaCard } from "@/components/manga/top/manga-card"

@@ -1,4 +1,4 @@
-import { AnimeCast } from "@/components/anime/anime-cast"
+import { AnimeCast } from "@/components/anime/single/characters/anime-cast"
 import { NoDataFound } from "@/components/layout/no-data"
 import { getIndividualAnimeCharacters } from "@/lib/fetchJikan"
 

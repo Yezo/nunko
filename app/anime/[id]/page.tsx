@@ -1,4 +1,4 @@
-import { AnimeCastItem } from "@/components/anime/anime-cast-item"
+import { AnimeCastItem } from "@/components/anime/single/characters/anime-cast-item"
 import { AnimeStaffItem } from "@/components/anime/single/staff/anime-staff-item"
 import { Dummy } from "@/components/dummy"
 import {
@@ -37,12 +37,12 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
   return (
     <>
       <section className="space-y-16">
-        <div>
+        <section>
           <h2 className="mb-4 text-[15px] font-medium">Description</h2>
           <div className="mt-4 text-sm leading-7">{data?.synopsis}</div>
-        </div>
+        </section>
 
-        <div>
+        <section>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-[15px] font-medium">Characters</h2>
             <Link
@@ -57,9 +57,9 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
               <AnimeCastItem key={index} data={item} language={"English"} />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div>
+        <section>
           <div className="mb-4 flex items-center justify-between ">
             <h2 className="text-[15px] font-medium">Staff</h2>
             <Link
@@ -74,7 +74,7 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
               <AnimeStaffItem key={index} data={item} />
             ))}
           </div>
-        </div>
+        </section>
 
         <section className="space-y-4">
           <div className="mb-4 flex items-center justify-between ">
@@ -110,8 +110,6 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
           </div>
         </section>
       </section>
-
-      <Dummy data={recommendations} />
     </>
   )
 }

@@ -1,12 +1,12 @@
 "use client"
 
 import { ITopAnimeData } from "@/types/anime/type-top-anime"
-import Image from "next/image"
-import Link from "next/link"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
+import Link from "next/link"
 
 type AnimeCardProps = {
   data: ITopAnimeData

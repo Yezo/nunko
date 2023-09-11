@@ -11,35 +11,21 @@ export function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export const transformDate = (date: unknown) => {
-  if (date instanceof Date) {
-    return "ERROR"
+export function formatDateToMMDDYYYY(date: Date | null) {
+  if (date) {
+    const formattedDate = moment(date).utc().format("MMMM D[,] YYYY")
+    return formattedDate
   }
-  if (typeof date === "string") {
-    const d = moment(date).utc().format("MMMM D[,] YYYY")
-    return d
-  }
+  return null
 }
 
-export const getMonthName = (monthNumber: number | null) => {
-  if (monthNumber) {
-    const date = new Date()
-    date.setMonth(monthNumber - 1)
-
-    return date.toLocaleString("en-US", {
-      month: "long",
-    })
-  }
-  return
-}
-
-export const formatDuration = (totalSeconds: number) => {
+export function formatDuration(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60 / 1000)
   const result = `${minutes} mins`
   return result
 }
 
-export const transformString = (searchParams: getAllAnimeProp, typeOfData: "anime" | "manga") => {
+export function transformString(searchParams: getAllAnimeProp, typeOfData: "anime" | "manga") {
   let url = new URL(`https://api.jikan.moe/v4/${typeOfData}`)
   let params = url.searchParams
   //Set new value
@@ -59,4 +45,17 @@ export const transformString = (searchParams: getAllAnimeProp, typeOfData: "anim
   url.search = params.toString()
   let result = url.toString()
   return result
+}
+
+export function renameParameters(value: string | number) {
+  const val = value && value.toString().toLowerCase()
+  if (val === "tv") return "TV Show"
+  if (val === "start_date") return "Release Date"
+  if (val === "ova") return "OVA"
+  if (val === "ona") return "ONA"
+  if (val === "lightnovel") return "Light Novel"
+  if (val === "oneshot") return "One-shot"
+  if (val && val.toString().startsWith("20")) return val.slice(0, 4)
+  if (val && val.toString().startsWith("19")) return val.slice(0, 4)
+  else return val
 }

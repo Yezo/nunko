@@ -1,4 +1,4 @@
-import { transformDate } from "@/lib/utils"
+import { formatDateToMMDDYYYY } from "@/lib/utils"
 import { getIndividualAnimeEpisodes } from "@/lib/fetchJikan"
 import { NoDataFound } from "@/components/layout/no-data"
 import {
@@ -32,7 +32,7 @@ export default async function EpisodesPage({ params }: { params: { id: string } 
                   <TableCell className="text-center font-medium">{item.mal_id}</TableCell>
                   <TableCell>{item.title}</TableCell>
                   <TableCell className="text-center">{item.score}</TableCell>
-                  <TableCell className="text-right">{transformDate(item.aired)}</TableCell>
+                  <TableCell className="text-right">{formatDateToMMDDYYYY(item.aired)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

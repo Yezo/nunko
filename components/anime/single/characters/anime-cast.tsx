@@ -1,6 +1,6 @@
 "use client"
 
-import { AnimeCastItem } from "@/components/anime/anime-cast-item"
+import { AnimeCastItem } from "@/components/anime/single/characters/anime-cast-item"
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { useState } from "react"

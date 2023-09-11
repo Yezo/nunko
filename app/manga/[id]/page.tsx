@@ -20,12 +20,12 @@ export default async function IndividualMangaPage({ params }: { params: { id: st
   return (
     <>
       <section className="space-y-16">
-        <div>
+        <section>
           <h2 className="mb-4 text-[15px] font-medium">Description</h2>
           <div className="mt-4 text-sm leading-7">{data?.synopsis}</div>
-        </div>
+        </section>
 
-        <div>
+        <section>
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-[15px] font-medium">Characters</h2>
             <Link
@@ -40,9 +40,9 @@ export default async function IndividualMangaPage({ params }: { params: { id: st
               <MangaCastItem key={index} data={item} />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="space-y-4">
+        <section className="space-y-4">
           <div className="mb-4 flex items-center justify-between ">
             <h2 className="text-[15px] font-medium">Recommendations</h2>
             <Link
@@ -74,7 +74,7 @@ export default async function IndividualMangaPage({ params }: { params: { id: st
               </div>
             ))}
           </div>
-        </div>
+        </section>
       </section>
     </>
   )

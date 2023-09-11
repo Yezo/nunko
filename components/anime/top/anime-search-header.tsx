@@ -1,4 +1,4 @@
-import { AnimeFilterDropdown } from "@/components/anime/anime-dropdown"
+import { AnimeFilterDropdown } from "@/components/anime/top/anime-dropdown"
 import { Input } from "@/components/ui/input"
 import {
   ANIME_MAIN_GENRES_ARR_DATA,

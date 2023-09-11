@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MANGA_MAIN_GENRES_DATA } from "@/components/manga/top/manga-data"
+import { renameParameters } from "@/lib/utils"
 
 type MangaFilterDropdownProps = {
   title: string
@@ -26,19 +27,6 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
   const BASE_URL = usePathname() // /search/anime/top-100
   const BASE_TYPE = type.toLowerCase() // order_by, sort, type
   const searchParams = useSearchParams()
-
-  const renameParameters = (value: string | number) => {
-    const val = value && value.toString().toLowerCase()
-    if (val === "tv") return "TV Show"
-    if (val === "start_date") return "Release Date"
-    if (val === "ova") return "OVA"
-    if (val === "ona") return "ONA"
-    if (val === "lightnovel") return "Light Novel"
-    if (val === "oneshot") return "One-shot"
-    if (val && val.toString().startsWith("20")) return val.slice(0, 4)
-    if (val && val.toString().startsWith("19")) return val.slice(0, 4)
-    else return val
-  }
 
   const calculatePlaceholderText = () => {
     const params = new URLSearchParams(searchParams)

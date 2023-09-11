@@ -1,5 +1,5 @@
-import { AnimeCard } from "@/components/anime/anime-card"
-import { AnimeSearchHeader } from "@/components/anime/anime-search-header"
+import { AnimeCard } from "@/components/anime/top/anime-card"
+import { AnimeSearchHeader } from "@/components/anime/top/anime-search-header"
 import { NoResults } from "@/components/layout/no-results"
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { getAllAnime, getAllAnimeProp } from "@/lib/fetchJikan"

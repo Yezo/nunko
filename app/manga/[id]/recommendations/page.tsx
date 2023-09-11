@@ -1,7 +1,7 @@
-import Link from "next/link"
-import Image from "next/image"
 import { NoDataFound } from "@/components/layout/no-data"
 import { getIndividualMangaRecommendations } from "@/lib/fetchJikan"
+import Link from "next/link"
+import Image from "next/image"
 
 export default async function RecommendationsPage({ params }: { params: { id: string } }) {
   const { data: recommendations } = await getIndividualMangaRecommendations(params)

@@ -4,9 +4,8 @@ import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
 import { getIndividualManga } from "@/lib/fetchJikan"
 import { FeatureContainer } from "@/components/anime/single/features/feature-container"
-import Image from "next/image"
 import { MangaDetailsContainer } from "@/components/manga/single/details/details-container"
-import { Dummy } from "@/components/dummy"
+import Image from "next/image"
 
 export default async function IndividualMangaPageLayout({
   params,
@@ -20,7 +19,6 @@ export default async function IndividualMangaPageLayout({
   return (
     <div className="flex">
       <Sidebar />
-      <Dummy data={data} />
 
       <main className="container mx-auto flex-1 px-4">
         <div className="flex flex-col-reverse justify-between border-b py-12 md:flex-row lg:py-20">
@@ -49,10 +47,10 @@ export default async function IndividualMangaPageLayout({
         </div>
 
         <section className="flex flex-col gap-12 py-8 lg:flex-row xl:gap-28">
-          <div className="space-y-8 lg:basis-2/4 xl:basis-3/4">
+          <section className="space-y-8 lg:basis-2/4 xl:basis-3/4">
             <IndividualLinksHeader id={params.id} type="manga" />
             <Suspense fallback={<Loading />}>{children}</Suspense>
-          </div>
+          </section>
 
           <MangaDetailsContainer data={data} />
         </section>

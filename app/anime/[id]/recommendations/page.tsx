@@ -1,7 +1,7 @@
 import { getIndividualAnimeRecommendations } from "@/lib/fetchJikan"
+import { NoDataFound } from "@/components/layout/no-data"
 import Link from "next/link"
 import Image from "next/image"
-import { NoDataFound } from "@/components/layout/no-data"
 
 export default async function RecommendationsPage({ params }: { params: { id: string } }) {
   const { data: recommendations } = await getIndividualAnimeRecommendations(params)

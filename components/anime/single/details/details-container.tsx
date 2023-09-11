@@ -3,26 +3,20 @@
 import { DetailsHeader } from "@/components/anime/single/details/details-header"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { DetailItem } from "@/components/anime/single/details/details-item"
-import { getMonthName } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+import { formatDateToMMDDYYYY } from "@/lib/utils"
 
 type AnimeDetailsContainerProps = {
   data: IAnimeData
 }
 
 export const AnimeDetailsContainer = ({ data }: AnimeDetailsContainerProps) => {
-  const startMonth = getMonthName(data.aired.prop.from.month)
-  const startDate = startMonth
-    ? startMonth + " " + data.aired.prop.from.day + ", " + data.aired.prop.from.year
-    : null
-  const endMonth = getMonthName(data.aired.prop.to.month)
-  const endDate = endMonth
-    ? endMonth + " " + data.aired.prop.to.day + ", " + data.aired.prop.to.year
-    : null
+  const startDate = formatDateToMMDDYYYY(data.aired.from)
+  const endDate = formatDateToMMDDYYYY(data.aired.to)
 
   return (
     <section className="space-y-12 lg:basis-2/4 xl:basis-1/4">
-      <div>
+      <section>
         <DetailsHeader title="Details" />
         <div className="space-y-4 rounded-lg border py-6 text-sm">
           <DetailItem data={data.score} title="Score" />
@@ -37,9 +31,9 @@ export const AnimeDetailsContainer = ({ data }: AnimeDetailsContainerProps) => {
           <DetailItem data={data.title_japanese} title="Japanese" />
           <DetailItem data={data.genres} title="Genres" />
         </div>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <DetailsHeader title="Broadcast" />
         <div className="space-y-4 rounded-lg border py-6 text-sm">
           <DetailItem data={data.type} title="Format" />
@@ -57,7 +51,7 @@ export const AnimeDetailsContainer = ({ data }: AnimeDetailsContainerProps) => {
           <DetailItem data={data.producers} title="Producers" />
           <DetailItem data={data.licensors} title="Licensors" />
         </div>
-      </div>
+      </section>
     </section>
   )
 }
