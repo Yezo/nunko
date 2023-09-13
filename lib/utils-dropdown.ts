@@ -103,10 +103,9 @@ export const calculatePlaceholderText = (searchParams: URLSearchParams, BASE_TYP
 }
 
 export const createQueryString = (
-  name: string,
+  BASE_TYPE: string,
   value: string,
   searchParams: URLSearchParams,
-  BASE_TYPE: string,
   data: {
     genre: string
     id: string
@@ -119,11 +118,11 @@ export const createQueryString = (
     const genreId = getGenreIdFromName(value, data)
     params.set("genres", genreId) // Set 'genres' based on genre name
   } else {
-    params.set(name, value) // Set other query parameters
+    params.set(BASE_TYPE, value) // Set other query parameters
   }
 
   if (BASE_TYPE === "order_by") {
-    handleOrderBySort(name, value, params) // Handle 'sort' based on selected value
+    handleOrderBySort(BASE_TYPE, value, params) // Handle 'sort' based on selected value
   }
 
   return params.toString()

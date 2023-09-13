@@ -12,7 +12,8 @@ export const MangaSearchHeader = () => {
     <div className="space-y-4 px-4 py-20">
       <h1 className="font-domine text-2xl font-semibold tracking-tight">Top Manga</h1>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {/* <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"> */}
+      <div className="flex flex-wrap gap-4">
         <FilterItem title="Search">
           <Input />
         </FilterItem>
@@ -44,7 +45,7 @@ export const MangaSearchHeader = () => {
 
 const FilterItem = ({ children, title }: { children: React.ReactNode; title: string }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-[200px] flex-col gap-2">
       <p className="text-sm font-medium">{title}</p>
       {children}
     </div>

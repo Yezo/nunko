@@ -5,6 +5,8 @@ import { usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { MANGA_MAIN_GENRES_DATA } from "@/components/manga/top/manga-data"
+import { calculatePlaceholderText, createQueryString, renameParameters } from "@/lib/utils-dropdown"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MANGA_MAIN_GENRES_DATA } from "@/components/manga/top/manga-data"
-import { calculatePlaceholderText, createQueryString, renameParameters } from "@/lib/utils-dropdown"
 
 type MangaFilterDropdownProps = {
   title: string
@@ -41,7 +41,7 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
       </DropdownMenuTrigger>
 
       {/* fix dropdown widths later */}
-      <DropdownMenuContent className="min-h-fit min-w-[150px] sm:min-w-[280px] md:min-w-[180px] lg:min-w-[200px] xl:min-w-[228px]">
+      <DropdownMenuContent className="min-h-fit w-[200px]">
         <DropdownMenuGroup>
           {scrollable ? (
             <ScrollArea className="h-64 pr-4">
@@ -52,7 +52,6 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
                       BASE_TYPE,
                       item.toString().toLowerCase(),
                       searchParams,
-                      BASE_TYPE,
                       MANGA_MAIN_GENRES_DATA
                     )}`}
                     className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
@@ -70,7 +69,6 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
                     BASE_TYPE,
                     item.toString().toLowerCase(),
                     searchParams,
-                    BASE_TYPE,
                     MANGA_MAIN_GENRES_DATA
                   )}`}
                   className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"

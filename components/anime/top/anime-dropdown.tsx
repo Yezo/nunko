@@ -44,7 +44,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
       </DropdownMenuTrigger>
 
       {/* fix dropdown widths later */}
-      <DropdownMenuContent className="min-h-fit min-w-[150px] sm:min-w-[280px] md:min-w-[180px] lg:min-w-[200px] xl:min-w-[228px]">
+      <DropdownMenuContent className="min-h-fit w-[200px]">
         <DropdownMenuGroup>
           {scrollable ? (
             <ScrollArea className="h-64 pr-4">
@@ -55,7 +55,6 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
                       BASE_TYPE,
                       item.toString().toLowerCase(),
                       searchParams,
-                      BASE_TYPE,
                       ANIME_MAIN_GENRES_DATA
                     )}`}
                     className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
@@ -73,7 +72,6 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
                     BASE_TYPE,
                     item.toString().toLowerCase(),
                     searchParams,
-                    BASE_TYPE,
                     ANIME_MAIN_GENRES_DATA
                   )}`}
                   className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
