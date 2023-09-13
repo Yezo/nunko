@@ -1,4 +1,3 @@
-import { getAllAnimeProp } from "@/lib/fetchJikan"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import moment from "moment"
@@ -12,50 +11,56 @@ export function wait(ms: number) {
 }
 
 export function formatDateToMMDDYYYY(date: Date | null) {
-  if (date) {
-    const formattedDate = moment(date).utc().format("MMMM D[,] YYYY")
-    return formattedDate
-  }
-  return null
+  return date ? moment(date).utc().format("MMMM D[,] YYYY") : null
 }
 
 export function formatDuration(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60 / 1000)
-  const result = `${minutes} mins`
-  return result
+  return `${minutes} mins`
 }
 
-export function transformString(searchParams: getAllAnimeProp, typeOfData: "anime" | "manga") {
-  let url = new URL(`https://api.jikan.moe/v4/${typeOfData}`)
-  let params = url.searchParams
-  //Set new value
-  if (searchParams.limit) params.set("limit", searchParams.limit)
-  if (searchParams.page) params.set("page", searchParams.page)
-  if (searchParams.sfw) params.set("sfw", "true")
-  if (searchParams.rating) params.set("rating", searchParams.rating)
-  if (searchParams.filter) params.set("filter", searchParams.filter)
-  if (searchParams.type) params.set("type", searchParams.type)
-  if (searchParams.order_by) params.set("order_by", searchParams.order_by)
-  if (searchParams.sort) params.set("sort", searchParams.sort)
-  if (searchParams.score) params.set("score", searchParams.score)
-  if (searchParams.min_score) params.set("min_score", searchParams.min_score)
-  if (searchParams.start_date) params.set("start_date", searchParams.start_date)
-  if (searchParams.end_date) params.set("end_date", searchParams.end_date)
-  if (searchParams.genres) params.set("genres", searchParams.genres)
-  url.search = params.toString()
-  let result = url.toString()
-  return result
+interface SearchParams {
+  limit?: number
+  page?: number
+  sfw?: boolean
+  rating?: string
+  filter?: string
+  type?: string
+  order_by?: string
+  sort?: string
+  score?: number
+  min_score?: number
+  start_date?: string
+  end_date?: string
+  genres?: string
+  [key: string]: string | number | boolean | undefined
 }
 
-export function renameParameters(value: string | number) {
-  const val = value && value.toString().toLowerCase()
-  if (val === "tv") return "TV Show"
-  if (val === "start_date") return "Release Date"
-  if (val === "ova") return "OVA"
-  if (val === "ona") return "ONA"
-  if (val === "lightnovel") return "Light Novel"
-  if (val === "oneshot") return "One-shot"
-  if (val && val.toString().startsWith("20")) return val.slice(0, 4)
-  if (val && val.toString().startsWith("19")) return val.slice(0, 4)
-  else return val
+export function transformString(searchParams: SearchParams, typeOfData: "anime" | "manga") {
+  const baseUrl = `https://api.jikan.moe/v4/${typeOfData}`
+  const searchParamsMap: Record<string, string> = {
+    limit: "limit",
+    page: "page",
+    sfw: "sfw",
+    rating: "rating",
+    filter: "filter",
+    type: "type",
+    order_by: "order_by",
+    sort: "sort",
+    score: "score",
+    min_score: "min_score",
+    start_date: "start_date",
+    end_date: "end_date",
+    genres: "genres",
+  }
+
+  const url = new URL(baseUrl)
+
+  for (const param in searchParams) {
+    if (searchParams[param] !== undefined && searchParamsMap[param]) {
+      url.searchParams.set(searchParamsMap[param], String(searchParams[param]))
+    }
+  }
+
+  return url.toString()
 }
