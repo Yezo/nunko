@@ -13,7 +13,7 @@ export default async function MangaSearchPage({ searchParams }: { searchParams: 
   return (
     <div className="flex">
       <Sidebar />
-      <Dummy data={data} />
+
       <main className="container mx-auto flex-1 px-4">
         <MangaSearchHeader />
 
