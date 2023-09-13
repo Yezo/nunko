@@ -1,4 +1,4 @@
-import { transformString, wait } from "@/lib/utils"
+import { SearchParams, transformString, wait } from "@/lib/utils"
 import { IAnime } from "@/types/anime/type-anime"
 import { IAnimeCharacters } from "@/types/anime/type-anime-characters"
 import { IAnimeEpisodes } from "@/types/anime/type-anime-episodes"
@@ -48,7 +48,7 @@ export const handleResponseError = (res: Response) => {
 
 //! ======== ANIME SECTION ========
 
-export async function getAllAnime(param: getAllAnimeProp): Promise<ITopAnime> {
+export async function getAllAnime(param: SearchParams): Promise<ITopAnime> {
   const url = transformString(param, "anime")
   const res = await fetch(url)
   handleResponseError(res)
@@ -170,7 +170,7 @@ export async function getIndividualMangaPictures(param: paramProps): Promise<IMa
   return res.json()
 }
 
-export async function getAllManga(param: getAllAnimeProp): Promise<ITopMangas> {
+export async function getAllManga(param: SearchParams): Promise<ITopMangas> {
   const url = transformString(param, "manga")
   const res = await fetch(url)
   handleResponseError(res)
