@@ -2,10 +2,11 @@ import { AnimeCard } from "@/components/anime/top/anime-card"
 import { AnimeSearchHeader } from "@/components/anime/top/anime-search-header"
 import { NoResults } from "@/components/layout/no-results"
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
-import { getAllAnime, getAllAnimeProp } from "@/lib/fetchJikan"
+import { getAllAnime } from "@/lib/fetchJikan"
+import { SearchParams } from "@/lib/utils"
 import { Suspense } from "react"
 
-export default async function AnimePage({ searchParams }: { searchParams: getAllAnimeProp }) {
+export default async function AnimePage({ searchParams }: { searchParams: SearchParams }) {
   const { data } = await getAllAnime(searchParams)
 
   return (

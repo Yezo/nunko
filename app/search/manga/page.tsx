@@ -1,13 +1,13 @@
-import { AnimeCard } from "@/components/anime/top/anime-card"
 import { Dummy } from "@/components/dummy"
 import { NoResults } from "@/components/layout/no-results"
 import { MangaCard } from "@/components/manga/top/manga-card"
 import { MangaSearchHeader } from "@/components/manga/top/manga-search-header"
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
-import { getAllAnimeProp, getAllManga } from "@/lib/fetchJikan"
+import { getAllManga } from "@/lib/fetchJikan"
+import { SearchParams } from "@/lib/utils"
 import { Suspense } from "react"
 
-export default async function MangaSearchPage({ searchParams }: { searchParams: getAllAnimeProp }) {
+export default async function MangaSearchPage({ searchParams }: { searchParams: SearchParams }) {
   const { data } = await getAllManga(searchParams)
 
   return (
