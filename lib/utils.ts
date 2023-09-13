@@ -19,7 +19,7 @@ export function formatDuration(totalSeconds: number) {
   return `${minutes} mins`
 }
 
-interface SearchParams {
+export type SearchParams = {
   limit?: number
   page?: number
   sfw?: boolean
