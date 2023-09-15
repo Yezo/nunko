@@ -37,7 +37,7 @@ export default async function IndividualMangaPage({ params }: { params: { id: st
           </div>
           <div className="grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             {filteredCharacters.map((item, index) => (
-              <MangaCastItem key={index} data={item} />
+              <MangaCastItem key={item.character.mal_id} data={item} />
             ))}
           </div>
         </section>

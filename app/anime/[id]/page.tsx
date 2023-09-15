@@ -31,7 +31,7 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
     ...new Map(filteredStaff.map((item) => [item.person["name"], item])).values(),
   ]
     .flat()
-    .splice(0, 6)
+    .slice(0, 6)
 
   const { data: recommendations } = await getIndividualAnimeRecommendations(params)
   return (
@@ -53,8 +53,8 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            {filteredCharacters.map((item, index) => (
-              <AnimeCastItem key={index} data={item} language={"English"} />
+            {filteredCharacters.map((item) => (
+              <AnimeCastItem key={item.character.mal_id} data={item} language={"English"} />
             ))}
           </div>
         </section>
@@ -70,8 +70,8 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
-            {uniqueStaff.map((item, index) => (
-              <AnimeStaffItem key={index} data={item} />
+            {uniqueStaff.map((item) => (
+              <AnimeStaffItem key={item.person.mal_id} data={item} />
             ))}
           </div>
         </section>
