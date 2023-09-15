@@ -12,15 +12,12 @@ export const MangaCastItem = ({ data }: MangaCastItemProps) => {
     <div className="flex min-h-[85px] justify-between gap-2 rounded border text-xs shadow-sm">
       <div className="flex">
         <Avatar className="h-[85px] w-16 rounded-none rounded-l">
-          {data &&
-            data.character &&
-            data.character.images.webp &&
-            data.character.images.webp.image_url && (
-              <AvatarImage
-                src={data.character.images.webp.image_url.toString()}
-                className="rounded-l object-cover object-top"
-              />
-            )}
+          {data.character.images.webp.image_url && (
+            <AvatarImage
+              src={data.character.images.webp.image_url.toString()}
+              className="rounded-l object-cover object-top"
+            />
+          )}
           <NoImageFallback />
         </Avatar>
         <div className="flex flex-col justify-between p-2 text-xs ">

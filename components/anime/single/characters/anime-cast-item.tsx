@@ -18,15 +18,12 @@ export const AnimeCastItem = ({ data, language, disableVoiceActors }: AnimeCastI
     <div className="flex min-h-[85px] justify-between gap-2 rounded border text-xs shadow-sm">
       <div className="flex">
         <Avatar className="h-[85px] w-16 rounded-none rounded-l">
-          {data &&
-            data.character &&
-            data.character.images.webp &&
-            data.character.images.webp.image_url && (
-              <AvatarImage
-                src={data.character.images.webp.image_url.toString()}
-                className="rounded-l object-cover object-top"
-              />
-            )}
+          {data.character.images.webp.image_url && (
+            <AvatarImage
+              src={data.character.images.webp.image_url.toString()}
+              className="rounded-l object-cover object-top"
+            />
+          )}
           <NoImageFallback />
         </Avatar>
         <div className="flex flex-col justify-between p-2 text-xs ">
@@ -39,19 +36,21 @@ export const AnimeCastItem = ({ data, language, disableVoiceActors }: AnimeCastI
       {disableVoiceActors ? null : (
         <div className="flex flex-row-reverse">
           <Avatar className="h-[85px] w-16 rounded-none rounded-r">
-            <AvatarImage
-              src={img[0]?.toString()}
-              className="object-cover object-top ring-1 ring-black/10"
-            />
+            {img.length > 0 && (
+              <AvatarImage
+                src={img[0].toString()}
+                className="object-cover object-top ring-1 ring-black/10"
+              />
+            )}
             <NoImageFallback />
           </Avatar>
 
           <div className="flex flex-col items-end justify-between p-2 text-xs ">
             <span className="max-w-[15ch] text-right font-semibold">
-              {actor_name && actor_name.length > 0 ? actor_name[0] : null}
+              {actor_name.length > 0 && actor_name[0]}
             </span>
             <span className=" text-right text-[0.7rem] font-light tracking-tight text-muted-foreground">
-              {actor_name && actor_name.length > 0 ? language : null}
+              {actor_name.length > 0 && language}
             </span>
           </div>
         </div>

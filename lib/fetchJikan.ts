@@ -37,13 +37,24 @@ export type getAllAnimeProp = {
 //The amount of milliseconds to throttle API calls to prevent rate-limiting
 export const MS = 350
 
+const errorMessages: { [key: string]: string } = {
+  400: "The developer did something incorrect with his code.",
+  404: "The resource could be not be found or does not exist.",
+  429: "You're currently rate-limited due to too many requests.",
+  500: "Something unusual occured. Please try again.",
+}
 //Error handler
+
 export const handleResponseError = (res: Response) => {
-  if (res.status === 400) throw new Error("400: The developer has made an invalid request.")
-  if (res.status === 404) throw new Error("404: The resource was not found or does not exist.")
-  if (res.status === 429) throw new Error("429: You are currently being rate-limited. ")
-  if (res.status === 500) throw new Error("500: Something went wrong. Please try again.")
-  if (!res.ok) throw new Error("000: Failed to fetch data.")
+  if (res && res instanceof Response) {
+    const statusCode = res.status.toString()
+
+    if (statusCode !== "200" && errorMessages[statusCode]) {
+      throw new Error(`${statusCode}: ${errorMessages[statusCode]}`)
+    }
+  } else {
+    throw new Error("Invalid response object.")
+  }
 }
 
 //! ======== ANIME SECTION ========

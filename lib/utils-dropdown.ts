@@ -1,37 +1,31 @@
 import { ANIME_MAIN_GENRES_DATA } from "@/components/anime/top/anime-data"
 
-export function renameParameters(value: string | number) {
-  const val = (value && value.toString().toLowerCase()) as string
+const renamedParametersList: { [key: string]: string } = {
+  tv: "TV Show",
+  start_date: "Release Date",
+  order_by: "Sort",
+  ova: "OVA",
+  ona: "ONA",
+  lightnovel: "Light Novel",
+  oneshot: "One-shot",
+}
 
-  switch (val) {
-    case "tv":
-      return "TV Show"
-    case "start_date":
-      return "Release Date"
-    case "order_by":
-      return "Sort"
-    case "ova":
-      return "OVA"
-    case "ona":
-      return "ONA"
-    case "lightnovel":
-      return "Light Novel"
-    case "oneshot":
-      return "One-shot"
-    default:
-      if (val && val.toString().startsWith("20")) return val.slice(0, 4)
-      if (val && val.toString().startsWith("19")) return val.slice(0, 4)
-      return val
+export function renameParameters(value: string | number) {
+  const valueAsString = String(value).toLowerCase()
+
+  if (valueAsString in renamedParametersList) {
+    return renamedParametersList[valueAsString]
   }
+
+  //Checks for years that start with 19 or 20
+  const yearRegex = /^(19|20)\d{2}-\d{2}-\d{2}$/
+  if (valueAsString && yearRegex.test(valueAsString)) return valueAsString.slice(0, 4)
+
+  return valueAsString
 }
 
 export const findParamValue = (paramName: string, params: URLSearchParams) => {
-  // Convert query parameters to an array of key-value pairs
-  const splitParams = Array.from(params.entries())
-  // Find the matching parameter by its name
-  const matchingParam = splitParams.find(([param]) => param === paramName)
-  // Return the value of the matching parameter, or an empty string if not found
-  return matchingParam ? matchingParam[1] : ""
+  return params.get(paramName) || ""
 }
 
 export const handleOrderBySort = (name: string, value: string, params: URLSearchParams) => {

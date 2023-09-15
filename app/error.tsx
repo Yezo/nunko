@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter()
   const statusCode = parseInt(error.message.slice(0, 3))
+  const statusMessage = error.message.slice(5)
   const handleGoBackOnePage = () => router.back()
 
   return (
@@ -40,12 +41,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
             </svg>
             <div>
               <h2 className="font-domine text-lg font-medium">Something went wrong!</h2>
-              <p className="text-sm text-muted-foreground">
-                {statusCode === 400 && "The developer did something incorrect with his code."}
-                {statusCode === 404 && "The resource could be not be found or does not exist."}
-                {statusCode === 429 && "You're currently rate-limited due to too many requests."}
-                {statusCode === 500 && "There was a server issue or something unusual happened."}
-              </p>
+              <p className="text-sm text-muted-foreground">{`${statusMessage}`}</p>
             </div>
           </div>
 
