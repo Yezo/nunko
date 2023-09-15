@@ -30,7 +30,7 @@ export default async function EpisodesPage({ params }: { params: { id: string } 
               {episodes.data.map((item) => (
                 <TableRow key={item.mal_id}>
                   <TableCell className="text-center font-medium">{item.mal_id}</TableCell>
-                  <TableCell>{item.title}</TableCell>
+                  <TableCell className="capitalize">{item.title}</TableCell>
                   <TableCell className="text-center">{item.score}</TableCell>
                   <TableCell className="text-right">{formatDateToMMDDYYYY(item.aired)}</TableCell>
                 </TableRow>
