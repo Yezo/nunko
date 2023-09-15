@@ -23,7 +23,7 @@ export const AnimeCard = ({ data }: AnimeCardProps) => {
                 src={data.images.webp.large_image_url}
                 alt={data.mal_id.toString()}
                 fill
-                className="h-full w-full rounded border object-cover object-top shadow-xl"
+                className="h-full w-full rounded border object-cover object-top shadow-md"
                 quality={100}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
