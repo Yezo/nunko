@@ -4,6 +4,7 @@ import {
   SIDEBAR_LIBRARY_NAV_LINKS,
   SIDEBAR_MAIN_NAV_LINKS,
 } from "@/components/navbar/sidebar/sidebar-data"
+import { ProfileDropdown } from "@/components/profile/profile-dropdown"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -84,24 +85,22 @@ export const Sidebar = () => {
             <div>Munkie</div>
           </div>
 
-          <Button size="icon" variant="ghost">
-            <DotsVerticalIcon className="h-[1rem] w-[1rem]" />
-          </Button>
+          <ProfileDropdown />
         </div>
       </div>
     </aside>
   )
 }
 
-const LinkIcon = ({ children }: { children: React.ReactNode }) => {
+export const LinkIcon = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="rounded border  border-muted/80 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-900 to-gray-800 p-1.5 shadow-sm">
+    <div className="rounded border border-muted/80 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-900 to-gray-800 p-1.5 shadow-sm">
       {children}
     </div>
   )
 }
 
-const LinkItem = ({ url, icon, name }: { url: string; icon: JSX.Element; name: string }) => {
+export const LinkItem = ({ url, icon, name }: { url: string; icon: JSX.Element; name: string }) => {
   return (
     <Link
       href={url}
