@@ -63,8 +63,12 @@ export const handleResponseError = (res: Response) => {
 
 //! ======== ANIME SECTION ========
 
-export async function getAllAnime(param: SearchParams): Promise<ITopAnime> {
-  const url = transformString(param, "anime")
+export async function getAllAnime(
+  param: SearchParams,
+  page: number,
+  query: string
+): Promise<ITopAnime> {
+  const url = transformString(param, "anime", page, query)
   const res = await fetch(url)
   handleResponseError(res)
 
@@ -194,8 +198,12 @@ export async function getIndividualMangaPictures(param: paramProps): Promise<IMa
   return res.json()
 }
 
-export async function getAllManga(param: SearchParams): Promise<ITopMangas> {
-  const url = transformString(param, "manga")
+export async function getAllManga(
+  param: SearchParams,
+  page: number,
+  query: string
+): Promise<ITopMangas> {
+  const url = transformString(param, "manga", page, query)
   const res = await fetch(url)
   handleResponseError(res)
 

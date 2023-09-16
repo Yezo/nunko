@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
@@ -47,7 +46,7 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
             <ScrollArea className="h-64 pr-4">
               {data.map((item, index) => (
                 <DropdownMenuItem key={index} asChild>
-                  <Link
+                  <a
                     href={`${BASE_URL}/?${createQueryString(
                       BASE_TYPE,
                       item.toString().toLowerCase(),
@@ -57,14 +56,14 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
                     className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
                   >
                     {renameParameters(item)}
-                  </Link>
+                  </a>
                 </DropdownMenuItem>
               ))}
             </ScrollArea>
           ) : (
             data.map((item, index) => (
               <DropdownMenuItem key={index} asChild>
-                <Link
+                <a
                   href={`${BASE_URL}/?${createQueryString(
                     BASE_TYPE,
                     item.toString().toLowerCase(),
@@ -74,7 +73,7 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
                   className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
                 >
                   {renameParameters(item)}
-                </Link>
+                </a>
               </DropdownMenuItem>
             ))
           )}

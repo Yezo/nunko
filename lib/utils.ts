@@ -37,8 +37,13 @@ export type SearchParams = {
   [key: string]: string | number | boolean | undefined
 }
 
-export function transformString(searchParams: SearchParams, typeOfData: "anime" | "manga") {
-  const baseUrl = `https://api.jikan.moe/v4/${typeOfData}`
+export function transformString(
+  searchParams: SearchParams,
+  typeOfData: "anime" | "manga",
+  page = 1,
+  query: string
+) {
+  const baseUrl = `https://api.jikan.moe/v4/${typeOfData}?limit=18&page=${page}&q=${query}`
   const searchParamsMap: Record<string, string> = {
     limit: "limit",
     page: "page",
