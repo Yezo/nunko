@@ -2,15 +2,15 @@
 
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { Button } from "@/components/ui/button"
-import { errorMessages } from "@/lib/fetchJikan"
 import { ReloadIcon, ResetIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter()
   const statusCode = error.message.slice(0, 3)
-  const statusMessage = error.message.slice(5)
   const handleGoBackOnePage = () => router.back()
+  const notACode =
+    statusCode !== "400" && statusCode !== "404" && statusCode !== "429" && statusCode !== "500"
 
   return (
     <div className="flex">
@@ -42,7 +42,13 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
             </svg>
             <div>
               <h2 className="font-domine text-lg font-medium">Something went wrong!</h2>
-              <p className="text-sm text-muted-foreground">{`${errorMessages[statusCode]}`}</p>
+              <p className="text-sm text-muted-foreground">
+                {statusCode === "400" && "The developer did something incorrect with his code."}
+                {statusCode === "404" && "The resource could be not be found or does not exist."}
+                {statusCode === "429" && "You're currently rate-limited due to too many requests."}
+                {statusCode === "500" && "Something unusual occurred. Please try again."}
+                {notACode && "Something unknown occurred. Please try again."}
+              </p>
             </div>
           </div>
 

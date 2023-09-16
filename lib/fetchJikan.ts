@@ -45,7 +45,7 @@ export const errorMessages: { [key: string]: string } = {
   400: "The developer did something incorrect with his code.",
   404: "The resource could be not be found or does not exist.",
   429: "You're currently rate-limited due to too many requests.",
-  500: "Something unusual occured. Please try again.",
+  500: "Something unusual occurred. Please try again.",
 }
 //Error handler
 
