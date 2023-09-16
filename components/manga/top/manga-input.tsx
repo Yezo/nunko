@@ -9,19 +9,19 @@ import { useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 export const MangaFilterInput = () => {
+  const router = useRouter()
   const BASE_URL = usePathname() // Get the current pathname = '/search/anime/top-100'
   const BASE_TYPE = "q" // Lowercase base = 'order_by', 'sort', 'type'
   const searchParams = useSearchParams() // Get the query parameters from the URL
-  const queryParam = searchParams.get("q")
-
+  const queryParam = searchParams.get("q") // The query string = 'One Piece', 'Bleach', 'Naruto'
   const [value, setValue] = useState(queryParam)
-  const router = useRouter()
 
   const debounced = useDebouncedCallback((value) => {
     setValue(value)
   }, 1000)
 
   useEffect(() => {
+    //If there's a query, redirect to the new URL with the q parameter
     if (value) {
       router.push(
         `${BASE_URL}/?${createQueryString(
@@ -32,6 +32,7 @@ export const MangaFilterInput = () => {
         )}`
       )
     }
+    //If there's no query, we want to redirect back to ALL while maintaining the other filters
     if (!value) {
       router.push(
         `${BASE_URL}/?${createQueryString(BASE_TYPE, "", searchParams, MANGA_MAIN_GENRES_DATA)}`
@@ -44,11 +45,11 @@ export const MangaFilterInput = () => {
       <Input
         placeholder={calculatePlaceholderText(searchParams, BASE_TYPE)}
         type="text"
-        className="cursor-pointer text-xs capitalize placeholder:text-xs placeholder:capitalize"
+        className="text-xs capitalize placeholder:text-xs placeholder:capitalize"
         defaultValue={""}
         onChange={(e) => debounced(e.target.value)}
       />
-      <MagnifyingGlassIcon className="-m-8 cursor-pointer text-muted-foreground" />
+      <MagnifyingGlassIcon className="-m-8 text-muted-foreground" />
     </div>
   )
 }
