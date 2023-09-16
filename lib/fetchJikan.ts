@@ -41,7 +41,7 @@ export type getAllAnimeProp = {
 //The amount of milliseconds to throttle API calls to prevent rate-limiting
 export const MS = 350
 
-const errorMessages: { [key: string]: string } = {
+export const errorMessages: { [key: string]: string } = {
   400: "The developer did something incorrect with his code.",
   404: "The resource could be not be found or does not exist.",
   429: "You're currently rate-limited due to too many requests.",

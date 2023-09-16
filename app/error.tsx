@@ -2,12 +2,13 @@
 
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { Button } from "@/components/ui/button"
+import { errorMessages } from "@/lib/fetchJikan"
 import { ReloadIcon, ResetIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter()
-  const statusCode = parseInt(error.message.slice(0, 3))
+  const statusCode = error.message.slice(0, 3)
   const statusMessage = error.message.slice(5)
   const handleGoBackOnePage = () => router.back()
 
@@ -41,7 +42,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
             </svg>
             <div>
               <h2 className="font-domine text-lg font-medium">Something went wrong!</h2>
-              <p className="text-sm text-muted-foreground">{`${statusMessage}`}</p>
+              <p className="text-sm text-muted-foreground">{`${errorMessages[statusCode]}`}</p>
             </div>
           </div>
 
