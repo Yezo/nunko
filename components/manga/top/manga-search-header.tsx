@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input"
 import { YEARS_DATA } from "@/components/anime/top/anime-data"
 import { MangaFilterDropdown } from "@/components/manga/top/manga-dropdown"
+import { MangaFilterInput } from "@/components/manga/top/manga-input"
 import {
   MANGA_MAIN_GENRES_ARR_DATA,
   MANGA_ORDERS_TYPE,
@@ -15,7 +15,7 @@ export const MangaSearchHeader = () => {
       {/* <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"> */}
       <div className="flex flex-wrap gap-4">
         <FilterItem title="Search">
-          <Input />
+          <MangaFilterInput />
         </FilterItem>
 
         <FilterItem title="Sort">

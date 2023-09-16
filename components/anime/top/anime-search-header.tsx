@@ -1,5 +1,5 @@
 import { AnimeFilterDropdown } from "@/components/anime/top/anime-dropdown"
-import { Input } from "@/components/ui/input"
+import { AnimeFilterInput } from "@/components/anime/top/anime-input"
 import {
   ANIME_MAIN_GENRES_ARR_DATA,
   ORDERS_DATA,
@@ -9,13 +9,13 @@ import {
 
 export const AnimeSearchHeader = () => {
   return (
-    <div className="space-y-4 px-4 py-20">
+    <div className="space-y-4 py-20">
       <h1 className="font-domine text-2xl font-semibold tracking-tight">Top Anime</h1>
 
       {/* <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"> */}
       <div className="flex flex-wrap gap-4">
         <FilterItem title="Search">
-          <Input />
+          <AnimeFilterInput />
         </FilterItem>
 
         <FilterItem title="Sort">

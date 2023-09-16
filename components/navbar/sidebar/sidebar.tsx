@@ -1,9 +1,11 @@
 "use client"
+
 import {
   SIDEBAR_EXPLORE_NAV_LINKS,
   SIDEBAR_LIBRARY_NAV_LINKS,
   SIDEBAR_MAIN_NAV_LINKS,
 } from "@/components/navbar/sidebar/sidebar-data"
+import { SidebarSearchInput } from "@/components/navbar/sidebar/sidebar-search-input"
 import { ProfileDropdown } from "@/components/profile/profile-dropdown"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -25,6 +27,7 @@ import {
 } from "@radix-ui/react-icons"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Suspense } from "react"
 
 export const Sidebar = () => {
   let pathname = usePathname() || "/"
@@ -45,14 +48,7 @@ export const Sidebar = () => {
             Nunko.
           </Link>
 
-          <div className="flex items-center py-4 pt-8">
-            <Input
-              placeholder="Search..."
-              type="text"
-              className="cursor-pointer placeholder:text-xs"
-            />
-            <MagnifyingGlassIcon className="-m-8 cursor-pointer text-muted-foreground" />
-          </div>
+          <SidebarSearchInput />
 
           <nav className="flex flex-col gap-2">
             <p className="font-medium"></p>

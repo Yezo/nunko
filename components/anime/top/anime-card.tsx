@@ -17,7 +17,7 @@ export const AnimeCard = ({ data }: AnimeCardProps) => {
     <HoverCard openDelay={500}>
       <HoverCardTrigger asChild>
         <Link href={`/anime/${data.mal_id}`}>
-          <div className="space-y-2 py-8">
+          <div className="space-y-2">
             <div className="relative h-[295px] w-[215px]">
               <Image
                 src={data.images.webp.large_image_url}
@@ -29,7 +29,7 @@ export const AnimeCard = ({ data }: AnimeCardProps) => {
               />
             </div>
 
-            <p className="max-w-[20ch] text-[0.8rem] font-medium leading-5 tracking-tight text-muted-foreground transition-colors duration-200 hover:text-foreground">
+            <p className="min-h-[80px] max-w-[20ch] text-[0.8rem] font-medium leading-5 tracking-tight text-muted-foreground transition-colors duration-200 hover:text-foreground">
               {data.title}
             </p>
           </div>

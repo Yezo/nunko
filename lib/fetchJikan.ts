@@ -18,6 +18,10 @@ export type paramProps = {
   id: string
 }
 
+export type queryProps = {
+  query: string
+}
+
 export type getAllAnimeProp = {
   limit?: string
   page?: string
@@ -132,6 +136,15 @@ export async function getIndividualAnimeNews(param: paramProps): Promise<IAnimeN
   return res.json()
 }
 
+export async function getSearchAnime(query: string): Promise<ITopAnime> {
+  const url = `https://api.jikan.moe/v4/anime?q=${query}`
+  const res = await fetch(url)
+  await wait(MS)
+  handleResponseError(res)
+
+  return res.json()
+}
+
 //! ======== MANGA SECTION ========
 
 export async function getIndividualManga(param: paramProps): Promise<IManga> {
@@ -184,6 +197,15 @@ export async function getIndividualMangaPictures(param: paramProps): Promise<IMa
 export async function getAllManga(param: SearchParams): Promise<ITopMangas> {
   const url = transformString(param, "manga")
   const res = await fetch(url)
+  handleResponseError(res)
+
+  return res.json()
+}
+
+export async function getSearchManga(query: string): Promise<ITopMangas> {
+  const url = `https://api.jikan.moe/v4/manga?q=${query}`
+  const res = await fetch(url)
+  await wait(MS)
   handleResponseError(res)
 
   return res.json()

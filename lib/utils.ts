@@ -33,6 +33,7 @@ export type SearchParams = {
   start_date?: string
   end_date?: string
   genres?: string
+  q?: string
   [key: string]: string | number | boolean | undefined
 }
 
@@ -52,6 +53,7 @@ export function transformString(searchParams: SearchParams, typeOfData: "anime" 
     start_date: "start_date",
     end_date: "end_date",
     genres: "genres",
+    q: "q",
   }
 
   const url = new URL(baseUrl)

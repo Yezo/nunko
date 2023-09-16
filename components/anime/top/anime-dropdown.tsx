@@ -57,7 +57,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
                       searchParams,
                       ANIME_MAIN_GENRES_DATA
                     )}`}
-                    className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
+                    className="cursor-pointer px-3 text-[0.8rem] capitalize text-muted-foreground  transition-colors hover:text-foreground"
                   >
                     {renameParameters(item)}
                   </Link>
@@ -74,7 +74,7 @@ export function AnimeFilterDropdown({ title, type, data, scrollable }: AnimeFilt
                     searchParams,
                     ANIME_MAIN_GENRES_DATA
                   )}`}
-                  className="px-3 text-[0.8rem] capitalize text-muted-foreground transition-colors  hover:text-foreground"
+                  className="cursor-pointer px-3 text-[0.8rem] capitalize text-muted-foreground  transition-colors hover:text-foreground"
                 >
                   {renameParameters(item)}
                 </Link>
