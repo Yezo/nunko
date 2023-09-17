@@ -10,6 +10,6 @@ export default async function Component({ children }: Props) {
   const session = await getServerSession(authOptions)
   //If the user isn't logged in, then redirect to profile/dashboard
   //TODO this should redirect to /feed after you finish building it
-  // if (session) redirect("/search/anime")
+  if (session) redirect("/")
   return <>{children}</>
 }
