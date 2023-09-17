@@ -1,13 +1,13 @@
-import { Sidebar } from "@/components/navbar/sidebar/sidebar"
-import { UpdateIcon } from "@radix-ui/react-icons"
-
-export default function Loading() {
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { FullscreenLoadingWithSession } from "@/components/layout/loading/fullscreen/fullscreen-session"
+import { FullscreenLoadingWithNoSession } from "@/components/layout/loading/fullscreen/fullscreen-no-session"
+export default async function Loading() {
+  const session = await getServerSession(authOptions)
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="grid min-h-screen flex-1 place-items-center">
-        <UpdateIcon className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    </div>
+    <>
+      {!session && <FullscreenLoadingWithNoSession />}
+      {session && <FullscreenLoadingWithSession />}
+    </>
   )
 }

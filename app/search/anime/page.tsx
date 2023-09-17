@@ -1,7 +1,7 @@
 import { AnimeInfiniteScrolling } from "@/components/anime/top/anime-infinite-scroll"
 import { AnimeSearchHeader } from "@/components/anime/top/anime-search-header"
+import { Main } from "@/components/layout/main"
 import { NoResults } from "@/components/layout/no-results"
-import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { getAllAnime } from "@/lib/fetchJikan"
 import { SearchParams } from "@/lib/utils"
 
@@ -10,13 +10,10 @@ export default async function AnimePage({ searchParams }: { searchParams: Search
   const { data } = await getAllAnime(searchParams, 1, query)
 
   return (
-    <div className="flex">
-      <Sidebar />
+    <Main>
+      <AnimeSearchHeader />
 
-      <main className="container mx-auto flex-1 px-4">
-        <AnimeSearchHeader />
-
-        {/* {data.length > 0 ? (
+      {/* {data.length > 0 ? (
           <>
             <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
               {data.map((item) => (
@@ -31,14 +28,13 @@ export default async function AnimePage({ searchParams }: { searchParams: Search
           <NoResults />
         )} */}
 
-        {data.length > 0 ? (
-          <>
-            <AnimeInfiniteScrolling searchParams={searchParams} initialData={data} />
-          </>
-        ) : (
-          <NoResults />
-        )}
-      </main>
-    </div>
+      {data.length > 0 ? (
+        <>
+          <AnimeInfiniteScrolling searchParams={searchParams} initialData={data} />
+        </>
+      ) : (
+        <NoResults />
+      )}
+    </Main>
   )
 }

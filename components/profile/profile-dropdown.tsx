@@ -20,6 +20,7 @@ import {
   PersonIcon,
   SunIcon,
 } from "@radix-ui/react-icons"
+import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
 
@@ -66,7 +67,7 @@ export const ProfileDropdown = () => {
 
         <DropdownMenuSeparator />
 
-        <MenuItem url="/" title="Sign Out">
+        <MenuItem url="/" title="Sign Out" onClick={() => signOut()}>
           <ExitIcon />
         </MenuItem>
       </DropdownMenuContent>
@@ -78,13 +79,15 @@ const MenuItem = ({
   url,
   title,
   children,
+  onClick,
 }: {
   url: string
   title: string
   children: React.ReactNode
+  onClick?: () => Promise<undefined>
 }) => {
   return (
-    <Link href={url}>
+    <Link href={url} onClick={onClick}>
       <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-muted-foreground text-slate-300 transition-colors hover:text-foreground">
         <LinkIcon>{children}</LinkIcon>
         <span>{title}</span>

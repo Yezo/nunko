@@ -1,18 +1,23 @@
-import { MainContainer } from "@/components/layout/main"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { CreateAccountForm } from "@/components/forms/signup-account"
+import { SignInForm } from "@/components/forms/signin-account"
 import { Sidebar } from "@/components/navbar/sidebar/sidebar"
 import { ThemeToggle } from "@/components/themes/theme-toggle"
 import { Button } from "@/components/ui/button"
+import { getServerSession } from "next-auth/next"
+import { signOut } from "next-auth/react"
+import { SignOutButton } from "@/components/forms/signout-button"
+import { Main } from "@/components/layout/main"
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+
   return (
-    <div className="flex">
-      <Sidebar />
-
-      <main className="container mx-auto flex-1 px-4">
-        <div className="text-[16px] font-light">Product</div>
-        <div className="text-[16px] font-light">Pricing</div>
-        <div className="text-[16px] font-light">Company</div>
-      </main>
-    </div>
+    <Main>
+      {session ? "The session has been initiated" : "There is no session yet."}
+      <SignInForm />
+      <CreateAccountForm />
+      <SignOutButton />
+    </Main>
   )
 }

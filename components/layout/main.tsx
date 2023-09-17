@@ -1,8 +1,6 @@
 type Props = {
   children: React.ReactNode
 }
-export const MainContainer = ({ children }: Props) => {
-  return (
-    <main className="container mx-auto flex-1 space-y-8 px-4 pb-24 pt-8 md:px-20">{children}</main>
-  )
+export const Main = ({ children }: Props) => {
+  return <main className="container mx-auto flex-1 px-4 sm:px-8 md:px-12 lg:px-20">{children}</main>
 }

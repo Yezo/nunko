@@ -8,28 +8,14 @@ import {
 import { SidebarSearchInput } from "@/components/navbar/sidebar/sidebar-search-input"
 import { ProfileDropdown } from "@/components/profile/profile-dropdown"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import {
-  CrumpledPaperIcon,
-  DesktopIcon,
-  DotsVerticalIcon,
-  ExclamationTriangleIcon,
-  GearIcon,
-  HomeIcon,
-  ImageIcon,
-  LaptopIcon,
-  MagnifyingGlassIcon,
-  PersonIcon,
-  ReaderIcon,
-  TargetIcon,
-} from "@radix-ui/react-icons"
+import { CrumpledPaperIcon } from "@radix-ui/react-icons"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Suspense } from "react"
-
+import { Skeleton } from "@/components/ui/skeleton"
 export const Sidebar = () => {
+  const session = useSession()
   let pathname = usePathname() || "/"
   if (pathname.includes("/anime/")) pathname = "/anime"
   if (pathname.includes("/search/anime/top-100")) pathname = "/anime"
@@ -76,9 +62,17 @@ export const Sidebar = () => {
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
               <AvatarImage src="https://avatars.githubusercontent.com/u/6843026?v=4" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </AvatarFallback>
             </Avatar>
-            <div>Munkie</div>
+            <div>
+              {session.status === "authenticated" ? (
+                session.data.user?.name
+              ) : (
+                <Skeleton className="h-[20px] w-[100px] rounded-md" />
+              )}
+            </div>
           </div>
 
           <ProfileDropdown />

@@ -1,9 +1,13 @@
-import { UpdateIcon } from "@radix-ui/react-icons"
-
-export default function Loading() {
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { MiniLoadingWithNoSession } from "@/components/layout/loading/mini/mini-no-session"
+import { MiniLoadingWithSession } from "@/components/layout/loading/mini/mini-session"
+export default async function Loading() {
+  const session = await getServerSession(authOptions)
   return (
-    <div className="flex h-[30rem] items-center justify-center">
-      <UpdateIcon className="h-[25px] w-[25px] animate-spin text-muted-foreground" />
-    </div>
+    <>
+      {!session && <MiniLoadingWithNoSession />}
+      {session && <MiniLoadingWithSession />}
+    </>
   )
 }

@@ -9,7 +9,7 @@ import Link from "next/link"
 
 export const NavbarDesktop = () => {
   return (
-    <div className="h-20 border-b ">
+    <div className="hidden h-20 border-b lg:block">
       <div className="container min-h-full items-center justify-between px-20 sm:flex">
         <Link href="/" className="font-domine text-xl font-semibold tracking-tight">
           Nunko.
@@ -19,10 +19,7 @@ export const NavbarDesktop = () => {
           <NavigationMenuList>
             <NavLinkStandalone title="About" url="/" />
             <NavLinkStandalone title="Pricing" url="/" />
-            <NavLinkStandalone
-              title="Anime"
-              url="/search/anime/top-100?sort=desc&order_by=favorites&min_score=1"
-            />
+            <NavLinkStandalone title="Anime" url="/search/anime" />
             {/* <NavlinkMenuItem title="Anime" data={animeItems} /> */}
             <NavlinkMenuItem title="Manga" data={mangaItems} />
             <NavLinkStandalone title="Changelog" url="/" />
