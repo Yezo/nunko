@@ -68,7 +68,8 @@ export const SignInForm = () => {
     if (res?.error === null) {
       form.reset()
       form.clearErrors()
-      router.push("/dashboard")
+      //TODO redirect to feed after you're done building it
+      router.push("/")
     }
     //If there's an error, then display the error alert
     if (res?.error) {
