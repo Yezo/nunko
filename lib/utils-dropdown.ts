@@ -1,4 +1,5 @@
 import { ANIME_MAIN_GENRES_DATA } from "@/components/anime/top/anime-data"
+import { ReadonlyURLSearchParams } from "next/navigation"
 
 const renamedParametersList: { [key: string]: string } = {
   tv: "TV Show",
@@ -76,8 +77,11 @@ export const getGenreNameFromId = (genreId: string) => {
   return genre ? genre.genre : ""
 }
 
-export const calculatePlaceholderText = (searchParams: URLSearchParams, BASE_TYPE: string) => {
-  const params = new URLSearchParams(searchParams)
+export const calculatePlaceholderText = (
+  searchParams: ReadonlyURLSearchParams,
+  BASE_TYPE: string
+) => {
+  const params = new URLSearchParams(searchParams.toString())
   const filteredParam = findParamValue(BASE_TYPE, params)
 
   if (filteredParam) {
@@ -99,13 +103,13 @@ export const calculatePlaceholderText = (searchParams: URLSearchParams, BASE_TYP
 export const createQueryString = (
   BASE_TYPE: string,
   value: string,
-  searchParams: URLSearchParams,
+  searchParams: ReadonlyURLSearchParams,
   data: {
     genre: string
     id: string
   }[]
 ) => {
-  const params = new URLSearchParams(searchParams)
+  const params = new URLSearchParams(searchParams.toString())
 
   // Modify the query parameters based on the selected name and value
   if (BASE_TYPE === "genres") {
