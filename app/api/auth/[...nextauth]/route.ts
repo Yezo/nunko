@@ -1,6 +1,5 @@
 import startDB from "@/lib/db"
 import UserModel from "@/models/userModel"
-
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
@@ -46,8 +45,8 @@ export const authOptions: NextAuthOptions = {
     },
     session({ session, token }) {
       if (session.user) {
-        // session.user.id = token.id as string
-        // session.user.role = token.role as string
+        session.user.id = token.id as string
+        session.user.role = token.role as string
       }
       return session
     },
