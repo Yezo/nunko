@@ -29,34 +29,18 @@ export const SIDEBAR_EXPLORE_NAV_LINKS = {
     name: "manga",
     icon: <ImageIcon />,
   },
-  "/movies": {
-    name: "movies",
-    icon: <ReaderIcon />,
-  },
-  "/anime/1": {
-    name: "cowboy bebop",
-    icon: <ReaderIcon />,
-  },
-  "/anime/21": {
-    name: "one piece",
-    icon: <ReaderIcon />,
-  },
-  "/anime/10": {
-    name: "error page",
-    icon: <ExclamationTriangleIcon />,
-  },
 }
 
 export const SIDEBAR_LIBRARY_NAV_LINKS = {
-  "/DSADSA": {
+  "/profile": {
     name: "profile",
     icon: <PersonIcon />,
   },
-  "/manga": {
+  "/search/anime": {
     name: "my anime",
     icon: <LaptopIcon />,
   },
-  "/movies": {
+  "/search/manga": {
     name: "my manga",
     icon: <ReaderIcon />,
   },
