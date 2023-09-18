@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <Main>
       {session ? "The session has been initiated" : "There is no session yet."}
-      {/* <SignInForm /> */}
+      <SignInForm />
       <CreateAccountForm />
       <SignOutButton />
     </Main>

@@ -22,6 +22,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import Link from "next/link"
+import { revalidatePath } from "next/cache"
 
 //Zod Schema for sign in form
 const formSchema = z.object({
@@ -70,6 +71,7 @@ export const SignInForm = () => {
       form.clearErrors()
       //TODO redirect to feed after you're done building it
       router.push("/")
+      router.refresh()
     }
     //If there's an error, then display the error alert
     if (res?.error) {
