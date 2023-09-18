@@ -55,7 +55,7 @@ export const SignInForm = () => {
       form.clearErrors()
 
       router.push("/feed")
-      // router.refresh()
+      router.refresh()
     }
     //If there's an error, then display the error alert
     if (res?.error) {
