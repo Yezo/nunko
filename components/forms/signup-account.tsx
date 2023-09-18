@@ -1,13 +1,18 @@
 "use client"
 
 import * as z from "zod"
+import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Form, FormField } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
+import { useForm } from "react-hook-form"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { FormFieldItem } from "@/components/forms/form-field-item"
+import { createUserSchema } from "@/lib/zod/schemas"
+import { createUser } from "@/lib/actions/createUser"
 import {
   ExclamationTriangleIcon,
   UpdateIcon,
@@ -16,41 +21,14 @@ import {
   CrumpledPaperIcon,
 } from "@radix-ui/react-icons"
 
-import { useForm } from "react-hook-form"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { FormFieldItem } from "@/components/forms/form-field-item"
-import Link from "next/link"
-
-//Zod Schema for sign in form
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Name is required.",
-  }),
-  email: z
-    .string()
-    .min(1, {
-      message: "Email is required.",
-    })
-    .email("Email is invalid."),
-  password: z
-    .string()
-    .min(1, {
-      message: "Password is required.",
-    })
-    .min(8, {
-      message: "Password must have more than 8 characters.",
-    }),
-})
-
 export const CreateAccountForm = () => {
   //States
   const [emailInUseError, setEmailInUseError] = useState(false)
   const [passwordVisiblity, setPasswordVisiblity] = useState(false)
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createUserSchema>>({
+    resolver: zodResolver(createUserSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -58,27 +36,15 @@ export const CreateAccountForm = () => {
     },
   })
 
-  //Function that fires when form is submited
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    //Sets the email in use error back to false
-    setEmailInUseError(false)
-
-    //Submission
-    const res = await fetch("api/auth/users", {
-      method: "POST",
-      body: JSON.stringify(values),
-    }).then((res) => res.json())
-
-    console.log(res)
-    //If there's no error, then reset the form and clear all form errors for the next time
-    if (res?.user) {
+  const onSubmit = async (data: z.infer<typeof createUserSchema>) => {
+    try {
+      await createUser(data)
       form.reset()
       form.clearErrors()
       router.push("/signin")
-    }
-    //If there's an error, then display the error alert
-    if (res?.error) {
+    } catch (e) {
       setEmailInUseError(true)
+      console.log("There was an error.")
     }
   }
 
@@ -95,8 +61,8 @@ export const CreateAccountForm = () => {
                 <CrumpledPaperIcon className="h-6 w-6" />
               </div>
             </Link>
-            <h1 className="font-domine text-2xl leading-none">Welcome to Nunko,</h1>
-            <p className=" font-domine text-sm leading-none text-muted-foreground">
+            <h1 className="font-domine text-2xl leading-none">Welcome to Nunko, </h1>
+            <p className="text-sm leading-none text-muted-foreground">
               Create your account within seconds - enjoy Nunko forever.
             </p>
           </div>

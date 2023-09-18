@@ -1,14 +1,18 @@
 "use client"
 
 import * as z from "zod"
+import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-
 import { Button } from "@/components/ui/button"
 import { Form, FormField } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { Separator } from "@/components/ui/separator"
-
+import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { FormFieldItem } from "@/components/forms/form-field-item"
+import { loginUserSchema } from "@/lib/zod/schemas"
 import {
   ExclamationTriangleIcon,
   EyeOpenIcon,
@@ -17,34 +21,14 @@ import {
   CrumpledPaperIcon,
 } from "@radix-ui/react-icons"
 
-import { useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { FormFieldItem } from "@/components/forms/form-field-item"
-import Link from "next/link"
-import { revalidatePath } from "next/cache"
-
-//Zod Schema for sign in form
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: "Email is required.",
-    })
-    .email("Email is invalid."),
-  password: z.string().min(8, {
-    message: "Password must have more than 8 characters.",
-  }),
-})
-
 export const SignInForm = () => {
   //States
   const [emailInUseError, setEmailInUseError] = useState(false)
   const [passwordVisiblity, setPasswordVisiblity] = useState(false)
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginUserSchema>>({
+    resolver: zodResolver(loginUserSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -52,7 +36,7 @@ export const SignInForm = () => {
   })
 
   //Function that fires when form is submited
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof loginUserSchema>) => {
     //Sets the email in use error back to false
     setEmailInUseError(false)
 
@@ -69,9 +53,9 @@ export const SignInForm = () => {
     if (res?.error === null) {
       form.reset()
       form.clearErrors()
-      //TODO redirect to feed after you're done building it
-      router.push("/")
-      router.refresh()
+
+      router.push("/feed")
+      // router.refresh()
     }
     //If there's an error, then display the error alert
     if (res?.error) {
@@ -85,14 +69,14 @@ export const SignInForm = () => {
           <div className="space-y-4 pb-6">
             <Link
               href="/"
-              className="flex items-center gap-2 pb-2 font-domine text-xl font-semibold tracking-tight "
+              className="flex items-center gap-2 pb-2 font-domine text-xl font-semibold tracking-tight"
             >
               <div className="rounded-md border border-muted/80 bg-gradient-to-t from-gray-900/90 to-gray-900/0 p-1.5 text-foreground shadow-sm">
                 <CrumpledPaperIcon className="h-6 w-6" />
               </div>
             </Link>
             <h1 className="font-domine text-2xl leading-none">Welcome back,</h1>
-            <p className=" font-domine text-sm leading-none text-muted-foreground">
+            <p className="text-sm leading-none text-muted-foreground">
               Log in with your account details below.
             </p>
           </div>
