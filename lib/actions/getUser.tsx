@@ -1,5 +1,3 @@
-"use server"
-
 import startDB from "@/lib/db"
 import UserModel from "@/models/userModel"
 
