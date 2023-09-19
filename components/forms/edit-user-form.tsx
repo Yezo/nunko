@@ -68,7 +68,7 @@ export const EditUserForm = ({ session, user }: EditUserFormProps) => {
                 <FormControl>
                   <>
                     <Input
-                      placeholder={`${user.name ?? "Username"}`}
+                      placeholder={`${(user && user?.name) ?? "Username"}`}
                       className="placeholder:text-xs placeholder:capitalize"
                       {...field}
                     />
