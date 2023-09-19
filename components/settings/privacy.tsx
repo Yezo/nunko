@@ -16,7 +16,7 @@ type PrivacyPickerProps = {
 export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
   const { update } = useSession()
 
-  function myFunction(value: string) {
+  function handlePrivacy(value: string) {
     changePrivacy(value)
     update({ privacy: value })
   }
@@ -30,7 +30,7 @@ export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
-          onClick={() => myFunction("public")}
+          onClick={() => handlePrivacy("public")}
         >
           <div className="grid place-items-center gap-2">
             <EyeOpenIcon className="h-5 w-5" />
@@ -44,7 +44,7 @@ export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
-          onClick={() => myFunction("hidden")}
+          onClick={() => handlePrivacy("hidden")}
         >
           <div className="grid place-items-center gap-2">
             <EyeClosedIcon className="h-5 w-5" />

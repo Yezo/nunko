@@ -38,7 +38,6 @@ export const EditUserForm = ({ session, user }: EditUserFormProps) => {
     },
   })
 
-  console.log(user)
   const onSubmit = async (data: z.infer<typeof editUserFormSchema>) => {
     try {
       await editUser(data, session?.user?.id)

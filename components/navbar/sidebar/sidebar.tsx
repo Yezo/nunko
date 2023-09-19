@@ -14,7 +14,11 @@ import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
-export const Sidebar = () => {
+
+type Props = {
+  username?: string | undefined
+}
+export const Sidebar = ({ username }: Props) => {
   const session = useSession()
   let pathname = usePathname() || "/"
   if (pathname.includes("/anime/")) pathname = "/anime"
@@ -68,7 +72,7 @@ export const Sidebar = () => {
             </Avatar>
             <div>
               {session.status === "authenticated" ? (
-                session.data.user?.name
+                <span> {username} </span>
               ) : (
                 <Skeleton className="h-[20px] w-[100px] rounded-md" />
               )}

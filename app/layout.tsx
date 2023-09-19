@@ -9,14 +9,24 @@ import { MobileNavbar } from "@/components/navbar/mobile/mobile-navbar"
 import { AuthProvider } from "@/lib/auth"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { IUser } from "@/app/(member)/settings/page"
+import { handleResponseError } from "@/lib/fetchJikan"
 
 export const metadata: Metadata = {
   title: "Nunko",
   description: "Companion app for your anime & manga",
 }
 
+async function fetchUser(id: string | undefined): Promise<IUser> {
+  const url = `http://nunko-amber.vercel.app/api/user/${id}`
+  const res = await fetch(url)
+  handleResponseError(res)
+  return res.json()
+}
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
+  const { user } = await fetchUser(session?.user?.id)
   return (
     <AuthProvider>
       <html lang="en" suppressHydrationWarning className={`${inter.variable} ${domine.variable}`}>
@@ -25,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <MobileNavbar />
             {!session && <NavbarDesktop />}
             <div className="flex">
-              {session && <Sidebar />}
+              {session && <Sidebar username={user?.name} />}
               {children}
             </div>
           </ThemeProvider>

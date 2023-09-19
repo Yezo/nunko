@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react"
 type Props = {}
 export const SignOutButton = ({}: Props) => {
   return (
-    <Button className="w-full rounded" variant={"outline"} onClick={() => signOut()}>
+    <Button className="rounded" variant="outline" onClick={() => signOut()}>
       Log Out
     </Button>
   )

@@ -1,9 +1,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { DeleteAccountButton } from "@/components/forms/delete-account-button"
 import { EditUserForm } from "@/components/forms/edit-user-form"
+import { SignOutButton } from "@/components/forms/signout-button"
 import { AppearanceThemePicker } from "@/components/settings/appearance"
 import { PrivacyPicker } from "@/components/settings/privacy"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { deleteUser } from "@/lib/actions/deleteUser"
 import { editUserPrivacy } from "@/lib/actions/editUserPrivacy"
 import { getUser } from "@/lib/actions/getUser"
 import startDB from "@/lib/db"
@@ -11,6 +14,7 @@ import { handleResponseError } from "@/lib/fetchJikan"
 import UserModel from "@/models/userModel"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { getServerSession } from "next-auth"
+import { signOut } from "next-auth/react"
 import { revalidatePath } from "next/cache"
 
 export interface IUser {
@@ -49,6 +53,16 @@ export default async function SettingsPage() {
     }
   }
 
+  async function deleteUserAction() {
+    "use server"
+    try {
+      await deleteUser(session?.user?.id)
+      revalidatePath("/settings")
+    } catch (e) {
+      console.log("There was an error.")
+    }
+  }
+
   return (
     <main className="container mx-auto flex-1 space-y-16 px-4 py-20 sm:px-8 md:px-12 lg:px-80">
       <h1 className="font-domine text-xl">Settings</h1>
@@ -71,8 +85,8 @@ export default async function SettingsPage() {
       </section>
 
       <div className="flex justify-end space-x-4">
-        <Button>Log out</Button>
-        <Button variant={"destructive"}>Delete my account</Button>
+        <SignOutButton />
+        <DeleteAccountButton deleteUser={deleteUserAction} />
       </div>
     </main>
   )
