@@ -28,7 +28,7 @@ export interface User {
   __v: number
 }
 
-export async function fetchUser(id: string | undefined): Promise<IUser> {
+async function fetchUser(id: string | undefined): Promise<IUser> {
   const url = `http://localhost:3000/api/user/${id}`
   const res = await fetch(url)
   handleResponseError(res)
