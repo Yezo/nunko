@@ -27,7 +27,7 @@ export default async function IndividualMangaPageLayout({
             </div>
           </div>
 
-          <FeatureContainer />
+          {/* <FeatureContainer  /> */}
         </div>
 
         {data.images.webp.image_url && (
