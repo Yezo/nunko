@@ -38,13 +38,13 @@ export default async function SettingsPage() {
         <EditUserForm session={session} user={parsedUser} />
       </section>
 
-      <section className="space-y-2">
+      {/* <section className="space-y-2">
         <AppearanceThemePicker />
       </section>
 
       <section className="space-y-2">
         <PrivacyPicker user={parsedUser} changePrivacy={changePrivacy} />
-      </section>
+      </section> */}
 
       <div className="flex justify-end space-x-4">
         <Button>Log out</Button>
