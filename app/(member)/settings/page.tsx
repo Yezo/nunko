@@ -15,7 +15,6 @@ import { revalidatePath } from "next/cache"
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions)
 
-  await startDB()
   let user = await UserModel.findOne({ _id: session?.user?.id })
 
   async function changePrivacy(value: string) {
