@@ -26,7 +26,7 @@ export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
       <div className="flex divide-x divide-border rounded-md border">
         <div
           className={`flex-1 select-none p-8  ${
-            user.privacy === "public"
+            user && user?.privacy === "public"
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
@@ -40,7 +40,7 @@ export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
 
         <div
           className={`flex-1 select-none p-8  ${
-            user.privacy === "hidden"
+            user && user?.privacy === "hidden"
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
