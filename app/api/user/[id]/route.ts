@@ -20,6 +20,6 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
       return NextResponse.json({ user })
     }
   } catch (error) {
-    return NextResponse.json({ error })
+    return NextResponse.json("ERROR: what happened")
   }
 }

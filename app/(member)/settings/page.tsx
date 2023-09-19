@@ -29,7 +29,7 @@ export interface User {
 }
 
 async function fetchUser(id: string | undefined): Promise<IUser> {
-  const url = `https://nunko-amber.vercel.app/api/user/${id}`
+  const url = `http://nunko-amber.vercel.app/api/user/${id}`
   const res = await fetch(url)
   handleResponseError(res)
   return res.json()
