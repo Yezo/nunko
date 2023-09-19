@@ -6,14 +6,17 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { editUserPrivacy } from "@/lib/actions/editUserPrivacy"
 import { getUser } from "@/lib/actions/getUser"
+import startDB from "@/lib/db"
+import UserModel from "@/models/userModel"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { getServerSession } from "next-auth"
 import { revalidatePath } from "next/cache"
 
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions)
-  const user = await getUser(session?.user?.id)
-  const parsedUser = JSON.parse(JSON.stringify(user))
+
+  await startDB()
+  let user = await UserModel.findOne({ _id: session?.user?.id })
 
   async function changePrivacy(value: string) {
     "use server"
@@ -35,16 +38,16 @@ export default async function SettingsPage() {
       </section>
 
       <section className="space-y-2">
-        <EditUserForm session={session} user={parsedUser} />
+        <EditUserForm session={session} user={JSON.parse(JSON.stringify(user))} />
       </section>
 
-      {/* <section className="space-y-2">
+      <section className="space-y-2">
         <AppearanceThemePicker />
       </section>
 
       <section className="space-y-2">
-        <PrivacyPicker user={parsedUser} changePrivacy={changePrivacy} />
-      </section> */}
+        <PrivacyPicker changePrivacy={changePrivacy} user={JSON.parse(JSON.stringify(user))} />
+      </section>
 
       <div className="flex justify-end space-x-4">
         <Button>Log out</Button>
