@@ -21,10 +21,11 @@ import {
 } from "@/components/ui/form"
 import { UserDocument } from "@/models/userModel"
 import { useRouter } from "next/navigation"
+import { User } from "@/app/(member)/settings/page"
 
 type EditUserFormProps = {
   session: Session | null
-  user: UserDocument
+  user: User
 }
 export const EditUserForm = ({ session, user }: EditUserFormProps) => {
   const { update } = useSession()
@@ -37,6 +38,7 @@ export const EditUserForm = ({ session, user }: EditUserFormProps) => {
     },
   })
 
+  console.log(user)
   const onSubmit = async (data: z.infer<typeof editUserFormSchema>) => {
     try {
       await editUser(data, session?.user?.id)

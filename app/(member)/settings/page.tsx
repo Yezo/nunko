@@ -7,15 +7,37 @@ import { Separator } from "@/components/ui/separator"
 import { editUserPrivacy } from "@/lib/actions/editUserPrivacy"
 import { getUser } from "@/lib/actions/getUser"
 import startDB from "@/lib/db"
+import { handleResponseError } from "@/lib/fetchJikan"
 import UserModel from "@/models/userModel"
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { getServerSession } from "next-auth"
 import { revalidatePath } from "next/cache"
 
+export interface IUser {
+  user: User
+}
+
+export interface User {
+  _id: string
+  email: string
+  name: string
+  password: string
+  role: string
+  privacy: string
+  avatar: string
+  __v: number
+}
+
+export async function fetchUser(id: string | undefined): Promise<IUser> {
+  const url = `http://localhost:3000/api/user/${id}`
+  const res = await fetch(url)
+  handleResponseError(res)
+  return res.json()
+}
+
 export default async function SettingsPage() {
   const session = await getServerSession(authOptions)
-
-  let user = await UserModel.findOne({ _id: session?.user?.id })
+  const { user } = await fetchUser(session?.user?.id)
 
   async function changePrivacy(value: string) {
     "use server"
@@ -37,7 +59,7 @@ export default async function SettingsPage() {
       </section>
 
       <section className="space-y-2">
-        <EditUserForm session={session} user={JSON.parse(JSON.stringify(user))} />
+        <EditUserForm session={session} user={user} />
       </section>
 
       <section className="space-y-2">
@@ -45,7 +67,7 @@ export default async function SettingsPage() {
       </section>
 
       <section className="space-y-2">
-        <PrivacyPicker changePrivacy={changePrivacy} user={JSON.parse(JSON.stringify(user))} />
+        <PrivacyPicker changePrivacy={changePrivacy} user={user} />
       </section>
 
       <div className="flex justify-end space-x-4">

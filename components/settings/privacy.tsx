@@ -1,5 +1,6 @@
 "use client"
 
+import { User } from "@/app/(member)/settings/page"
 import { editUserPrivacy } from "@/lib/actions/editUserPrivacy"
 import { UserDocument } from "@/models/userModel"
 import { EyeClosedIcon, EyeOpenIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
@@ -9,10 +10,16 @@ import { revalidatePath } from "next/cache"
 import { useState } from "react"
 
 type PrivacyPickerProps = {
-  user: UserDocument
   changePrivacy: (value: string) => Promise<void>
+  user: User
 }
-export const PrivacyPicker = ({ user, changePrivacy }: PrivacyPickerProps) => {
+export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
+  const { update } = useSession()
+
+  function myFunction(value: string) {
+    changePrivacy(value)
+    update({ privacy: value })
+  }
   return (
     <>
       <h2>Privacy</h2>
@@ -23,7 +30,7 @@ export const PrivacyPicker = ({ user, changePrivacy }: PrivacyPickerProps) => {
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
-          onClick={() => changePrivacy("public")}
+          onClick={() => myFunction("public")}
         >
           <div className="grid place-items-center gap-2">
             <EyeOpenIcon className="h-5 w-5" />
@@ -37,7 +44,7 @@ export const PrivacyPicker = ({ user, changePrivacy }: PrivacyPickerProps) => {
               ? "cursor-not-allowed bg-muted/50"
               : "cursor-pointer transition-colors hover:bg-muted/80"
           }`}
-          onClick={() => changePrivacy("hidden")}
+          onClick={() => myFunction("hidden")}
         >
           <div className="grid place-items-center gap-2">
             <EyeClosedIcon className="h-5 w-5" />
