@@ -40,3 +40,22 @@ export const loginUserSchema = z.object({
     message: "Password must have more than 8 characters.",
   }),
 })
+
+//Logging a user in
+export const createAnimeEntrySchema = z.object({
+  type: z.string().min(1, {
+    message: "Type is required.",
+  }),
+  title: z.string().min(1, {
+    message: "Title is required.",
+  }),
+  mal_id: z.number().min(1, {
+    message: "ID is required.",
+  }),
+  status: z.string().min(1, {
+    message: "Status is required.",
+  }),
+  score: z.number(),
+  progress: z.number(),
+  user_id: z.string(),
+})

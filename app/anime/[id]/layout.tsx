@@ -27,7 +27,7 @@ export default async function IndividualAnimePageLayout({
             </div>
           </div>
 
-          <FeatureContainer />
+          <FeatureContainer data={data} />
         </div>
 
         {data.images.webp.image_url && (
