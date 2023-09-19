@@ -19,12 +19,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { UserDocument } from "@/models/userModel"
+import { useRouter } from "next/navigation"
 
-export const EditUserForm = ({ session }: { session: Session | null }) => {
+type EditUserFormProps = {
+  session: Session | null
+  user: UserDocument
+}
+export const EditUserForm = ({ session, user }: EditUserFormProps) => {
   const { update } = useSession()
-  const [placeholderName, setPlaceholderName] = useState<string | undefined | null>(
-    session?.user?.name
-  )
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof editUserFormSchema>>({
     resolver: zodResolver(editUserFormSchema),
@@ -36,10 +40,10 @@ export const EditUserForm = ({ session }: { session: Session | null }) => {
   const onSubmit = async (data: z.infer<typeof editUserFormSchema>) => {
     try {
       await editUser(data, session?.user?.id)
-      setPlaceholderName(data.name)
       update({ name: data.name })
-      form.reset()
       form.clearErrors()
+      form.reset()
+      router.refresh()
     } catch (e) {
       console.log("There was an error.")
     }
@@ -62,7 +66,7 @@ export const EditUserForm = ({ session }: { session: Session | null }) => {
                 <FormControl>
                   <>
                     <Input
-                      placeholder={`${placeholderName ?? "Username"}`}
+                      placeholder={`${user.name ?? "Username"}`}
                       className="placeholder:text-xs placeholder:capitalize"
                       {...field}
                     />

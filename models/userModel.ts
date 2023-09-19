@@ -2,11 +2,13 @@ import { Model, model, models } from "mongoose"
 import { Document, Schema } from "mongoose"
 import bcrypt from "bcrypt"
 
-interface UserDocument extends Document {
+export interface UserDocument extends Document {
   email: string
   name: string
   password: string
   role: "admin" | "user"
+  privacy: "public" | "hidden"
+  avatar: string
 }
 
 interface Methods {
@@ -18,6 +20,8 @@ const userSchema = new Schema<UserDocument, {}, Methods>({
   name: { type: String, required: true, trim: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["admin", "user"], default: "user" },
+  privacy: { type: String, enum: ["public", "hidden"], default: "public" },
+  avatar: { type: String, required: true, trim: true, default: "none" },
 })
 
 //Hash the password before saving
@@ -41,5 +45,5 @@ userSchema.methods.comparePassword = async function (password) {
   }
 }
 
-const UserModel = models.User || model("User", userSchema)
+const UserModel = models.Users || model("Users", userSchema)
 export default UserModel as Model<UserDocument, {}, Methods>

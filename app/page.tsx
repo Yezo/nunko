@@ -11,6 +11,7 @@ export default async function Home() {
   return (
     <Main>
       {session ? "The session has been initiated" : "There is no session yet."}
+      {session?.user?.privacy}
       <SignInForm />
       <CreateAccountForm />
       <SignOutButton />
