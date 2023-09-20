@@ -29,7 +29,7 @@ export interface Anime {
 }
 
 async function fetchUser(id: string | undefined): Promise<IAnimes> {
-  const url = `http://localhost:3000/api/animes/${id}`
+  const url = `http://nunko-amber.vercel.app/api/animes/${id}`
   const res = await fetch(url)
   handleResponseError(res)
   return res.json()
