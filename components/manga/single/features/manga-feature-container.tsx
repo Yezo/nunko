@@ -1,26 +1,26 @@
 "use client"
 
-import { Anime, IAnimes } from "@/app/anime/[id]/layout"
-import { AnimeListFeatureButton } from "@/components/anime/single/features/feature-button"
+import { IMangas, Manga } from "@/app/manga/[id]/layout"
+import { MangaListFeatureButton } from "@/components/manga/single/features/manga-feature-button"
 import { ReadingBookSVG, EyeSVG, BookmarkSVG, CheckmarkSVG } from "@/lib/icons"
-import { IAnimeData } from "@/types/anime/type-anime"
+import { IMangaData } from "@/types/manga/type-manga"
 import { Pencil2Icon } from "@radix-ui/react-icons"
 import { Dispatch, SetStateAction, useState } from "react"
 
 type FeatureContainerProps = {
-  data: IAnimeData //Anime data of an entry = 'One Piece', 'Naruto', 'Bleach'
-  user: IAnimes //A list of the user's anime entries
-  editAnimeStatus: (status: string, animeID: string) => Promise<void> //Server action for edits
+  data: IMangaData //Anime data of an entry = 'One Piece', 'Naruto', 'Bleach'
+  user: IMangas //A list of the user's anime entries
+  editMangaStatus: (status: string, mangaID: string) => Promise<void> //Server action for edits
 }
-export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContainerProps) => {
-  const filtered: Anime | undefined = user.animes.find((item) => item.title === data.title)
+export const MangaFeatureContainer = ({ data, user, editMangaStatus }: FeatureContainerProps) => {
+  const filtered: Manga | undefined = user.mangas.find((item) => item.title === data.title)
   const thisEntryExistsInDB = filtered !== undefined
   const [added, setAdded] = useState(thisEntryExistsInDB)
   const [status, setStatus] = useState(filtered?.status || "NONE")
 
   return (
     <div className="flex flex-wrap gap-4">
-      <AnimeListFeatureButton
+      <MangaListFeatureButton
         title={`${added ? "Edit entry" : "Add entry"}`}
         data={data}
         added={added}
@@ -30,14 +30,14 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
         filtered={filtered}
       >
         {added ? <Pencil2Icon className="h-[24px] w-[24px]" /> : <ReadingBookSVG />}
-      </AnimeListFeatureButton>
+      </MangaListFeatureButton>
 
       {added && (
         <>
           <Item
-            title="Watching"
+            title="Reading"
             status={status}
-            editAnimeStatus={editAnimeStatus}
+            editMangaStatus={editMangaStatus}
             data={data}
             setStatus={setStatus}
           >
@@ -46,7 +46,7 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
           <Item
             title="Planned"
             status={status}
-            editAnimeStatus={editAnimeStatus}
+            editMangaStatus={editMangaStatus}
             data={data}
             setStatus={setStatus}
           >
@@ -55,7 +55,7 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
           <Item
             title="Completed"
             status={status}
-            editAnimeStatus={editAnimeStatus}
+            editMangaStatus={editMangaStatus}
             data={data}
             setStatus={setStatus}
           >
@@ -71,16 +71,16 @@ type ItemProps = {
   children: React.ReactNode
   title: string
   status: string
-  data: IAnimeData
+  data: IMangaData
   setStatus: Dispatch<SetStateAction<string>>
-  editAnimeStatus: (status: string, animeID: string) => Promise<void>
+  editMangaStatus: (status: string, mangaID: string) => Promise<void>
 }
-const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: ItemProps) => {
+const Item = ({ title, children, status, editMangaStatus, data, setStatus }: ItemProps) => {
   const match = status === title
 
   const handleClick = async (status: string) => {
     if (!match) {
-      await editAnimeStatus(status, data.mal_id.toString())
+      await editMangaStatus(status, data.mal_id.toString())
       setStatus(status)
     }
   }
@@ -90,7 +90,7 @@ const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: Ite
         className={`mx-auto rounded-lg border px-6 py-2 shadow-sm transition-colors duration-300  md:px-8 md:py-3.5 
         ${match && title === "Completed" && "bg-green-400 dark:bg-green-600"} 
         ${match && title === "Planned" && "bg-orange-400 dark:bg-orange-600"} 
-        ${match && title === "Watching" && "bg-blue-400 dark:bg-blue-600"} 
+        ${match && title === "Reading" && "bg-blue-400 dark:bg-blue-600"} 
         ${
           title === "Completed" &&
           " hover:bg-green-600 hover:text-background dark:hover:bg-green-400"
@@ -99,7 +99,7 @@ const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: Ite
           title === "Planned" &&
           "hover:bg-orange-600 hover:text-background dark:hover:bg-orange-400"
         }
-        ${title === "Watching" && "hover:bg-blue-600 hover:text-background dark:hover:bg-blue-400"}
+        ${title === "Reading" && "hover:bg-blue-600 hover:text-background dark:hover:bg-blue-400"}
       `}
       >
         {children}

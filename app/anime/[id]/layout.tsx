@@ -3,11 +3,11 @@ import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
 import { getIndividualAnime, handleResponseError } from "@/lib/fetchJikan"
 import { AnimeDetailsContainer } from "@/components/anime/single/details/details-container"
-import { FeatureContainer } from "@/components/anime/single/features/feature-container"
+import { FeatureContainer } from "@/components/anime/single/features/anime-feature-container"
 import { Main } from "@/components/layout/main"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from "next-auth"
-import { editAnimeStatus } from "@/lib/actions/editAnimeStatus"
+import { editAnimeStatus } from "@/lib/actions/anime-entry/editAnimeStatus"
 import Image from "next/image"
 
 export interface IAnimes {

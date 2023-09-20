@@ -72,7 +72,7 @@ export const Sidebar = ({ username }: Props) => {
             </Avatar>
             <div>
               {session.status === "authenticated" ? (
-                <span> {username} </span>
+                <span className="capitalize"> {username} </span>
               ) : (
                 <Skeleton className="h-[20px] w-[100px] rounded-md" />
               )}

@@ -9,13 +9,11 @@ import { useForm } from "react-hook-form"
 import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
-import { createAnimeEntrySchema } from "@/lib/zod/schemas"
-import { IAnimeData } from "@/types/anime/type-anime"
+import { createAnimeEntrySchema, createMangaEntrySchema } from "@/lib/zod/schemas"
 import { useSession } from "next-auth/react"
-import { editAnimeEntry } from "@/lib/actions/editAnimeEntry"
-import { Anime } from "@/app/anime/[id]/layout"
-import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
 import { useToast } from "@/components/ui/use-toast"
+import { IMangaData } from "@/types/manga/type-manga"
+import { createMangaEntry } from "@/lib/actions/manga-entry/createMangaEntry"
 import {
   Select,
   SelectContent,
@@ -24,22 +22,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type EditAnimeEntryFormProps = {
-  data?: IAnimeData
+type CreateMangaEntryFormProps = {
+  data?: IMangaData
   setOpen: Dispatch<SetStateAction<boolean>>
   setAdded: Dispatch<SetStateAction<boolean>>
   setStatus: Dispatch<SetStateAction<string>>
-  filtered: Anime | undefined
-  status: string
 }
-export const EditAnimeEntryForm = ({
+export const CreateMangaEntryForm = ({
   data,
   setOpen,
   setAdded,
   setStatus,
-  filtered,
-  status,
-}: EditAnimeEntryFormProps) => {
+}: CreateMangaEntryFormProps) => {
   const session = useSession()
   const userId = (session?.data?.user?.id as string) ?? ""
   const [isPending, startTransition] = useTransition()
@@ -47,26 +41,26 @@ export const EditAnimeEntryForm = ({
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
-    resolver: zodResolver(createAnimeEntrySchema),
+    resolver: zodResolver(createMangaEntrySchema),
     defaultValues: {
-      type: "anime",
+      type: "manga",
       title: data?.title,
       mal_id: data?.mal_id,
-      status: filtered?.status,
-      score: filtered?.score,
-      progress: filtered?.progress,
+      status: "Reading",
+      score: "0",
+      progress: "0",
       user_id: userId,
     },
   })
 
-  const onSubmit = async (data: z.infer<typeof createAnimeEntrySchema>) => {
+  const onSubmit = async (data: z.infer<typeof createMangaEntrySchema>) => {
     try {
-      await editAnimeEntry(data, userId)
+      await createMangaEntry(data, userId)
       setOpen(false)
       setAdded(true)
       setStatus(data.status)
       toast({
-        description: `${data?.title} has been edited.`,
+        description: `${data.title} was added to your list.`,
       })
       form.reset()
       form.clearErrors()
@@ -78,25 +72,8 @@ export const EditAnimeEntryForm = ({
     }
   }
 
-  const onDelete = async (mal_id: number | undefined, user_id: string | undefined) => {
-    try {
-      await deleteAnimeEntry(mal_id, user_id)
-      setOpen(false)
-      setAdded(false)
-      toast({
-        variant: "destructive",
-        description: `${data?.title} was removed from your list.`,
-      })
-      startTransition(() => {
-        router.refresh()
-      })
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
   return (
-    <div className="">
+    <div className="min-w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex gap-2">
@@ -104,7 +81,7 @@ export const EditAnimeEntryForm = ({
               control={form.control}
               name="score"
               render={({ field }) => (
-                <FormFieldItem title="Score" errorPosition="bottom">
+                <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
                   <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
@@ -113,7 +90,7 @@ export const EditAnimeEntryForm = ({
               control={form.control}
               name="progress"
               render={({ field }) => (
-                <FormFieldItem title="Episodes" errorPosition="bottom">
+                <FormFieldItem title="Episodes" errorPosition="bottom" widthFull={true}>
                   <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
@@ -124,14 +101,14 @@ export const EditAnimeEntryForm = ({
             control={form.control}
             name="status"
             render={({ field }) => (
-              <FormFieldItem title="Status" errorPosition="top">
+              <FormFieldItem title="Status" errorPosition="top" widthFull={true}>
                 <Select onValueChange={field.onChange}>
                   <SelectTrigger className="text-xs placeholder:text-xs">
-                    <SelectValue placeholder={status ? status : filtered?.status} {...field} />
+                    <SelectValue placeholder="Reading" {...field} />
                   </SelectTrigger>
                   <SelectContent className="text-xs">
-                    <SelectItem value="Watching" className="text-xs">
-                      Watching
+                    <SelectItem value="Reading" className="text-xs">
+                      Reading
                     </SelectItem>
                     <SelectItem value="Planned" className="text-xs">
                       Watch Later
@@ -154,19 +131,9 @@ export const EditAnimeEntryForm = ({
             )}
           />
 
-          <div className="flex gap-2">
-            <Button
-              variant="destructive"
-              onClick={() => onDelete(data?.mal_id, userId)}
-              className="min-w-[100px]"
-            >
-              Delete
-            </Button>
-
-            <Button type="submit" className="flex-1">
-              Edit entry
-            </Button>
-          </div>
+          <Button type="submit" className="min-w-full">
+            Add entry
+          </Button>
         </form>
       </Form>
     </div>

@@ -41,8 +41,27 @@ export const loginUserSchema = z.object({
   }),
 })
 
-//Logging a user in
+//Adding anime entry
 export const createAnimeEntrySchema = z.object({
+  type: z.string().min(1, {
+    message: "Type is required.",
+  }),
+  title: z.string().min(1, {
+    message: "Title is required.",
+  }),
+  mal_id: z.number().min(1, {
+    message: "ID is required.",
+  }),
+  status: z.string().min(1, {
+    message: "Status is required.",
+  }),
+  score: z.string(),
+  progress: z.string(),
+  user_id: z.string(),
+})
+
+//Editing manga entry
+export const createMangaEntrySchema = z.object({
   type: z.string().min(1, {
     message: "Type is required.",
   }),

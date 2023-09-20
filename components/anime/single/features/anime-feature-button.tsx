@@ -1,8 +1,8 @@
 "use client"
 
 import { Anime } from "@/app/anime/[id]/layout"
-import { CreateAnimeEntryForm } from "@/components/forms/create-anime-entry"
-import { EditAnimeEntryForm } from "@/components/forms/edit-anime-entry"
+import { CreateAnimeEntryForm } from "@/components/forms/anime-entry/create-anime-entry"
+import { EditAnimeEntryForm } from "@/components/forms/anime-entry/edit-anime-entry"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { Dispatch, SetStateAction, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog"

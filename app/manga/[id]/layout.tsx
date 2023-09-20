@@ -1,11 +1,40 @@
 import { IndividualLinksHeader } from "@/components/shared/individual-links-header"
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
-import { getIndividualManga } from "@/lib/fetchJikan"
-import { FeatureContainer } from "@/components/anime/single/features/feature-container"
+import { getIndividualManga, handleResponseError } from "@/lib/fetchJikan"
+import { FeatureContainer } from "@/components/anime/single/features/anime-feature-container"
 import { MangaDetailsContainer } from "@/components/manga/single/details/details-container"
 import { Main } from "@/components/layout/main"
 import Image from "next/image"
+import { IAnimes } from "@/app/anime/[id]/layout"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { editMangaStatus } from "@/lib/actions/manga-entry/editMangaStatus"
+import { getServerSession } from "next-auth"
+import { MangaFeatureContainer } from "@/components/manga/single/features/manga-feature-container"
+
+export interface IMangas {
+  mangas: Manga[]
+}
+
+export interface Manga {
+  _id: string
+  type: string
+  mal_id: number
+  title: string
+  status: string
+  score: string
+  progress: string
+  user_id: string
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}
+async function fetchUser(id: string | undefined): Promise<IMangas> {
+  const url = `http://nunko-amber.vercel.app/api/mangas/${id}`
+  const res = await fetch(url)
+  handleResponseError(res)
+  return res.json()
+}
 
 export default async function IndividualMangaPageLayout({
   params,
@@ -14,8 +43,18 @@ export default async function IndividualMangaPageLayout({
   params: { id: string }
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
   const { data } = await getIndividualManga(params)
+  const userData = await fetchUser(session?.user?.id)
 
+  async function editMangaStatusAction(status: string, animeID: string) {
+    "use server"
+    try {
+      await editMangaStatus(status, animeID, session?.user?.id)
+    } catch (e) {
+      console.log("There was an error.")
+    }
+  }
   return (
     <Main>
       <div className="flex flex-col-reverse justify-between border-b py-12 md:flex-row lg:py-20">
@@ -27,7 +66,11 @@ export default async function IndividualMangaPageLayout({
             </div>
           </div>
 
-          {/* <FeatureContainer  /> */}
+          <MangaFeatureContainer
+            data={data}
+            user={userData}
+            editMangaStatus={editMangaStatusAction}
+          />
         </div>
 
         {data.images.webp.image_url && (
