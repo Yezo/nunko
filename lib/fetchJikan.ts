@@ -39,7 +39,7 @@ export type getAllAnimeProp = {
 }
 
 //The amount of milliseconds to throttle API calls to prevent rate-limiting
-export const MS = 500
+export const MS = 600
 
 export const errorMessages: { [key: string]: string } = {
   400: "The developer did something incorrect with his code.",

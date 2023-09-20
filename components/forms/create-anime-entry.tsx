@@ -10,10 +10,10 @@ import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createAnimeEntrySchema } from "@/lib/zod/schemas"
-import { UpdateIcon } from "@radix-ui/react-icons"
 import { createAnimeEntry } from "@/lib/actions/createAnimeEntry"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { useSession } from "next-auth/react"
+import { useToast } from "@/components/ui/use-toast"
 import {
   Select,
   SelectContent,
@@ -38,6 +38,7 @@ export const CreateAnimeEntryForm = ({
   const userId = (session?.data?.user?.id as string) ?? ""
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
     resolver: zodResolver(createAnimeEntrySchema),
@@ -58,6 +59,9 @@ export const CreateAnimeEntryForm = ({
       setOpen(false)
       setAdded(true)
       setStatus(data.status)
+      toast({
+        description: `${data.title} was added to your list.`,
+      })
       form.reset()
       form.clearErrors()
       startTransition(() => {
@@ -72,25 +76,13 @@ export const CreateAnimeEntryForm = ({
     <div className="min-w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormFieldItem title="Title" errorPosition="bottom">
-                <Input placeholder="Nunko" className="text-xs placeholder:text-xs" {...field} />
-              </FormFieldItem>
-            )}
-          />
-
           <div className="flex gap-2">
             <FormField
               control={form.control}
               name="score"
               render={({ field }) => (
                 <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
-                  <div className="flex items-center">
-                    <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
-                  </div>
+                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
             />
@@ -99,9 +91,7 @@ export const CreateAnimeEntryForm = ({
               name="progress"
               render={({ field }) => (
                 <FormFieldItem title="Episodes" errorPosition="bottom" widthFull={true}>
-                  <div className="flex items-center">
-                    <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
-                  </div>
+                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
             />
@@ -113,31 +103,37 @@ export const CreateAnimeEntryForm = ({
             render={({ field }) => (
               <FormFieldItem title="Status" errorPosition="top" widthFull={true}>
                 <Select onValueChange={field.onChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="text-xs placeholder:text-xs">
                     <SelectValue placeholder="Watching" {...field} />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Watching">Watching</SelectItem>
-                    <SelectItem value="Planned">Watch Later</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                    <SelectItem value="Paused">Paused</SelectItem>
-                    <SelectItem value="Hiatus">Hiatus</SelectItem>
-                    <SelectItem value="Dropped">Dropped</SelectItem>
+                  <SelectContent className="text-xs">
+                    <SelectItem value="Watching" className="text-xs">
+                      Watching
+                    </SelectItem>
+                    <SelectItem value="Planned" className="text-xs">
+                      Watch Later
+                    </SelectItem>
+                    <SelectItem value="Completed" className="text-xs">
+                      Completed
+                    </SelectItem>
+                    <SelectItem value="Paused" className="text-xs">
+                      Paused
+                    </SelectItem>
+                    <SelectItem value="Hiatus" className="text-xs">
+                      Hiatus
+                    </SelectItem>
+                    <SelectItem value="Dropped" className="text-xs">
+                      Dropped
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormFieldItem>
             )}
           />
 
-          {form.formState.isSubmitting ? (
-            <Button type="submit" className="flex min-w-full items-center gap-2" disabled>
-              <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Add entry
-            </Button>
-          ) : (
-            <Button type="submit" className="min-w-full">
-              Add entry
-            </Button>
-          )}
+          <Button type="submit" className="min-w-full">
+            Add entry
+          </Button>
         </form>
       </Form>
     </div>

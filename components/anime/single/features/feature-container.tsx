@@ -2,24 +2,21 @@
 
 import { Anime, IAnimes } from "@/app/anime/[id]/layout"
 import { AnimeListFeatureButton } from "@/components/anime/single/features/feature-button"
-import { ReadingBookSVG, EyeSVG, BookmarkSVG, CheckmarkSVG, EditPencilSVG } from "@/lib/icons"
+import { ReadingBookSVG, EyeSVG, BookmarkSVG, CheckmarkSVG } from "@/lib/icons"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { Pencil2Icon } from "@radix-ui/react-icons"
-import { Dispatch, SetStateAction, useState, useTransition } from "react"
-import { useRouter } from "next/navigation"
+import { Dispatch, SetStateAction, useState } from "react"
 
 type FeatureContainerProps = {
-  data: IAnimeData
-  user: IAnimes
-  editAnimeStatus: (status: string, animeID: string) => Promise<void>
+  data: IAnimeData //Anime data of an entry = 'One Piece', 'Naruto', 'Bleach'
+  user: IAnimes //A list of the user's anime entries
+  editAnimeStatus: (status: string, animeID: string) => Promise<void> //Server action for edits
 }
 export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContainerProps) => {
-  const filtered: Anime[] = user.animes.filter((item) => item.title === data.title)
-  const thisEntryExistsInDB = filtered.length > 0
-  const filteredStatus = filtered.map((item) => item.status)
+  const filtered: Anime | undefined = user.animes.find((item) => item.title === data.title)
+  const thisEntryExistsInDB = filtered !== undefined
   const [added, setAdded] = useState(thisEntryExistsInDB)
-  const [status, setStatus] = useState(filteredStatus[0] || "NONE")
-  console.log(user)
+  const [status, setStatus] = useState(filtered?.status || "NONE")
 
   return (
     <div className="flex flex-wrap gap-4">
@@ -28,6 +25,7 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
         data={data}
         added={added}
         setAdded={setAdded}
+        status={status}
         setStatus={setStatus}
         filtered={filtered}
       >
@@ -81,17 +79,28 @@ const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: Ite
   const match = status === title
 
   const handleClick = async (status: string) => {
-    await editAnimeStatus(status, data.mal_id.toString())
-    setStatus(status)
+    if (!match) {
+      await editAnimeStatus(status, data.mal_id.toString())
+      setStatus(status)
+    }
   }
   return (
     <div className="space-y-2" onClick={() => handleClick(title)}>
       <button
-        className={`mx-auto rounded-lg border px-6 py-2 shadow-sm transition-colors duration-300 hover:bg-accent md:px-8 md:py-3.5 ${
-          match && title === "Completed" && "bg-green-600"
-        } ${match && title === "Planned" && "bg-orange-600"} ${
-          match && title === "Watching" && "bg-blue-600"
-        }`}
+        className={`mx-auto rounded-lg border px-6 py-2 shadow-sm transition-colors duration-300  md:px-8 md:py-3.5 
+        ${match && title === "Completed" && "bg-green-400 dark:bg-green-600"} 
+        ${match && title === "Planned" && "bg-orange-400 dark:bg-orange-600"} 
+        ${match && title === "Watching" && "bg-blue-400 dark:bg-blue-600"} 
+        ${
+          title === "Completed" &&
+          " hover:bg-green-600 hover:text-background dark:hover:bg-green-400"
+        }
+        ${
+          title === "Planned" &&
+          "hover:bg-orange-600 hover:text-background dark:hover:bg-orange-400"
+        }
+        ${title === "Watching" && "hover:bg-blue-600 hover:text-background dark:hover:bg-blue-400"}
+      `}
       >
         {children}
       </button>

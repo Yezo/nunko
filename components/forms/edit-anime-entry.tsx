@@ -10,12 +10,12 @@ import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createAnimeEntrySchema } from "@/lib/zod/schemas"
-import { UpdateIcon } from "@radix-ui/react-icons"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { useSession } from "next-auth/react"
 import { editAnimeEntry } from "@/lib/actions/editAnimeEntry"
 import { Anime } from "@/app/anime/[id]/layout"
 import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
+import { useToast } from "@/components/ui/use-toast"
 import {
   Select,
   SelectContent,
@@ -29,7 +29,8 @@ type EditAnimeEntryFormProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
   setAdded: Dispatch<SetStateAction<boolean>>
   setStatus: Dispatch<SetStateAction<string>>
-  filtered: Anime[]
+  filtered: Anime | undefined
+  status: string
 }
 export const EditAnimeEntryForm = ({
   data,
@@ -37,11 +38,13 @@ export const EditAnimeEntryForm = ({
   setAdded,
   setStatus,
   filtered,
+  status,
 }: EditAnimeEntryFormProps) => {
   const session = useSession()
   const userId = (session?.data?.user?.id as string) ?? ""
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
     resolver: zodResolver(createAnimeEntrySchema),
@@ -49,9 +52,9 @@ export const EditAnimeEntryForm = ({
       type: "anime",
       title: data?.title,
       mal_id: data?.mal_id,
-      status: filtered[0]?.status,
-      score: filtered[0]?.score,
-      progress: filtered[0]?.progress,
+      status: filtered?.status,
+      score: filtered?.score,
+      progress: filtered?.progress,
       user_id: userId,
     },
   })
@@ -62,6 +65,9 @@ export const EditAnimeEntryForm = ({
       setOpen(false)
       setAdded(true)
       setStatus(data.status)
+      toast({
+        description: `${data?.title} has been edited.`,
+      })
       form.reset()
       form.clearErrors()
       startTransition(() => {
@@ -77,6 +83,10 @@ export const EditAnimeEntryForm = ({
       await deleteAnimeEntry(mal_id, user_id)
       setOpen(false)
       setAdded(false)
+      toast({
+        variant: "destructive",
+        description: `${data?.title} was removed from your list.`,
+      })
       startTransition(() => {
         router.refresh()
       })
@@ -86,28 +96,16 @@ export const EditAnimeEntryForm = ({
   }
 
   return (
-    <div className="min-w-full">
+    <div className="">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormFieldItem title="Title" errorPosition="bottom">
-                <Input placeholder="Nunko" className="text-xs placeholder:text-xs" {...field} />
-              </FormFieldItem>
-            )}
-          />
-
           <div className="flex gap-2">
             <FormField
               control={form.control}
               name="score"
               render={({ field }) => (
-                <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
-                  <div className="flex items-center">
-                    <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
-                  </div>
+                <FormFieldItem title="Score" errorPosition="bottom">
+                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
             />
@@ -115,10 +113,8 @@ export const EditAnimeEntryForm = ({
               control={form.control}
               name="progress"
               render={({ field }) => (
-                <FormFieldItem title="Episodes" errorPosition="bottom" widthFull={true}>
-                  <div className="flex items-center">
-                    <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
-                  </div>
+                <FormFieldItem title="Episodes" errorPosition="bottom">
+                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
                 </FormFieldItem>
               )}
             />
@@ -128,18 +124,30 @@ export const EditAnimeEntryForm = ({
             control={form.control}
             name="status"
             render={({ field }) => (
-              <FormFieldItem title="Status" errorPosition="top" widthFull={true}>
+              <FormFieldItem title="Status" errorPosition="top">
                 <Select onValueChange={field.onChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Watching" {...field} />
+                  <SelectTrigger className="text-xs placeholder:text-xs">
+                    <SelectValue placeholder={status ? status : filtered?.status} {...field} />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Watching">Watching</SelectItem>
-                    <SelectItem value="Planned">Watch Later</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                    <SelectItem value="Paused">Paused</SelectItem>
-                    <SelectItem value="Hiatus">Hiatus</SelectItem>
-                    <SelectItem value="Dropped">Dropped</SelectItem>
+                  <SelectContent className="text-xs">
+                    <SelectItem value="Watching" className="text-xs">
+                      Watching
+                    </SelectItem>
+                    <SelectItem value="Planned" className="text-xs">
+                      Watch Later
+                    </SelectItem>
+                    <SelectItem value="Completed" className="text-xs">
+                      Completed
+                    </SelectItem>
+                    <SelectItem value="Paused" className="text-xs">
+                      Paused
+                    </SelectItem>
+                    <SelectItem value="Hiatus" className="text-xs">
+                      Hiatus
+                    </SelectItem>
+                    <SelectItem value="Dropped" className="text-xs">
+                      Dropped
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormFieldItem>
@@ -147,25 +155,17 @@ export const EditAnimeEntryForm = ({
           />
 
           <div className="flex gap-2">
-            {form.formState.isSubmitting ? (
-              <Button disabled className="flex-1 items-center gap-2">
-                <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Delete
-              </Button>
-            ) : (
-              <Button variant="destructive" onClick={() => onDelete(data?.mal_id, userId)}>
-                Delete
-              </Button>
-            )}
+            <Button
+              variant="destructive"
+              onClick={() => onDelete(data?.mal_id, userId)}
+              className="min-w-[100px]"
+            >
+              Delete
+            </Button>
 
-            {form.formState.isSubmitting ? (
-              <Button className="flex-1 items-center gap-2" disabled>
-                <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Edit entry
-              </Button>
-            ) : (
-              <Button type="submit" className="flex-1">
-                Edit entry
-              </Button>
-            )}
+            <Button type="submit" className="flex-1">
+              Edit entry
+            </Button>
           </div>
         </form>
       </Form>
