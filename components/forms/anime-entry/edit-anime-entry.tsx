@@ -169,6 +169,7 @@ export const EditAnimeEntryForm = ({
               variant="destructive"
               onClick={() => onDelete(data?.mal_id, userId)}
               className="min-w-[100px]"
+              type="button"
             >
               Delete
             </Button>
