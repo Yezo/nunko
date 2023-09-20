@@ -7,10 +7,13 @@ import { UpdateIcon } from "@radix-ui/react-icons"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { editUser } from "@/lib/actions/editUser"
 import { editUserFormSchema } from "@/lib/zod/schemas"
+import { useRouter } from "next/navigation"
+import { User } from "@/app/(member)/settings/page"
+import { useToast } from "@/components/ui/use-toast"
+import { userErrorMsg } from "@/lib/actions/errorMessages"
+import { editUser } from "@/lib/actions/user/editUser"
 import {
   Form,
   FormControl,
@@ -19,9 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { UserDocument } from "@/models/userModel"
-import { useRouter } from "next/navigation"
-import { User } from "@/app/(member)/settings/page"
 
 type EditUserFormProps = {
   session: Session | null
@@ -29,6 +29,7 @@ type EditUserFormProps = {
 }
 export const EditUserForm = ({ session, user }: EditUserFormProps) => {
   const { update } = useSession()
+  const { toast } = useToast()
   const router = useRouter()
 
   const form = useForm<z.infer<typeof editUserFormSchema>>({
@@ -42,11 +43,21 @@ export const EditUserForm = ({ session, user }: EditUserFormProps) => {
     try {
       await editUser(data, session?.user?.id)
       update({ name: data.name })
+      toast({
+        title: "Username changed.",
+        description: `Your username was successfully changed to ${data.name}.`,
+      })
       form.clearErrors()
       form.reset()
       router.refresh()
-    } catch (e) {
-      console.log("There was an error.")
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        const { message: err } = e
+        if (err === userErrorMsg) {
+          form.setError("name", { type: "custom", message: "Username is already in use." })
+        } else if (err)
+          form.setError("name", { type: "custom", message: "Error occurred. Try again." })
+      }
     }
   }
 
@@ -80,9 +91,8 @@ export const EditUserForm = ({ session, user }: EditUserFormProps) => {
           />
 
           {form.formState.isSubmitting ? <DisabledButton /> : <ActiveButton />}
-          {form.formState.isSubmitted && <span className="ml-4 text-sm">Saved.</span>}
-          {form.formState.errors && (
-            <span className="ml-4 text-sm">{form.formState.errors.name?.message}</span>
+          {form.formState.isSubmitted && form.formState.isValid && (
+            <span className="ml-4 text-sm">Saved.</span>
           )}
         </form>
       </Form>

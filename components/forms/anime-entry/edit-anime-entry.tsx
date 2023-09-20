@@ -73,8 +73,13 @@ export const EditAnimeEntryForm = ({
       startTransition(() => {
         router.refresh()
       })
-    } catch (e) {
-      console.log(e)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}`,
+        })
+      }
     }
   }
 
@@ -90,8 +95,13 @@ export const EditAnimeEntryForm = ({
       startTransition(() => {
         router.refresh()
       })
-    } catch (e) {
-      console.log(e)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}`,
+        })
+      }
     }
   }
 

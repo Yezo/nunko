@@ -12,21 +12,23 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createUserSchema } from "@/lib/zod/schemas"
-import { createUser } from "@/lib/actions/createUser"
+import { createUser } from "@/lib/actions/user/createUser"
+import { UpdateIcon, EyeOpenIcon, EyeNoneIcon, CrumpledPaperIcon } from "@radix-ui/react-icons"
+import { ErrorMessage } from "@/components/forms/error-message"
 import {
-  ExclamationTriangleIcon,
-  UpdateIcon,
-  EyeOpenIcon,
-  EyeNoneIcon,
-  CrumpledPaperIcon,
-} from "@radix-ui/react-icons"
+  dbErrorMsg,
+  emailErrorMsg,
+  failErrorMsg,
+  userErrorMsg,
+  zodErrorMsg,
+} from "@/lib/actions/errorMessages"
 
 export const CreateAccountForm = () => {
   //States
-  const [emailInUseError, setEmailInUseError] = useState(false)
+  const [inUseError, setInUseError] = useState(false)
+  const [handlingError, setHandlingError] = useState(false)
   const [passwordVisiblity, setPasswordVisiblity] = useState(false)
   const router = useRouter()
-
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
@@ -42,9 +44,12 @@ export const CreateAccountForm = () => {
       form.reset()
       form.clearErrors()
       router.push("/signin")
-    } catch (e) {
-      setEmailInUseError(true)
-      console.log("There was an error.")
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        const { message: err } = e
+        if (err === emailErrorMsg || err === userErrorMsg) setInUseError(true)
+        else if (err === zodErrorMsg || err === dbErrorMsg || failErrorMsg) setHandlingError(true)
+      }
     }
   }
 
@@ -61,22 +66,22 @@ export const CreateAccountForm = () => {
                 <CrumpledPaperIcon className="h-6 w-6" />
               </div>
             </Link>
+
             <h1 className="font-domine text-2xl leading-none">Welcome to Nunko, </h1>
+
             <p className="text-sm leading-none text-muted-foreground">
               Create your account within seconds - enjoy Nunko forever.
             </p>
           </div>
-          {emailInUseError && (
-            <p className="flex min-w-full items-center justify-center gap-2 rounded-md bg-red-600 py-2 text-xs text-white">
-              <ExclamationTriangleIcon className="h-[1rem] w-[1rem]" />
-              <span className="uppercase tracking-wider ">This email is already in use.</span>
-            </p>
-          )}
+
+          {inUseError && <ErrorMessage type="inUse" />}
+          {handlingError && <ErrorMessage type="handling" />}
+
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormFieldItem title="Name" errorPosition="bottom">
+              <FormFieldItem title="Username" errorPosition="bottom">
                 <Input placeholder="Nunko" className="text-xs placeholder:text-xs" {...field} />
               </FormFieldItem>
             )}
@@ -136,12 +141,12 @@ export const CreateAccountForm = () => {
 
           <Separator />
 
-          <span className="font-spectral flex flex-col items-center justify-center text-sm tracking-tight text-muted-foreground sm:flex-row">
+          <div className="flex flex-col items-center justify-center text-sm tracking-tight text-muted-foreground sm:flex-row">
             Already have an account?
             <Link href="/signin" className="pl-2 text-foreground">
               Log in
             </Link>
-          </span>
+          </div>
         </form>
       </Form>
     </div>

@@ -1,13 +1,9 @@
 "use client"
 
 import { User } from "@/app/(member)/settings/page"
-import { editUserPrivacy } from "@/lib/actions/editUserPrivacy"
-import { UserDocument } from "@/models/userModel"
-import { EyeClosedIcon, EyeOpenIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
-import { Session } from "next-auth"
+import { useToast } from "@/components/ui/use-toast"
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
-import { revalidatePath } from "next/cache"
-import { useState } from "react"
 
 type PrivacyPickerProps = {
   changePrivacy: (value: string) => Promise<void>
@@ -15,10 +11,24 @@ type PrivacyPickerProps = {
 }
 export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
   const { update } = useSession()
+  const { toast } = useToast()
 
   async function handlePrivacy(value: string) {
-    await changePrivacy(value)
-    update({ privacy: value })
+    try {
+      await changePrivacy(value)
+      update({ privacy: value })
+      toast({
+        title: `${value === "hidden" ? "We respect your privacy." : "Dear social butterfly,"}`,
+        description: `Your status was successfully changed to ${value}.`,
+      })
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}.`,
+        })
+      }
+    }
   }
   return (
     <>

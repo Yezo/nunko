@@ -9,13 +9,13 @@ import { useForm } from "react-hook-form"
 import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
-import { createAnimeEntrySchema, createMangaEntrySchema } from "@/lib/zod/schemas"
-import { IAnimeData } from "@/types/anime/type-anime"
+import { createMangaEntrySchema } from "@/lib/zod/schemas"
 import { useSession } from "next-auth/react"
-import { editAnimeEntry } from "@/lib/actions/anime-entry/editAnimeEntry"
-import { Anime } from "@/app/anime/[id]/layout"
-import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
 import { useToast } from "@/components/ui/use-toast"
+import { Manga } from "@/app/manga/[id]/layout"
+import { deleteMangaEntry } from "@/lib/actions/manga-entry/deleteMangaEntry"
+import { editMangaEntry } from "@/lib/actions/manga-entry/editMangaEntry"
+import { IMangaData } from "@/types/manga/type-manga"
 import {
   Select,
   SelectContent,
@@ -23,10 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Manga } from "@/app/manga/[id]/layout"
-import { deleteMangaEntry } from "@/lib/actions/manga-entry/deleteMangaEntry"
-import { editMangaEntry } from "@/lib/actions/manga-entry/editMangaEntry"
-import { IMangaData } from "@/types/manga/type-manga"
 
 type EditMangaEntryFormProps = {
   data?: IMangaData
@@ -77,8 +73,13 @@ export const EditMangaEntryForm = ({
       startTransition(() => {
         router.refresh()
       })
-    } catch (e) {
-      console.log(e)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}`,
+        })
+      }
     }
   }
 
@@ -94,8 +95,13 @@ export const EditMangaEntryForm = ({
       startTransition(() => {
         router.refresh()
       })
-    } catch (e) {
-      console.log(e)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}`,
+        })
+      }
     }
   }
 
