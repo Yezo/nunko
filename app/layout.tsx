@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { IUser } from "@/app/(member)/settings/page"
 import { handleResponseError } from "@/lib/fetchJikan"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Nunko",
@@ -38,6 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {session && <Sidebar username={user?.name} />}
               {children}
             </div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
