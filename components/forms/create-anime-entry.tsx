@@ -69,7 +69,7 @@ export const CreateAnimeEntryForm = ({
   const onSubmit = async (data: z.infer<typeof createAnimeEntrySchema>) => {
     try {
       console.log(data)
-      await createAnimeEntry(data)
+      await createAnimeEntry(data, userId)
       setOpen(false)
       setAdded(true)
       setStatus(data.status)

@@ -5,11 +5,14 @@ import { createAnimeEntrySchema } from "@/lib/zod/schemas"
 import { z } from "zod"
 import AnimeModel from "@/models/animeModel"
 
-export const createAnimeEntry = async (data: z.infer<typeof createAnimeEntrySchema>) => {
+export const createAnimeEntry = async (
+  data: z.infer<typeof createAnimeEntrySchema>,
+  userID: string
+) => {
   try {
     await startDB()
 
-    const oldEntry = await AnimeModel.findOne({ mal_id: data.mal_id })
+    const oldEntry = await AnimeModel.findOne({ mal_id: data.mal_id, user_id: userID })
     if (oldEntry) {
       throw new Error("This already exists.")
     }
