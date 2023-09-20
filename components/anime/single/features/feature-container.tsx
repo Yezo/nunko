@@ -5,7 +5,8 @@ import { AnimeListFeatureButton } from "@/components/anime/single/features/featu
 import { ReadingBookSVG, EyeSVG, BookmarkSVG, CheckmarkSVG, EditPencilSVG } from "@/lib/icons"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { Pencil2Icon } from "@radix-ui/react-icons"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 
 type FeatureContainerProps = {
   data: IAnimeData
@@ -18,6 +19,7 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
   const filteredStatus = filtered.map((item) => item.status)
   const [added, setAdded] = useState(thisEntryExistsInDB)
   const [status, setStatus] = useState(filteredStatus[0] || "NONE")
+  console.log(user)
 
   return (
     <div className="flex flex-wrap gap-4">
@@ -27,39 +29,42 @@ export const FeatureContainer = ({ data, user, editAnimeStatus }: FeatureContain
         added={added}
         setAdded={setAdded}
         setStatus={setStatus}
+        filtered={filtered}
       >
         {added ? <Pencil2Icon className="h-[24px] w-[24px]" /> : <ReadingBookSVG />}
       </AnimeListFeatureButton>
 
-      <Item
-        title="Watching"
-        status={status}
-        editAnimeStatus={editAnimeStatus}
-        data={data}
-        setStatus={setStatus}
-      >
-        <EyeSVG />
-      </Item>
-
-      <Item
-        title="Watch Later"
-        status={status}
-        editAnimeStatus={editAnimeStatus}
-        data={data}
-        setStatus={setStatus}
-      >
-        <BookmarkSVG />
-      </Item>
-
-      <Item
-        title="Completed"
-        status={status}
-        editAnimeStatus={editAnimeStatus}
-        data={data}
-        setStatus={setStatus}
-      >
-        <CheckmarkSVG />
-      </Item>
+      {added && (
+        <>
+          <Item
+            title="Watching"
+            status={status}
+            editAnimeStatus={editAnimeStatus}
+            data={data}
+            setStatus={setStatus}
+          >
+            <EyeSVG />
+          </Item>
+          <Item
+            title="Planned"
+            status={status}
+            editAnimeStatus={editAnimeStatus}
+            data={data}
+            setStatus={setStatus}
+          >
+            <BookmarkSVG />
+          </Item>
+          <Item
+            title="Completed"
+            status={status}
+            editAnimeStatus={editAnimeStatus}
+            data={data}
+            setStatus={setStatus}
+          >
+            <CheckmarkSVG />
+          </Item>
+        </>
+      )}
     </div>
   )
 }
@@ -75,8 +80,8 @@ type ItemProps = {
 const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: ItemProps) => {
   const match = status === title
 
-  const handleClick = (status: string) => {
-    editAnimeStatus(status, data.mal_id.toString())
+  const handleClick = async (status: string) => {
+    await editAnimeStatus(status, data.mal_id.toString())
     setStatus(status)
   }
   return (
@@ -84,7 +89,7 @@ const Item = ({ title, children, status, editAnimeStatus, data, setStatus }: Ite
       <button
         className={`mx-auto rounded-lg border px-6 py-2 shadow-sm transition-colors duration-300 hover:bg-accent md:px-8 md:py-3.5 ${
           match && title === "Completed" && "bg-green-600"
-        } ${match && title === "Watch Later" && "bg-orange-600"} ${
+        } ${match && title === "Planned" && "bg-orange-600"} ${
           match && title === "Watching" && "bg-blue-600"
         }`}
       >

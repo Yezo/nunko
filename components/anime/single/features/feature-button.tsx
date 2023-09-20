@@ -1,6 +1,10 @@
 "use client"
 
+import { Anime } from "@/app/anime/[id]/layout"
 import { CreateAnimeEntryForm } from "@/components/forms/create-anime-entry"
+import { EditAnimeEntryForm } from "@/components/forms/edit-anime-entry"
+import { IAnimeData } from "@/types/anime/type-anime"
+import { Dispatch, SetStateAction, useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -9,8 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { IAnimeData } from "@/types/anime/type-anime"
-import { Dispatch, SetStateAction, useState } from "react"
 
 type AnimeListFeatureButtonProps = {
   children: React.ReactNode
@@ -19,6 +21,7 @@ type AnimeListFeatureButtonProps = {
   added: boolean
   setAdded: Dispatch<SetStateAction<boolean>>
   setStatus: Dispatch<SetStateAction<string>>
+  filtered: Anime[]
 }
 export const AnimeListFeatureButton = ({
   children,
@@ -27,6 +30,7 @@ export const AnimeListFeatureButton = ({
   added,
   setAdded,
   setStatus,
+  filtered,
 }: AnimeListFeatureButtonProps) => {
   const [open, setOpen] = useState(false)
 
@@ -49,12 +53,22 @@ export const AnimeListFeatureButton = ({
           <DialogTitle>{data.title}</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <CreateAnimeEntryForm
-          data={data}
-          setOpen={setOpen}
-          setAdded={setAdded}
-          setStatus={setStatus}
-        />
+        {added ? (
+          <EditAnimeEntryForm
+            data={data}
+            setOpen={setOpen}
+            setAdded={setAdded}
+            setStatus={setStatus}
+            filtered={filtered}
+          />
+        ) : (
+          <CreateAnimeEntryForm
+            data={data}
+            setOpen={setOpen}
+            setAdded={setAdded}
+            setStatus={setStatus}
+          />
+        )}
       </DialogContent>
     </Dialog>
   )

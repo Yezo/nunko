@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createAnimeEntrySchema } from "@/lib/zod/schemas"
 import { UpdateIcon } from "@radix-ui/react-icons"
-import { createAnimeEntry } from "@/lib/actions/createAnimeEntry"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { useSession } from "next-auth/react"
+import { editAnimeEntry } from "@/lib/actions/editAnimeEntry"
+import { Anime } from "@/app/anime/[id]/layout"
+import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
 import {
   Select,
   SelectContent,
@@ -22,18 +24,20 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type CreateAnimeEntryFormProps = {
+type EditAnimeEntryFormProps = {
   data?: IAnimeData
   setOpen: Dispatch<SetStateAction<boolean>>
   setAdded: Dispatch<SetStateAction<boolean>>
   setStatus: Dispatch<SetStateAction<string>>
+  filtered: Anime[]
 }
-export const CreateAnimeEntryForm = ({
+export const EditAnimeEntryForm = ({
   data,
   setOpen,
   setAdded,
   setStatus,
-}: CreateAnimeEntryFormProps) => {
+  filtered,
+}: EditAnimeEntryFormProps) => {
   const session = useSession()
   const userId = (session?.data?.user?.id as string) ?? ""
   const [isPending, startTransition] = useTransition()
@@ -45,21 +49,34 @@ export const CreateAnimeEntryForm = ({
       type: "anime",
       title: data?.title,
       mal_id: data?.mal_id,
-      status: "Watching",
-      score: "0",
-      progress: "0",
+      status: filtered[0]?.status,
+      score: filtered[0]?.score,
+      progress: filtered[0]?.progress,
       user_id: userId,
     },
   })
 
   const onSubmit = async (data: z.infer<typeof createAnimeEntrySchema>) => {
     try {
-      await createAnimeEntry(data, userId)
+      await editAnimeEntry(data, userId)
       setOpen(false)
       setAdded(true)
       setStatus(data.status)
       form.reset()
       form.clearErrors()
+      startTransition(() => {
+        router.refresh()
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const onDelete = async (mal_id: number | undefined, user_id: string | undefined) => {
+    try {
+      await deleteAnimeEntry(mal_id, user_id)
+      setOpen(false)
+      setAdded(false)
       startTransition(() => {
         router.refresh()
       })
@@ -129,15 +146,27 @@ export const CreateAnimeEntryForm = ({
             )}
           />
 
-          {form.formState.isSubmitting ? (
-            <Button type="submit" className="flex min-w-full items-center gap-2" disabled>
-              <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Add entry
-            </Button>
-          ) : (
-            <Button type="submit" className="min-w-full">
-              Add entry
-            </Button>
-          )}
+          <div className="flex gap-2">
+            {form.formState.isSubmitting ? (
+              <Button disabled className="flex-1 items-center gap-2">
+                <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Delete
+              </Button>
+            ) : (
+              <Button variant="destructive" onClick={() => onDelete(data?.mal_id, userId)}>
+                Delete
+              </Button>
+            )}
+
+            {form.formState.isSubmitting ? (
+              <Button className="flex-1 items-center gap-2" disabled>
+                <UpdateIcon className="h-[1rem] w-[1rem] animate-spin" /> Edit entry
+              </Button>
+            ) : (
+              <Button type="submit" className="flex-1">
+                Edit entry
+              </Button>
+            )}
+          </div>
         </form>
       </Form>
     </div>

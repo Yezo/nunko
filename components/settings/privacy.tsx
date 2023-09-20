@@ -16,8 +16,8 @@ type PrivacyPickerProps = {
 export const PrivacyPicker = ({ changePrivacy, user }: PrivacyPickerProps) => {
   const { update } = useSession()
 
-  function handlePrivacy(value: string) {
-    changePrivacy(value)
+  async function handlePrivacy(value: string) {
+    await changePrivacy(value)
     update({ privacy: value })
   }
   return (
