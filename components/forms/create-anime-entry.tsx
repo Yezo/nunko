@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createAnimeEntrySchema, createUserSchema } from "@/lib/zod/schemas"
@@ -36,11 +36,18 @@ import { useSession } from "next-auth/react"
 type CreateAnimeEntryFormProps = {
   data?: IAnimeData
   setOpen: Dispatch<SetStateAction<boolean>>
+  setAdded: Dispatch<SetStateAction<boolean>>
+  setStatus: Dispatch<SetStateAction<string>>
 }
-export const CreateAnimeEntryForm = ({ data, setOpen }: CreateAnimeEntryFormProps) => {
+export const CreateAnimeEntryForm = ({
+  data,
+  setOpen,
+  setAdded,
+  setStatus,
+}: CreateAnimeEntryFormProps) => {
   const session = useSession()
   const userId = (session?.data?.user?.id as string) ?? ""
-
+  const [isPending, startTransition] = useTransition()
   //States
   const router = useRouter()
 
@@ -53,8 +60,8 @@ export const CreateAnimeEntryForm = ({ data, setOpen }: CreateAnimeEntryFormProp
       title: data?.title,
       mal_id: data?.mal_id,
       status: "Watching",
-      score: 0,
-      progress: 0,
+      score: "0",
+      progress: "0",
       user_id: userId,
     },
   })
@@ -64,8 +71,15 @@ export const CreateAnimeEntryForm = ({ data, setOpen }: CreateAnimeEntryFormProp
       console.log(data)
       await createAnimeEntry(data)
       setOpen(false)
+      setAdded(true)
+      setStatus(data.status)
       form.reset()
       form.clearErrors()
+      startTransition(() => {
+        // Refresh the current route and fetch new data from the server without
+        // losing client-side browser or React state.
+        router.refresh()
+      })
     } catch (e) {
       console.log(e)
     }

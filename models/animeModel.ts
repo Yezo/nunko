@@ -6,8 +6,8 @@ export interface AnimeDocument extends Document {
   mal_id: number
   title: string
   status: "Watching" | "Planned" | "Completed" | "Hiatus" | "Paused" | "Dropped"
-  score: number
-  progress: number
+  score: string
+  progress: string
   user_id: string
 }
 
@@ -21,8 +21,8 @@ const animeSchema = new Schema<AnimeDocument, {}>(
       enum: ["Watching", "Planned", "Completed", "Hiatus", "Dropped", "Paused"],
       required: true,
     },
-    score: { type: Number, required: true },
-    progress: { type: Number, required: true },
+    score: { type: String, required: true },
+    progress: { type: String, required: true },
     user_id: { type: String, required: true },
   },
   { timestamps: true }

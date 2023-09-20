@@ -55,7 +55,7 @@ export const createAnimeEntrySchema = z.object({
   status: z.string().min(1, {
     message: "Status is required.",
   }),
-  score: z.number(),
-  progress: z.number(),
+  score: z.string(),
+  progress: z.string(),
   user_id: z.string(),
 })

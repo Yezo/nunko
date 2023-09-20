@@ -1,11 +1,39 @@
 import { IndividualLinksHeader } from "@/components/shared/individual-links-header"
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
-import { getIndividualAnime } from "@/lib/fetchJikan"
+import { getIndividualAnime, handleResponseError } from "@/lib/fetchJikan"
 import { AnimeDetailsContainer } from "@/components/anime/single/details/details-container"
 import { FeatureContainer } from "@/components/anime/single/features/feature-container"
-import Image from "next/image"
 import { Main } from "@/components/layout/main"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth"
+import { editAnimeStatus } from "@/lib/actions/editAnimeStatus"
+import Image from "next/image"
+
+export interface IAnimes {
+  animes: Anime[]
+}
+
+export interface Anime {
+  _id: string
+  type: string
+  mal_id: number
+  title: string
+  status: string
+  score: string
+  progress: string
+  user_id: string
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}
+
+async function fetchUser(id: string | undefined): Promise<IAnimes> {
+  const url = `http://localhost:3000/api/animes/${id}`
+  const res = await fetch(url)
+  handleResponseError(res)
+  return res.json()
+}
 
 export default async function IndividualAnimePageLayout({
   params,
@@ -14,7 +42,18 @@ export default async function IndividualAnimePageLayout({
   params: { id: string }
   children: React.ReactNode
 }) {
+  const session = await getServerSession(authOptions)
   const { data } = await getIndividualAnime(params)
+  const userData = await fetchUser(session?.user?.id)
+
+  async function editAnimeStatusAction(status: string, animeID: string) {
+    "use server"
+    try {
+      await editAnimeStatus(status, animeID, session?.user?.id)
+    } catch (e) {
+      console.log("There was an error.")
+    }
+  }
 
   return (
     <Main>
@@ -27,7 +66,7 @@ export default async function IndividualAnimePageLayout({
             </div>
           </div>
 
-          <FeatureContainer data={data} />
+          <FeatureContainer data={data} user={userData} editAnimeStatus={editAnimeStatusAction} />
         </div>
 
         {data.images.webp.image_url && (
