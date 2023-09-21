@@ -9,6 +9,9 @@ export interface AnimeDocument extends Document {
   score: string
   progress: string
   user_id: string
+  image: string
+  episodes: number
+  airingStatus: string
 }
 
 const animeSchema = new Schema<AnimeDocument, {}>(
@@ -24,6 +27,9 @@ const animeSchema = new Schema<AnimeDocument, {}>(
     score: { type: String, required: true },
     progress: { type: String, required: true },
     user_id: { type: String, required: true },
+    image: { type: String, required: true },
+    episodes: { type: Number, default: 0 },
+    airingStatus: { type: String, required: true },
   },
   { timestamps: true }
 )

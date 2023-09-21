@@ -56,6 +56,9 @@ export const EditMangaEntryForm = ({
       score: filtered?.score,
       progress: filtered?.progress,
       user_id: userId,
+      image: data?.images?.webp?.image_url,
+      chapters: data?.chapters ?? 0,
+      publishingStatus: data?.status,
     },
   })
 
@@ -115,7 +118,15 @@ export const EditMangaEntryForm = ({
               name="score"
               render={({ field }) => (
                 <FormFieldItem title="Score" errorPosition="bottom">
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />
@@ -123,8 +134,15 @@ export const EditMangaEntryForm = ({
               control={form.control}
               name="progress"
               render={({ field }) => (
-                <FormFieldItem title="Episodes" errorPosition="bottom">
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                <FormFieldItem title="Chapters" errorPosition="bottom">
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={Number(data?.chapters) ?? 2000}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />

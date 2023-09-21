@@ -57,7 +57,16 @@ export const createAnimeEntrySchema = z.object({
   }),
   score: z.string(),
   progress: z.string(),
-  user_id: z.string(),
+  user_id: z.string().min(1, {
+    message: "ID is required.",
+  }),
+  image: z.string().min(1, {
+    message: "Image is required.",
+  }),
+  airingStatus: z.string().min(1, {
+    message: "Airing Status is required.",
+  }),
+  episodes: z.number(),
 })
 
 //Editing manga entry
@@ -77,4 +86,11 @@ export const createMangaEntrySchema = z.object({
   score: z.string(),
   progress: z.string(),
   user_id: z.string(),
+  image: z.string().min(1, {
+    message: "Image is required.",
+  }),
+  publishingStatus: z.string().min(1, {
+    message: "Airing Status is required.",
+  }),
+  chapters: z.number(),
 })

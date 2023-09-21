@@ -9,6 +9,9 @@ export interface MangaDocument extends Document {
   score: string
   progress: string
   user_id: string
+  image: string
+  chapters: number
+  publishingStatus: string
 }
 
 const mangaSchema = new Schema<MangaDocument, {}>(
@@ -24,6 +27,9 @@ const mangaSchema = new Schema<MangaDocument, {}>(
     score: { type: String, required: true },
     progress: { type: String, required: true },
     user_id: { type: String, required: true },
+    image: { type: String, required: true },
+    chapters: { type: Number, default: 0 },
+    publishingStatus: { type: String, required: true },
   },
   { timestamps: true }
 )

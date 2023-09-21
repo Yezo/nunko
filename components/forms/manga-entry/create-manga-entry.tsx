@@ -40,7 +40,7 @@ export const CreateMangaEntryForm = ({
   const router = useRouter()
   const { toast } = useToast()
 
-  const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
+  const form = useForm<z.infer<typeof createMangaEntrySchema>>({
     resolver: zodResolver(createMangaEntrySchema),
     defaultValues: {
       type: "manga",
@@ -50,6 +50,9 @@ export const CreateMangaEntryForm = ({
       score: "0",
       progress: "0",
       user_id: userId,
+      image: data?.images?.webp?.image_url,
+      chapters: data?.chapters ?? 0,
+      publishingStatus: data?.status,
     },
   })
 
@@ -87,7 +90,15 @@ export const CreateMangaEntryForm = ({
               name="score"
               render={({ field }) => (
                 <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />
@@ -95,8 +106,15 @@ export const CreateMangaEntryForm = ({
               control={form.control}
               name="progress"
               render={({ field }) => (
-                <FormFieldItem title="Episodes" errorPosition="bottom" widthFull={true}>
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                <FormFieldItem title="Chapters" errorPosition="bottom" widthFull={true}>
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={Number(data?.chapters) ?? 2000}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />

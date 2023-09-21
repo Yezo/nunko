@@ -25,6 +25,9 @@ export interface Anime {
   user_id: string
   createdAt: Date
   updatedAt: Date
+  image: string
+  airingStatus: string
+  episodes: number
   __v: number
 }
 

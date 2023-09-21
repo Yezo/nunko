@@ -27,8 +27,12 @@ export interface Manga {
   user_id: string
   createdAt: Date
   updatedAt: Date
+  image: string
+  publishingStatus: string
+  chapters: number
   __v: number
 }
+
 async function fetchUser(id: string | undefined): Promise<IMangas> {
   const url = `http://nunko-amber.vercel.app/api/mangas/${id}`
   const res = await fetch(url)

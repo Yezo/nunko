@@ -50,6 +50,9 @@ export const CreateAnimeEntryForm = ({
       score: "0",
       progress: "0",
       user_id: userId,
+      image: data?.images?.webp?.image_url,
+      episodes: data?.episodes ?? 0,
+      airingStatus: data?.status,
     },
   })
 
@@ -87,7 +90,15 @@ export const CreateAnimeEntryForm = ({
               name="score"
               render={({ field }) => (
                 <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />
@@ -96,7 +107,14 @@ export const CreateAnimeEntryForm = ({
               name="progress"
               render={({ field }) => (
                 <FormFieldItem title="Episodes" errorPosition="bottom" widthFull={true}>
-                  <Input placeholder="0" className="text-xs placeholder:text-xs" {...field} />
+                  <Input
+                    placeholder="0"
+                    type="number"
+                    min={0}
+                    max={Number(data?.episodes) ?? 2000}
+                    className="text-xs placeholder:text-xs"
+                    {...field}
+                  />
                 </FormFieldItem>
               )}
             />
