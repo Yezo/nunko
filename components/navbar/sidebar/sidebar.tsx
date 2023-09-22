@@ -9,7 +9,7 @@ import { SidebarSearchInput } from "@/components/navbar/sidebar/sidebar-search-i
 import { ProfileDropdown } from "@/components/profile/profile-dropdown"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { CrumpledPaperIcon } from "@radix-ui/react-icons"
+import { CrumpledPaperIcon, LaptopIcon, PersonIcon, ReaderIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -56,9 +56,38 @@ export const Sidebar = ({ username }: Props) => {
             <Separator className="my-2" />
 
             <p className="font-medium">Library</p>
-            {Object.entries(SIDEBAR_LIBRARY_NAV_LINKS).map(([path, { name, icon }]) => {
+            {/* {Object.entries(SIDEBAR_LIBRARY_NAV_LINKS).map(([path, { name, icon }]) => {
               return <LinkItem url={path} key={path} name={name} icon={icon} />
-            })}
+            })} */}
+            <Link
+              href={`/user/${session.data?.user?.name?.toLowerCase()}`}
+              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+            >
+              <LinkIcon>
+                <PersonIcon />
+              </LinkIcon>
+              Profile
+            </Link>
+
+            <Link
+              href={`/user/${session.data?.user?.name?.toLowerCase()}/animelist`}
+              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+            >
+              <LinkIcon>
+                <LaptopIcon />
+              </LinkIcon>
+              My Anime
+            </Link>
+
+            <Link
+              href={`/user/${session.data?.user?.name?.toLowerCase()}/mangalist`}
+              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+            >
+              <LinkIcon>
+                <ReaderIcon />
+              </LinkIcon>
+              My Manga
+            </Link>
           </nav>
         </div>
 
@@ -72,7 +101,7 @@ export const Sidebar = ({ username }: Props) => {
             </Avatar>
             <div>
               {session.status === "authenticated" ? (
-                <span className="capitalize"> {username} </span>
+                <span className="font-medium capitalize"> {username} </span>
               ) : (
                 <Skeleton className="h-[20px] w-[100px] rounded-md" />
               )}
@@ -88,7 +117,7 @@ export const Sidebar = ({ username }: Props) => {
 
 export const LinkIcon = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="rounded border border-muted/80 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-900 to-gray-800 p-1.5 shadow-sm">
+    <div className="rounded border border-muted/80 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-900 to-gray-800 p-1.5 text-background shadow-sm dark:text-slate-300">
       {children}
     </div>
   )
@@ -98,7 +127,7 @@ export const LinkItem = ({ url, icon, name }: { url: string; icon: JSX.Element; 
   return (
     <Link
       href={url}
-      className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize text-slate-300 transition-colors hover:text-white"
+      className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize transition-colors hover:text-white dark:text-slate-300"
     >
       <LinkIcon>{icon}</LinkIcon>
       {name}

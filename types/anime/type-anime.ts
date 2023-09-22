@@ -19,7 +19,7 @@ export interface IAnimeData {
   status: string
   airing: boolean
   aired: Aired
-  duration: string | null
+  duration: string
   rating: string | null
   score: number | null
   scored_by: number | null
@@ -42,7 +42,7 @@ export interface IAnimeData {
 }
 
 export interface Aired {
-  from: Date | null
+  from: Date
   to: Date | null
   prop: Prop
   string: string

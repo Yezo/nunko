@@ -14,6 +14,7 @@ import { createAnimeEntry } from "@/lib/actions/anime-entry/createAnimeEntry"
 import { IAnimeData } from "@/types/anime/type-anime"
 import { useSession } from "next-auth/react"
 import { useToast } from "@/components/ui/use-toast"
+import { formatDateToMMDDYYYY } from "@/lib/utils"
 import {
   Select,
   SelectContent,
@@ -43,7 +44,7 @@ export const CreateAnimeEntryForm = ({
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
     resolver: zodResolver(createAnimeEntrySchema),
     defaultValues: {
-      type: "anime",
+      type: data?.type ?? "Unknown",
       title: data?.title,
       mal_id: data?.mal_id,
       status: "Watching",
@@ -53,11 +54,16 @@ export const CreateAnimeEntryForm = ({
       image: data?.images?.webp?.image_url,
       episodes: data?.episodes ?? 0,
       airingStatus: data?.status,
+      username: session?.data?.user?.name ?? "Unknown",
+      airDate: formatDateToMMDDYYYY(data?.aired.from),
+      duration: data?.duration,
     },
   })
 
   const onSubmit = async (data: z.infer<typeof createAnimeEntrySchema>) => {
+    console.log(data)
     try {
+      console.log(data)
       await createAnimeEntry(data, userId)
       setOpen(false)
       setAdded(true)
@@ -111,7 +117,7 @@ export const CreateAnimeEntryForm = ({
                     placeholder="0"
                     type="number"
                     min={0}
-                    max={Number(data?.episodes) ?? 2000}
+                    max={data?.episodes ? Number(data?.episodes) : 2000}
                     className="text-xs placeholder:text-xs"
                     {...field}
                   />

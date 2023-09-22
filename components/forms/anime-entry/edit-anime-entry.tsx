@@ -16,6 +16,7 @@ import { editAnimeEntry } from "@/lib/actions/anime-entry/editAnimeEntry"
 import { Anime } from "@/app/anime/[id]/layout"
 import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
 import { useToast } from "@/components/ui/use-toast"
+import { formatDateToMMDDYYYY } from "@/lib/utils"
 import {
   Select,
   SelectContent,
@@ -49,7 +50,7 @@ export const EditAnimeEntryForm = ({
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
     resolver: zodResolver(createAnimeEntrySchema),
     defaultValues: {
-      type: "anime",
+      type: data?.type ?? "Unknown",
       title: data?.title,
       mal_id: data?.mal_id,
       status: filtered?.status,
@@ -59,6 +60,9 @@ export const EditAnimeEntryForm = ({
       image: data?.images?.webp?.image_url,
       episodes: data?.episodes ?? 0,
       airingStatus: data?.status,
+      username: filtered?.username,
+      airDate: formatDateToMMDDYYYY(data?.aired.from),
+      duration: data?.duration,
     },
   })
 
@@ -140,7 +144,7 @@ export const EditAnimeEntryForm = ({
                     placeholder="0"
                     type="number"
                     min={0}
-                    max={Number(data?.episodes) ?? 2000}
+                    max={data?.episodes ? Number(data?.episodes) : 2000}
                     className="text-xs placeholder:text-xs"
                     {...field}
                   />

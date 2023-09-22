@@ -28,6 +28,9 @@ export interface Anime {
   image: string
   airingStatus: string
   episodes: number
+  username: string
+  duration: string
+  airDate: string
   __v: number
 }
 

@@ -104,7 +104,7 @@ export const createQueryString = (
   BASE_TYPE: string,
   value: string,
   searchParams: ReadonlyURLSearchParams,
-  data: {
+  data?: {
     genre: string
     id: string
   }[]
@@ -112,7 +112,7 @@ export const createQueryString = (
   const params = new URLSearchParams(searchParams.toString())
 
   // Modify the query parameters based on the selected name and value
-  if (BASE_TYPE === "genres") {
+  if (BASE_TYPE === "genres" && data) {
     const genreId = getGenreIdFromName(value, data)
     params.set("genres", genreId) // Set 'genres' based on genre name
   } else {

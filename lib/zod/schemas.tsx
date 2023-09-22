@@ -67,6 +67,13 @@ export const createAnimeEntrySchema = z.object({
     message: "Airing Status is required.",
   }),
   episodes: z.number(),
+  username: z.string().min(1, {
+    message: "Username is required.",
+  }),
+  duration: z.string().min(1, {
+    message: "Duration is required.",
+  }),
+  airDate: z.string(),
 })
 
 //Editing manga entry

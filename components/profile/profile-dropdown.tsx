@@ -58,11 +58,11 @@ export const ProfileDropdown = () => {
         </MenuItem>
 
         <DropdownMenuItem
-          className="flex cursor-pointer items-center gap-2 text-muted-foreground text-slate-300 transition-colors hover:text-foreground"
+          className="flex cursor-pointer items-center gap-2 transition-colors hover:text-foreground dark:text-muted-foreground dark:text-slate-300"
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >
-          <LinkIcon>{theme === "dark" ? <MoonIcon /> : <SunIcon />}</LinkIcon>
-          <span>{theme === "dark" ? "Dark Mode" : "Light Mode"}</span>
+          <LinkIcon>{theme === "light" ? <MoonIcon /> : <SunIcon />}</LinkIcon>
+          <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
@@ -88,7 +88,7 @@ const MenuItem = ({
 }) => {
   return (
     <Link href={url} onClick={onClick}>
-      <DropdownMenuItem className="flex cursor-pointer items-center gap-2 text-muted-foreground text-slate-300 transition-colors hover:text-foreground">
+      <DropdownMenuItem className="flex cursor-pointer items-center gap-2 transition-colors hover:text-foreground dark:text-muted-foreground dark:text-slate-300">
         <LinkIcon>{children}</LinkIcon>
         <span>{title}</span>
       </DropdownMenuItem>

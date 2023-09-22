@@ -43,7 +43,7 @@ export const CreateMangaEntryForm = ({
   const form = useForm<z.infer<typeof createMangaEntrySchema>>({
     resolver: zodResolver(createMangaEntrySchema),
     defaultValues: {
-      type: "manga",
+      type: data?.type ?? "Unknown",
       title: data?.title,
       mal_id: data?.mal_id,
       status: "Reading",
