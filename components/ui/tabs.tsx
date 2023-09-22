@@ -2,23 +2,25 @@
 
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-
 import { cn } from "@/lib/utils"
 
 const Tabs = TabsPrimitive.Root
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & { rightElementSlot?: React.ReactNode }
+>(({ className, rightElementSlot, children, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-9 items-center justify-center rounded-lg bg-muted text-muted-foreground",
+      "flex w-full grow items-center justify-start gap-x-8 border-b border-border",
       className
     )}
     {...props}
-  />
+  >
+    {children}
+    {rightElementSlot && <div className="flex w-full grow justify-end">{rightElementSlot}</div>}
+  </TabsPrimitive.List>
 ))
 TabsList.displayName = TabsPrimitive.List.displayName
 
@@ -29,7 +31,10 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap  px-3 py-1 text-[15px] ring-offset-background transition-colors first:pl-0 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background  data-[state=active]:text-foreground data-[state=active]:underline data-[state=active]:decoration-2 data-[state=active]:underline-offset-8",
+      "-mb-px inline-flex items-center justify-center whitespace-nowrap rounded-t border-b border-transparent py-3 text-sm  text-muted-foreground transition-colors hover:text-foreground",
+      "focus-visible:bg-gray-300/5 focus-visible:outline-none",
+      "disabled:pointer-events-none disabled:opacity-50",
+      "data-[state=active]:border-blue-500 data-[state=active]:text-foreground",
       className
     )}
     {...props}
@@ -44,7 +49,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
       className
     )}
     {...props}
