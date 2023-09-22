@@ -9,11 +9,12 @@ import { useForm } from "react-hook-form"
 import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
-import { createAnimeEntrySchema, createMangaEntrySchema } from "@/lib/zod/schemas"
+import { createMangaEntrySchema } from "@/lib/zod/schemas"
 import { useSession } from "next-auth/react"
 import { useToast } from "@/components/ui/use-toast"
-import { IMangaData } from "@/types/manga/type-manga"
-import { createMangaEntry } from "@/lib/actions/manga-entry/createMangaEntry"
+import { deleteMangaEntry } from "@/lib/actions/manga-entry/deleteMangaEntry"
+import { editMangaEntry } from "@/lib/actions/manga-entry/editMangaEntry"
+import { Manga } from "@/app/manga/[id]/layout"
 import {
   Select,
   SelectContent,
@@ -22,23 +23,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type CreateMangaEntryFormProps = {
-  data?: IMangaData
+type EditMangaTableFormProps = {
+  data?: Manga | undefined
   setOpen: Dispatch<SetStateAction<boolean>>
-  setAdded: Dispatch<SetStateAction<boolean>>
-  setStatus: Dispatch<SetStateAction<string>>
 }
-export const CreateMangaEntryForm = ({
-  data,
-  setOpen,
-  setAdded,
-  setStatus,
-}: CreateMangaEntryFormProps) => {
-  const session = useSession()
-  const userId = (session?.data?.user?.id as string) ?? ""
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+export const EditMangaTableForm = ({ data, setOpen }: EditMangaTableFormProps) => {
   const { toast } = useToast()
+  const router = useRouter()
+  const session = useSession()
+  const [isPending, startTransition] = useTransition()
+  const userId = (session?.data?.user?.id as string) ?? ""
 
   const form = useForm<z.infer<typeof createMangaEntrySchema>>({
     resolver: zodResolver(createMangaEntrySchema),
@@ -46,26 +40,24 @@ export const CreateMangaEntryForm = ({
       type: data?.type ?? "Unknown",
       title: data?.title,
       mal_id: data?.mal_id,
-      status: "Reading",
-      score: "0",
-      progress: "0",
-      user_id: userId,
-      image: data?.images?.webp?.image_url,
+      status: data?.status,
+      score: data?.score,
+      progress: data?.progress,
+      user_id: data?.user_id,
+      image: data?.image,
       chapters: data?.chapters ?? 0,
-      publishingStatus: data?.status,
-      username: session?.data?.user?.name ?? "Unknown",
+      publishingStatus: data?.publishingStatus,
+      username: data?.username ?? "Unknown",
       volumes: data?.volumes ?? 0,
     },
   })
 
   const onSubmit = async (data: z.infer<typeof createMangaEntrySchema>) => {
     try {
-      await createMangaEntry(data, userId)
+      await editMangaEntry(data, userId)
       setOpen(false)
-      setAdded(true)
-      setStatus(data.status)
       toast({
-        description: `${data.title} was added to your list.`,
+        description: `${data?.title} has been edited.`,
       })
       form.reset()
       form.clearErrors()
@@ -82,8 +74,29 @@ export const CreateMangaEntryForm = ({
     }
   }
 
+  const onDelete = async (mal_id: number | undefined, user_id: string | undefined) => {
+    try {
+      await deleteMangaEntry(mal_id, user_id)
+      setOpen(false)
+      toast({
+        variant: "destructive",
+        description: `${data?.title} was removed from your list.`,
+      })
+      startTransition(() => {
+        router.refresh()
+      })
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast({
+          title: "An error occurred.",
+          description: `${e.message}`,
+        })
+      }
+    }
+  }
+
   return (
-    <div className="min-w-full">
+    <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex gap-2">
@@ -91,7 +104,7 @@ export const CreateMangaEntryForm = ({
               control={form.control}
               name="score"
               render={({ field }) => (
-                <FormFieldItem title="Score" errorPosition="bottom" widthFull={true}>
+                <FormFieldItem title="Score" errorPosition="bottom">
                   <Input
                     placeholder="0"
                     type="number"
@@ -108,12 +121,12 @@ export const CreateMangaEntryForm = ({
               control={form.control}
               name="progress"
               render={({ field }) => (
-                <FormFieldItem title="Chapters" errorPosition="bottom" widthFull={true}>
+                <FormFieldItem title="Episodes" errorPosition="bottom">
                   <Input
                     placeholder="0"
                     type="number"
                     min={0}
-                    max={Number(data?.chapters) ?? 2000}
+                    max={data?.chapters ? Number(data?.chapters) : 2000}
                     className="text-xs placeholder:text-xs"
                     {...field}
                   />
@@ -126,17 +139,17 @@ export const CreateMangaEntryForm = ({
             control={form.control}
             name="status"
             render={({ field }) => (
-              <FormFieldItem title="Status" errorPosition="top" widthFull={true}>
+              <FormFieldItem title="Status" errorPosition="top">
                 <Select onValueChange={field.onChange}>
                   <SelectTrigger className="text-xs placeholder:text-xs">
-                    <SelectValue placeholder="Reading" {...field} />
+                    <SelectValue placeholder={data?.status} {...field} />
                   </SelectTrigger>
                   <SelectContent className="text-xs">
                     <SelectItem value="Reading" className="text-xs">
                       Reading
                     </SelectItem>
                     <SelectItem value="Planned" className="text-xs">
-                      Read Later
+                      Watch Later
                     </SelectItem>
                     <SelectItem value="Completed" className="text-xs">
                       Completed
@@ -156,11 +169,22 @@ export const CreateMangaEntryForm = ({
             )}
           />
 
-          <Button type="submit" className="min-w-full">
-            Add entry
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={() => onDelete(data?.mal_id, userId)}
+              className="min-w-[100px]"
+              type="button"
+            >
+              Delete
+            </Button>
+
+            <Button type="submit" className="flex-1">
+              Edit entry
+            </Button>
+          </div>
         </form>
       </Form>
-    </div>
+    </>
   )
 }

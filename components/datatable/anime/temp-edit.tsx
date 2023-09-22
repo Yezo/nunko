@@ -1,11 +1,12 @@
 "use client"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Anime } from "@/app/anime/[id]/layout"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
-import { EditTableForm } from "@/components/datatable/edit-entry"
+import { EditAnimeTableForm } from "@/components/datatable/anime/edit-entry"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import Image from "next/image"
@@ -55,7 +56,7 @@ export const EditEntry = ({ data }: EditEntryProps) => {
                   </div>
                 </div>
 
-                <EditTableForm setOpen={setOpen} data={data} />
+                <EditAnimeTableForm setOpen={setOpen} data={data} />
               </div>
             </DialogContent>
           </Dialog>

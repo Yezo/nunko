@@ -2,7 +2,7 @@ import { Model, model, models } from "mongoose"
 import { Document, Schema } from "mongoose"
 
 export interface MangaDocument extends Document {
-  type: "anime" | "manga"
+  type: "Manga" | "Novel" | "Light Novel" | "One-Shot" | "Doujin" | "Manhwa" | "Manhua"
   mal_id: number
   title: string
   status: "Reading" | "Planned" | "Completed" | "Hiatus" | "Paused" | "Dropped"
@@ -12,11 +12,17 @@ export interface MangaDocument extends Document {
   image: string
   chapters: number
   publishingStatus: string
+  username: string
+  volumes: number
 }
 
 const mangaSchema = new Schema<MangaDocument, {}>(
   {
-    type: { type: String, enum: ["anime", "manga"], required: true },
+    type: {
+      type: String,
+      enum: ["Manga", "Novel", "Light Novel", "One-Shot", "Doujin", "Manhwa", "Manhua"],
+      required: true,
+    },
     mal_id: { type: Number, required: true },
     title: { type: String, required: true, trim: true },
     status: {
@@ -30,6 +36,8 @@ const mangaSchema = new Schema<MangaDocument, {}>(
     image: { type: String, required: true },
     chapters: { type: Number, default: 0 },
     publishingStatus: { type: String, required: true },
+    username: { type: String, required: true },
+    volumes: { type: Number, default: 0 },
   },
   { timestamps: true }
 )

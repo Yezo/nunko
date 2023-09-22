@@ -30,6 +30,8 @@ export interface Manga {
   image: string
   publishingStatus: string
   chapters: number
+  username: string
+  volumes: number
   __v: number
 }
 

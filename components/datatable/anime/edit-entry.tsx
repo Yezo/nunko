@@ -23,11 +23,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-type EditAnimeEntryFormProps = {
+type EditAnimeTableFormProps = {
   data?: Anime | undefined
   setOpen: Dispatch<SetStateAction<boolean>>
 }
-export const EditTableForm = ({ data, setOpen }: EditAnimeEntryFormProps) => {
+
+export const EditAnimeTableForm = ({ data, setOpen }: EditAnimeTableFormProps) => {
   const { toast } = useToast()
   const router = useRouter()
   const session = useSession()

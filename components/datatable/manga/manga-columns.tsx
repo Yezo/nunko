@@ -1,14 +1,12 @@
 "use client"
 
-import { Anime } from "@/app/anime/[id]/layout"
-import { EditEntry } from "@/components/datatable/temp-edit"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Manga } from "@/app/manga/[id]/layout"
+import { EditMangaTable } from "@/components/datatable/manga/edit-manga"
 import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 
-export const columns: ColumnDef<Anime>[] = [
+export const mangaColumns: ColumnDef<Manga>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -30,31 +28,29 @@ export const columns: ColumnDef<Anime>[] = [
         _id,
         mal_id,
         status,
-        airingStatus,
-        airDate,
         createdAt,
-        duration,
         progress,
-        episodes,
         score,
         type,
         updatedAt,
         user_id,
         username,
+        volumes,
+        publishingStatus,
+        chapters,
         __v,
       } = row.original
-      const data: Anime = {
+      const data: Manga = {
         image: image,
         title: title,
         _id: _id,
         mal_id: mal_id,
-        duration: duration,
+        chapters: chapters,
+        volumes: volumes,
         status: status,
-        airingStatus: airingStatus,
-        airDate: airDate,
+        publishingStatus: publishingStatus,
         createdAt: createdAt,
         progress: progress,
-        episodes: episodes,
         username: username,
         user_id: user_id,
         updatedAt: updatedAt,
@@ -62,7 +58,7 @@ export const columns: ColumnDef<Anime>[] = [
         score: score,
         __v: __v,
       }
-      return <EditEntry data={data} />
+      return <EditMangaTable data={data} />
     },
   },
   {
@@ -103,17 +99,17 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const { progress, episodes } = row.original
+      const { progress, chapters } = row.original
 
       return (
         <div className="min-w-full px-4 text-center font-medium capitalize text-muted-foreground">
-          {progress}/{episodes === 0 ? "?" : episodes}
+          {progress}/{chapters === 0 ? "?" : chapters}
         </div>
       )
     },
   },
   {
-    accessorKey: "airingStatus",
+    accessorKey: "publishingStatus",
     header: ({ column }) => {
       return (
         <Button
@@ -127,7 +123,7 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const { airingStatus } = row.original
+      const { publishingStatus } = row.original
 
       const renameStatus = (status: string) => {
         if (status === "Finished Airing") return "Completed"
@@ -137,7 +133,7 @@ export const columns: ColumnDef<Anime>[] = [
 
       return (
         <div className="min-w-full px-4 text-center font-medium capitalize text-muted-foreground">
-          {renameStatus(airingStatus)}
+          {renameStatus(publishingStatus)}
         </div>
       )
     },
@@ -167,11 +163,3 @@ export const columns: ColumnDef<Anime>[] = [
     },
   },
 ]
-
-const NoImageFallback = () => {
-  return (
-    <AvatarFallback className="rounded">
-      <Skeleton className="h-12 w-12 rounded" />
-    </AvatarFallback>
-  )
-}

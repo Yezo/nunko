@@ -1,16 +1,14 @@
 import { handleResponseError } from "@/lib/fetchJikan"
 import { Dummy } from "@/components/dummy"
 import { Anime, IAnimes } from "@/app/anime/[id]/layout"
-import { columns } from "@/components/datatable/columns"
+import { animeColumns } from "@/components/datatable/anime/anime-columns"
 import { DataTable } from "@/components/datatable/data-table"
 import { AnimeListFilterSelect } from "@/components/datatable/query-select"
 
 //Fetch to MongoDB and grab a list of all the user's anime entries
 async function fetchUserAnimes(username: string | undefined): Promise<IAnimes> {
   const url = `http://nunko-amber.vercel.app/api/user/animelist/${username}`
-  // const url = `http://localhost:3000/api/user/animelist/${username}`
-  // const res = await fetch(url, { cache: "no-store" })
-  const res = await fetch(url, { next: { revalidate: 10 } })
+  const res = await fetch(url, { cache: "no-store" })
   handleResponseError(res)
   return res.json()
 }
@@ -92,7 +90,7 @@ export default async function UsernameAnimeListPage({
         if (hasData && (listQueryMatches || !list))
           return (
             <section className="py-8" key={section.title}>
-              <DataTable columns={columns} data={section.data} title={section.title} />
+              <DataTable columns={animeColumns} data={section.data} title={section.title} />
             </section>
           )
         return null

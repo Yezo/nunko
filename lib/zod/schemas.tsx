@@ -100,4 +100,8 @@ export const createMangaEntrySchema = z.object({
     message: "Airing Status is required.",
   }),
   chapters: z.number(),
+  username: z.string().min(1, {
+    message: "Username is required.",
+  }),
+  volumes: z.number(),
 })

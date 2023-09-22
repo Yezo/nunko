@@ -59,6 +59,8 @@ export const EditMangaEntryForm = ({
       image: data?.images?.webp?.image_url,
       chapters: data?.chapters ?? 0,
       publishingStatus: data?.status,
+      username: session?.data?.user?.name ?? "Unknown",
+      volumes: data?.volumes ?? 0,
     },
   })
 
@@ -162,7 +164,7 @@ export const EditMangaEntryForm = ({
                       Reading
                     </SelectItem>
                     <SelectItem value="Planned" className="text-xs">
-                      Watch Later
+                      Read Later
                     </SelectItem>
                     <SelectItem value="Completed" className="text-xs">
                       Completed
