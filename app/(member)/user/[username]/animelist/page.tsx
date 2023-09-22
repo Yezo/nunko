@@ -7,8 +7,8 @@ import { AnimeListFilterSelect } from "@/components/datatable/query-select"
 
 //Fetch to MongoDB and grab a list of all the user's anime entries
 async function fetchUserAnimes(username: string | undefined): Promise<IAnimes> {
-  //   const url = `http://nunko-amber.vercel.app/api/user/animelist/${username}`
-  const url = `http://localhost:3000/api/user/animelist/${username}`
+  const url = `http://nunko-amber.vercel.app/api/user/animelist/${username}`
+  // const url = `http://localhost:3000/api/user/animelist/${username}`
   //   const res = await fetch(url, { cache: "no-store" })
   const res = await fetch(url, { next: { revalidate: 60 } })
   handleResponseError(res)

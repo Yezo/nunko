@@ -10,8 +10,8 @@ export function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-export function formatDateToMMDDYYYY(date: Date | undefined) {
-  return date ? moment(date).utc().format("MMMM D[,] YYYY") : undefined
+export function formatDateToMMDDYYYY(date: Date | null) {
+  return date ? moment(date).utc().format("MMMM D[,] YYYY") : null
 }
 
 export function formatDuration(totalSeconds: number) {

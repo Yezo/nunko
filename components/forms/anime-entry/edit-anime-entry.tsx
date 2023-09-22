@@ -61,7 +61,7 @@ export const EditAnimeEntryForm = ({
       episodes: data?.episodes ?? 0,
       airingStatus: data?.status,
       username: filtered?.username,
-      airDate: formatDateToMMDDYYYY(data?.aired.from),
+      airDate: formatDateToMMDDYYYY(data?.aired?.from ?? null) ?? "Unknown",
       duration: data?.duration,
     },
   })

@@ -55,7 +55,7 @@ export const CreateAnimeEntryForm = ({
       episodes: data?.episodes ?? 0,
       airingStatus: data?.status,
       username: session?.data?.user?.name ?? "Unknown",
-      airDate: formatDateToMMDDYYYY(data?.aired.from),
+      airDate: formatDateToMMDDYYYY(data?.aired?.from ?? null) ?? "Unknown",
       duration: data?.duration,
     },
   })
