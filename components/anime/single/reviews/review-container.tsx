@@ -43,7 +43,6 @@ export const AnimeReviewContainer = ({ reviews, params }: AnimeReviewContainerPr
         )
       ).json()
       const { data } = news
-      console.log(data)
       setSpoilerData(data)
     }
   }

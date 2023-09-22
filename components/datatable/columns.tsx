@@ -1,6 +1,7 @@
 "use client"
 
 import { Anime } from "@/app/anime/[id]/layout"
+import { EditEntry } from "@/components/datatable/temp-edit"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -23,17 +24,45 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const img = row.original.image
-      const title = row.original.title
-      return (
-        <div className="flex min-w-[580px] cursor-pointer items-center gap-4 px-4 font-medium text-muted-foreground transition-colors hover:text-foreground">
-          <Avatar className="h-10 w-10 rounded">
-            {img && <AvatarImage src={img} className="object-cover" />}
-            <NoImageFallback />
-          </Avatar>
-          <span className=" ">{title}</span>
-        </div>
-      )
+      const {
+        image,
+        title,
+        _id,
+        mal_id,
+        status,
+        airingStatus,
+        airDate,
+        createdAt,
+        duration,
+        progress,
+        episodes,
+        score,
+        type,
+        updatedAt,
+        user_id,
+        username,
+        __v,
+      } = row.original
+      const data: Anime = {
+        image: image,
+        title: title,
+        _id: _id,
+        mal_id: mal_id,
+        duration: duration,
+        status: status,
+        airingStatus: airingStatus,
+        airDate: airDate,
+        createdAt: createdAt,
+        progress: progress,
+        episodes: episodes,
+        username: username,
+        user_id: user_id,
+        updatedAt: updatedAt,
+        type: type,
+        score: score,
+        __v: __v,
+      }
+      return <EditEntry data={data} />
     },
   },
   {
@@ -74,11 +103,11 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const progress = row.original.progress
-      const totalEpisodes = row.original.episodes
+      const { progress, episodes } = row.original
+
       return (
         <div className="min-w-full px-4 text-center font-medium capitalize text-muted-foreground">
-          {progress}/{totalEpisodes}
+          {progress}/{episodes === 0 ? "?" : episodes}
         </div>
       )
     },
@@ -98,12 +127,14 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const airingStatus = row.original.airingStatus
+      const { airingStatus } = row.original
+
       const renameStatus = (status: string) => {
         if (status === "Finished Airing") return "Completed"
         if (status === "Currently Airing") return "Airing"
         return status
       }
+
       return (
         <div className="min-w-full px-4 text-center font-medium capitalize text-muted-foreground">
           {renameStatus(airingStatus)}
@@ -126,7 +157,7 @@ export const columns: ColumnDef<Anime>[] = [
       )
     },
     cell: ({ row }) => {
-      const type = row.original.type
+      const { type } = row.original
 
       return (
         <div className="min-w-full px-4 text-center font-medium capitalize text-muted-foreground">

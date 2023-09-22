@@ -10,13 +10,11 @@ import { Dispatch, SetStateAction, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { FormFieldItem } from "@/components/forms/form-field-item"
 import { createAnimeEntrySchema } from "@/lib/zod/schemas"
-import { IAnimeData } from "@/types/anime/type-anime"
 import { useSession } from "next-auth/react"
 import { editAnimeEntry } from "@/lib/actions/anime-entry/editAnimeEntry"
 import { Anime } from "@/app/anime/[id]/layout"
 import { deleteAnimeEntry } from "@/lib/actions/anime-entry/deleteAnimeEntry"
 import { useToast } from "@/components/ui/use-toast"
-import { formatDateToMMDDYYYY } from "@/lib/utils"
 import {
   Select,
   SelectContent,
@@ -26,42 +24,31 @@ import {
 } from "@/components/ui/select"
 
 type EditAnimeEntryFormProps = {
-  data?: IAnimeData
+  data?: Anime | undefined
   setOpen: Dispatch<SetStateAction<boolean>>
-  setAdded: Dispatch<SetStateAction<boolean>>
-  setStatus: Dispatch<SetStateAction<string>>
-  filtered: Anime | undefined
-  status: string
 }
-export const EditAnimeEntryForm = ({
-  data,
-  setOpen,
-  setAdded,
-  setStatus,
-  filtered,
-  status,
-}: EditAnimeEntryFormProps) => {
-  const session = useSession()
-  const userId = (session?.data?.user?.id as string) ?? ""
-  const [isPending, startTransition] = useTransition()
-  const router = useRouter()
+export const EditTableForm = ({ data, setOpen }: EditAnimeEntryFormProps) => {
   const { toast } = useToast()
+  const router = useRouter()
+  const session = useSession()
+  const [isPending, startTransition] = useTransition()
+  const userId = (session?.data?.user?.id as string) ?? ""
 
   const form = useForm<z.infer<typeof createAnimeEntrySchema>>({
     resolver: zodResolver(createAnimeEntrySchema),
     defaultValues: {
-      type: data?.type ?? "Unknown",
+      type: data?.type,
       title: data?.title,
       mal_id: data?.mal_id,
-      status: filtered?.status,
-      score: filtered?.score,
-      progress: filtered?.progress,
+      status: data?.status,
+      score: data?.score,
+      progress: data?.progress,
       user_id: userId,
-      image: data?.images?.webp?.image_url,
-      episodes: data?.episodes ?? 0,
-      airingStatus: data?.status,
-      username: filtered?.username,
-      airDate: formatDateToMMDDYYYY(data?.aired?.from ?? null) ?? "Unknown",
+      image: data?.image,
+      episodes: data?.episodes,
+      airingStatus: data?.airingStatus,
+      username: data?.username,
+      airDate: data?.airDate,
       duration: data?.duration,
     },
   })
@@ -70,8 +57,6 @@ export const EditAnimeEntryForm = ({
     try {
       await editAnimeEntry(data, userId)
       setOpen(false)
-      setAdded(true)
-      setStatus(data.status)
       toast({
         description: `${data?.title} has been edited.`,
       })
@@ -94,7 +79,6 @@ export const EditAnimeEntryForm = ({
     try {
       await deleteAnimeEntry(mal_id, user_id)
       setOpen(false)
-      setAdded(false)
       toast({
         variant: "destructive",
         description: `${data?.title} was removed from your list.`,
@@ -113,7 +97,7 @@ export const EditAnimeEntryForm = ({
   }
 
   return (
-    <div className="">
+    <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex gap-2">
@@ -159,7 +143,7 @@ export const EditAnimeEntryForm = ({
               <FormFieldItem title="Status" errorPosition="top">
                 <Select onValueChange={field.onChange}>
                   <SelectTrigger className="text-xs placeholder:text-xs">
-                    <SelectValue placeholder={status ? status : filtered?.status} {...field} />
+                    <SelectValue placeholder={data?.status} {...field} />
                   </SelectTrigger>
                   <SelectContent className="text-xs">
                     <SelectItem value="Watching" className="text-xs">
@@ -202,6 +186,6 @@ export const EditAnimeEntryForm = ({
           </div>
         </form>
       </Form>
-    </div>
+    </>
   )
 }
