@@ -62,6 +62,7 @@ export default async function UsernameAnimeListPage({
   const { mangas } = await fetchUserMangas(username)
   const session = await getServerSession(authOptions)
   const allMangas = transformData(mangas, format, status)
+  const ids = [...new Set(mangas.map((item) => item.user_id))]
 
   const sections = [
     { title: "Currently Reading", data: filterData(allMangas, "Reading") },
@@ -93,7 +94,7 @@ export default async function UsernameAnimeListPage({
           return (
             <section className="py-8" key={section.title}>
               <DataTable
-                columns={session?.user?.id ? mangaColumns : guestMangaColumns}
+                columns={ids && ids[0] === session?.user?.id ? mangaColumns : guestMangaColumns}
                 data={section.data}
                 title={section.title}
               />

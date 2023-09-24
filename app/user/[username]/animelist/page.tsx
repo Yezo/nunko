@@ -63,7 +63,9 @@ export default async function UsernameAnimeListPage({
   const { animes } = await fetchUserAnimes(username)
   const session = await getServerSession(authOptions)
   const allAnimes = transformData(animes, format, status)
+  const ids = [...new Set(animes.map((item) => item.user_id))]
 
+  // console.log(animes.map((item) => item.user_id))
   const sections = [
     { title: "Currently Watching", data: filterData(allAnimes, "Watching") },
     { title: "Plan to watch", data: filterData(allAnimes, "Planned") },
@@ -75,7 +77,7 @@ export default async function UsernameAnimeListPage({
 
   return (
     <>
-      <Dummy data={animes} />
+      <Dummy data={ids} />
       <div className="flex flex-wrap justify-end gap-2">
         <AnimeListFilterSelect
           placeholder="List"
@@ -95,7 +97,7 @@ export default async function UsernameAnimeListPage({
           return (
             <section className="py-8" key={section.title}>
               <DataTable
-                columns={session?.user?.id ? animeColumns : guestAnimeColumns}
+                columns={ids && ids[0] === session?.user?.id ? animeColumns : guestAnimeColumns}
                 data={section.data}
                 title={section.title}
               />
