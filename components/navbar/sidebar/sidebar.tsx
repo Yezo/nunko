@@ -117,7 +117,7 @@ export const Sidebar = ({ username }: Props) => {
 
 export const LinkIcon = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="rounded border border-muted/80 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-900 to-gray-800 p-1.5 text-background shadow-sm dark:text-slate-300">
+    <div className="rounded border border-foreground/[.01] bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-gray-100 via-gray-200 to-gray-300 p-1.5 text-foreground/60 shadow-sm dark:border-foreground/[0.05] dark:bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] dark:from-gray-900 dark:to-gray-800 dark:text-slate-300 ">
       {children}
     </div>
   )
