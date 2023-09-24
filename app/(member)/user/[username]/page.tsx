@@ -10,8 +10,7 @@ import Link from "next/link"
 //Fetch to MongoDB and grab a list of all the user's anime entries
 async function fetchUserAnimes(username: string | undefined): Promise<IAnimes> {
   const url = `http://nunko-amber.vercel.app/api/user/animelist/${username}`
-  // const res = await fetch(url, { cache: "no-store" })
-  const res = await fetch(url, { next: { revalidate: 20 } })
+  const res = await fetch(url, { cache: "no-store" })
   handleResponseError(res)
   return res.json()
 }
@@ -19,8 +18,7 @@ async function fetchUserAnimes(username: string | undefined): Promise<IAnimes> {
 //Fetch to MongoDB and grab a list of all the user's manga entries
 async function fetchUserMangas(username: string | undefined): Promise<IMangas> {
   const url = `http://nunko-amber.vercel.app/api/user/mangalist/${username}`
-  // const res = await fetch(url, { cache: "no-store" })
-  const res = await fetch(url, { next: { revalidate: 20 } })
+  const res = await fetch(url, { cache: "no-store" })
   handleResponseError(res)
   return res.json()
 }
@@ -123,7 +121,7 @@ export default async function UserOverviewPage({ params }: { params: { username:
 
           {sortedData.length > 0 ? (
             <>
-              <div className="grid grid-cols-4 gap-1">
+              <div className="grid grid-cols-2 gap-1  md:grid-cols-3 lg:grid-cols-4">
                 <StatsCard title="Total anime" value={animes.length}>
                   <DesktopIcon className="h-5 w-5" />
                 </StatsCard>
@@ -143,7 +141,7 @@ export default async function UserOverviewPage({ params }: { params: { username:
         <section className="basis-3/5">
           <h2 className="mb-4 text-[15px] font-medium">Activity</h2>
           {sortedData.length > 0 ? (
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
               {sortedData.map((item) => {
                 const date = moment(item.updatedAt).fromNow()
 
@@ -169,7 +167,7 @@ export default async function UserOverviewPage({ params }: { params: { username:
                           {item.title}
                         </Link>
                       </div>
-                      <div>{date}</div>
+                      <div className="first-letter:capitalize">{date}</div>
                     </div>
                   </div>
                 )
@@ -178,7 +176,6 @@ export default async function UserOverviewPage({ params }: { params: { username:
           ) : (
             <div className="mt-8 grid min-h-[300px] place-items-center rounded border">
               <div className="flex flex-col items-center justify-center gap-4">
-                svg here
                 <div className="text-center">
                   <div className="text-lg font-medium tracking-tight text-foreground">
                     No activity!
