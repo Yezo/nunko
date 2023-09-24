@@ -3,6 +3,9 @@ import { DataTable } from "@/components/datatable/data-table"
 import { AnimeListFilterSelect } from "@/components/datatable/query-select"
 import { IMangas, Manga } from "@/app/manga/[id]/layout"
 import { mangaColumns } from "@/components/datatable/manga/manga-columns"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth"
+import { guestMangaColumns } from "@/components/datatable/manga/guest-manga-columns"
 
 //Fetch to MongoDB and grab a list of all the user's anime entries
 async function fetchUserMangas(username: string | undefined): Promise<IMangas> {
@@ -57,6 +60,7 @@ export default async function UsernameAnimeListPage({
   const { format, status, list } = searchParams
   const { username } = params
   const { mangas } = await fetchUserMangas(username)
+  const session = await getServerSession(authOptions)
   const allMangas = transformData(mangas, format, status)
 
   const sections = [
@@ -88,7 +92,11 @@ export default async function UsernameAnimeListPage({
         if (hasData && (listQueryMatches || !list))
           return (
             <section className="py-8" key={section.title}>
-              <DataTable columns={mangaColumns} data={section.data} title={section.title} />
+              <DataTable
+                columns={session?.user?.id ? mangaColumns : guestMangaColumns}
+                data={section.data}
+                title={section.title}
+              />
             </section>
           )
         return null
