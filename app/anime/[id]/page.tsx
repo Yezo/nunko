@@ -117,10 +117,10 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
                 <BirdSVG />
                 <div className="text-center">
                   <div className="text-lg font-medium tracking-tight text-foreground">
-                    No characters!
+                    No staff!
                   </div>
                   <div className="text-center text-sm text-muted-foreground">
-                    We couldn't find the characters for this series.
+                    We couldn't find the staff for this series.
                   </div>
                 </div>
               </div>
@@ -169,10 +169,10 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
                 <BirdSVG />
                 <div className="text-center">
                   <div className="text-lg font-medium tracking-tight text-foreground">
-                    No characters!
+                    No recommendations!
                   </div>
                   <div className="text-center text-sm text-muted-foreground">
-                    We couldn't find the characters for this series.
+                    We couldn't find the recommendations for this series.
                   </div>
                 </div>
               </div>
