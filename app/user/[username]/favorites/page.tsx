@@ -1,7 +1,4 @@
-import { Main } from "@/components/layout/main"
-import { UserProfileNavigation } from "@/components/navbar/tabs/tab"
-
-export default async function UserStatsPage({ params }: { params: { username: string } }) {
+export default async function UserFavoritesPage({ params }: { params: { username: string } }) {
   return (
     <section className="grid min-h-[625px] place-items-center rounded border p-8">
       <div className="flex flex-col items-center justify-center gap-4">
