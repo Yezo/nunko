@@ -11,6 +11,11 @@ import { handleResponseError } from "@/lib/fetchJikan"
 import { getServerSession } from "next-auth"
 import { revalidatePath } from "next/cache"
 
+export const metadata = {
+  title: "Settings",
+  description: "Nunko - Settings",
+}
+
 export interface IUser {
   user: User
 }

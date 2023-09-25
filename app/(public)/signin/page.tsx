@@ -3,6 +3,10 @@ import { SignInForm } from "@/components/forms/signin-account"
 import { getServerSession } from "next-auth/next"
 import Image from "next/image"
 
+export const metadata = {
+  title: "Sign In",
+  description: "Nunko - Sign In",
+}
 export default async function LoginPage() {
   const session = await getServerSession(authOptions)
 

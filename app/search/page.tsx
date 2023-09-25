@@ -1,5 +1,4 @@
 import { AnimeCard } from "@/components/anime/top/anime-card"
-import { Dummy } from "@/components/dummy"
 import { NoResults } from "@/components/layout/no-results"
 import { MangaCard } from "@/components/manga/top/manga-card"
 import { SearchInput } from "@/components/search/search-input"
@@ -8,6 +7,11 @@ import { Suspense } from "react"
 import { CaretRightIcon } from "@radix-ui/react-icons"
 import { Main } from "@/components/layout/main"
 import Link from "next/link"
+
+export const metadata = {
+  title: "Search",
+  description: "Nunko - Search",
+}
 
 type SearchQueryPageProps = {
   searchParams: { q: string }
@@ -33,7 +37,6 @@ export default async function SearchQueryPage({ searchParams }: SearchQueryPageP
           </div>
           {animeData.length > 0 ? (
             <>
-              <Dummy data={animeData} />
               <section className="relative grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
                 {animeData.slice(0, 6).map((item) => (
                   <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>
@@ -65,7 +68,6 @@ export default async function SearchQueryPage({ searchParams }: SearchQueryPageP
           </div>
           {mangaData.length > 0 ? (
             <>
-              <Dummy data={mangaData} />
               <section className="relative grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
                 {mangaData.slice(0, 6).map((item) => (
                   <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>

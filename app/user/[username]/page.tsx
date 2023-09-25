@@ -1,8 +1,6 @@
 import { Anime, IAnimes } from "@/app/anime/[id]/layout"
 import { IMangas, Manga } from "@/app/manga/[id]/layout"
 import { BirdSVG } from "@/assets/icons"
-
-import { Dummy } from "@/components/dummy"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { handleResponseError } from "@/lib/fetchJikan"
 import { DesktopIcon, ImageIcon, PlayIcon, ReaderIcon } from "@radix-ui/react-icons"
@@ -115,8 +113,6 @@ export default async function UserOverviewPage({ params }: { params: { username:
 
   return (
     <>
-      <Dummy data={sortedData} />
-
       <div className="flex flex-col gap-8">
         <section className="basis-2/5">
           <h2 className="mb-4 text-[15px] font-medium">Stats</h2>

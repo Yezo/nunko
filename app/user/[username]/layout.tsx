@@ -1,10 +1,14 @@
 import { Suspense } from "react"
 import { Loading } from "@/components/ui/loading"
-import { Main } from "@/components/layout/main"
 import { UserProfileNavigation } from "@/components/navbar/tabs/tab"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Footer } from "@/components/footer/footer"
+
+export const metadata = {
+  title: "Profile",
+  description: "Nunko - Profile",
+}
 
 export default async function IndividualAnimePageLayout({
   params,

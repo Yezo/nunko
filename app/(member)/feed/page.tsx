@@ -1,12 +1,13 @@
-import { Anime } from "@/app/anime/[id]/layout"
-import { Manga } from "@/app/manga/[id]/layout"
-import { Dummy } from "@/components/dummy"
 import { Footer } from "@/components/footer/footer"
-import { Main } from "@/components/layout/main"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { handleResponseError } from "@/lib/fetchJikan"
 import moment from "moment"
 import Link from "next/link"
+
+export const metadata = {
+  title: "Feed",
+  description: "Nunko - Activity Feed",
+}
 
 export interface MixedDataFeed {
   entries: MixedData[]
@@ -70,18 +71,6 @@ export default async function FeedPage() {
 
   function checkTypeOfManga(type: string | undefined) {
     return type && mangaTypes.includes(type)
-  }
-
-  function sumProgress(data: Anime[] | Manga[]): number {
-    let totalProgress = 0
-    for (const item of data) {
-      // Assuming 'progress' is a string containing numeric values
-      const progressValue = parseInt(item.progress, 10)
-      if (!isNaN(progressValue)) {
-        totalProgress += progressValue
-      }
-    }
-    return totalProgress
   }
 
   function handleAnimeActions(data: MixedData | undefined) {

@@ -14,8 +14,23 @@ import { handleResponseError } from "@/lib/fetchJikan"
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: "Nunko",
-  description: "Companion app for your anime & manga",
+  title: {
+    default: "Nunko",
+    template: "%s | Nunko",
+  },
+  description: "The next generational platform for all things anime and manga",
+  openGraph: {
+    title: "Nunko",
+    description: "The next generational platform for all things anime and manga",
+    url: "https://nunko-amber.vercel.app/",
+    siteName: "Nunko",
+    locale: "en-US",
+    type: "website",
+  },
+  twitter: {
+    title: "Nunko",
+    card: "summary_large_image",
+  },
 }
 
 async function fetchUser(id: string | undefined): Promise<IUser> {

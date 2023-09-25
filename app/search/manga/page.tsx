@@ -5,6 +5,11 @@ import { MangaSearchHeader } from "@/components/manga/top/manga-search-header"
 import { getAllManga } from "@/lib/fetchJikan"
 import { SearchParams } from "@/lib/utils"
 
+export const metadata = {
+  title: "Search Manga",
+  description: "Nunko - Search Manga",
+}
+
 export default async function MangaSearchPage({ searchParams }: { searchParams: SearchParams }) {
   const query = searchParams.q || ""
   const { data } = await getAllManga(searchParams, 1, query)

@@ -1,6 +1,5 @@
 import { AnimeCastItem } from "@/components/anime/single/characters/anime-cast-item"
 import { AnimeStaffItem } from "@/components/anime/single/staff/anime-staff-item"
-import { Dummy } from "@/components/dummy"
 import {
   getIndividualAnime,
   getIndividualAnimeCharacters,
@@ -10,7 +9,6 @@ import {
 import { CaretRightIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import Image from "next/image"
-import { Footer } from "@/components/footer/footer"
 
 export default async function IndividualAnimePage({ params }: { params: { id: string } }) {
   const { data } = await getIndividualAnime(params)

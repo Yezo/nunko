@@ -1,5 +1,4 @@
 import { handleResponseError } from "@/lib/fetchJikan"
-import { Dummy } from "@/components/dummy"
 import { Anime, IAnimes } from "@/app/anime/[id]/layout"
 import { animeColumns } from "@/components/datatable/anime/anime-columns"
 import { DataTable } from "@/components/datatable/data-table"
@@ -77,7 +76,6 @@ export default async function UsernameAnimeListPage({
 
   return (
     <>
-      <Dummy data={ids} />
       <div className="flex flex-wrap justify-end gap-2">
         <AnimeListFilterSelect
           placeholder="List"

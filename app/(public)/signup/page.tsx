@@ -2,6 +2,12 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { CreateAccountForm } from "@/components/forms/signup-account"
 import { getServerSession } from "next-auth/next"
 import Image from "next/image"
+
+export const metadata = {
+  title: "Sign Up",
+  description: "Nunko - Sign Up",
+}
+
 export default async function SignupPage() {
   const session = await getServerSession(authOptions)
 
