@@ -36,7 +36,7 @@ export const MobileNavbar = ({ username }: MobileNavbarProps) => {
   return (
     <div className="h-20 border-b lg:hidden">
       <div className="container flex min-h-full items-center justify-between ">
-        <Link href="/" className="font-domine text-xl font-semibold tracking-tight">
+        <Link href="/" className="text-xl font-semibold tracking-tighter">
           Nunko.
         </Link>
 

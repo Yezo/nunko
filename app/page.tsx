@@ -8,10 +8,10 @@ export default async function Home() {
   return (
     <Main>
       <section className="grid place-items-center space-y-12 py-12 pb-10 sm:py-20">
-        <div className="grid  place-items-center gap-8 sm:gap-5">
+        <div className="grid place-items-center gap-8 sm:gap-5">
           <Link
             href="/signup"
-            className="bg:b flex select-none items-center gap-2 rounded-full border border-blue-500/10 bg-blue-600/10 px-3 py-1 text-xs font-medium leading-5 text-blue-500 dark:border-sky-300/10 dark:bg-sky-400/10 dark:text-sky-300"
+            className="flex select-none items-center gap-2 rounded-full border border-blue-500/10 bg-blue-600/10 px-3 py-1 text-xs font-medium leading-5 text-blue-500 dark:border-sky-300/10 dark:bg-sky-400/10 dark:text-sky-300"
           >
             <FaceIcon />
             Nunko 1.0 is finally here.
@@ -59,14 +59,14 @@ export default async function Home() {
       </section>
 
       <section className="space-y-40 py-10" id="features">
-        <div className="flex flex-col gap-12 md:flex-row">
-          <div className="grid place-items-center">
+        <div className="flex flex-col gap-12 md:flex-row ">
+          <div className="grid flex-1 place-items-center ">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Discover existing and new titles with your own filtering
             </h2>
           </div>
 
-          <div className="min-h-[400px] rounded-md p-4">
+          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
@@ -83,7 +83,7 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col-reverse gap-12 md:flex-row">
-          <div className="min-h-[400px] rounded-md p-4">
+          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
@@ -97,7 +97,7 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className="grid place-items-center">
+          <div className="grid flex-1 place-items-center ">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Track your favorite anime and manga by adding them to your collections
             </h2>
@@ -105,13 +105,13 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col gap-12 md:flex-row">
-          <div className="grid place-items-center">
+          <div className="grid flex-1 place-items-center ">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Personal statistics to show your daily, weekly, and lifetime progress
             </h2>
           </div>
 
-          <div className="min-h-[400px] rounded-md p-4">
+          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
@@ -128,7 +128,7 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col-reverse gap-12 md:flex-row">
-          <div className="min-h-[400px] rounded-md p-4">
+          <div className="min-h-[400px] flex-1 rounded-md p-4">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
@@ -142,7 +142,7 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className="grid place-items-center">
+          <div className="grid flex-1 place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Find out what the rest of the world is up to with our global activity feed
             </h2>
@@ -151,7 +151,7 @@ export default async function Home() {
       </section>
 
       <section className="grid place-items-center space-y-12 py-12 pb-10 sm:pt-40">
-        <div className="grid  place-items-center gap-8 sm:gap-5">
+        <div className="grid place-items-center gap-8 sm:gap-5">
           <Link
             href="/signup"
             className="bg:b flex select-none items-center gap-2 rounded-full border border-blue-500/10 bg-blue-600/10 px-3 py-1 text-xs font-medium leading-5 text-blue-500 dark:border-sky-300/10 dark:bg-sky-400/10 dark:text-sky-300"
