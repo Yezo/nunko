@@ -91,7 +91,9 @@ export default async function FeedPage() {
       if (data.status === "Completed") return "Finished watching"
       if (data.status === "Planned") return "Plans to watch"
       if (data.status === "Dropped") return "Dropped the series"
-      if (data.status === "Watching") return `Watched episode ${data.progress} of`
+      if (data.status === "Watching" && data.progress === "0") return `Started watching`
+      if (data.status === "Watching" && data.progress !== "0")
+        return `Watched episode ${data.progress} of`
       if (data.status === "Paused") return `Paused on episode ${data.progress} of`
     }
 
@@ -99,7 +101,9 @@ export default async function FeedPage() {
       if (data.status === "Completed") return "Finished reading"
       if (data.status === "Planned") return "Plans to read"
       if (data.status === "Dropped") return "Dropped the series"
-      if (data.status === "Reading") return `Read chapter ${data.progress} of`
+      if (data.status === "Reading" && data.progress === "0") return `Started reading`
+      if (data.status === "Reading" && data.progress !== "0")
+        return `Read chapter ${data.progress} of`
       if (data.status === "Paused") return `Paused on chapter ${data.progress} of`
     }
     return null
