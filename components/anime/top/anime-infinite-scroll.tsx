@@ -64,7 +64,7 @@ export const AnimeInfiniteScrolling = ({
 
   return (
     <div>
-      <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+      <section className="relative grid grid-cols-2 gap-x-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {anime?.map((item) => (
           <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>
             <AnimeCard key={item.mal_id} data={item} />
@@ -72,7 +72,7 @@ export const AnimeInfiniteScrolling = ({
         ))}
       </section>
 
-      <div ref={ref} className="grid place-items-center pb-16 pt-8">
+      <div ref={ref} className="grid place-items-center py-60 pb-16">
         {anime.length > 18 && hasNextPage ? (
           <UpdateIcon className="h-6 w-6 animate-spin text-muted-foreground" />
         ) : null}

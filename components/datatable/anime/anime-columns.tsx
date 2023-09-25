@@ -1,7 +1,7 @@
 "use client"
 
 import { Anime } from "@/app/anime/[id]/layout"
-import { EditEntry } from "@/components/datatable/anime/temp-edit"
+import { EditEntry } from "@/components/datatable/anime/edit-anime"
 import { Button } from "@/components/ui/button"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"

@@ -13,25 +13,8 @@ export default async function AnimePage({ searchParams }: { searchParams: Search
     <Main>
       <AnimeSearchHeader />
 
-      {/* {data.length > 0 ? (
-          <>
-            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-              {data.map((item) => (
-                <Suspense key={item.mal_id} fallback={<div>Loading...</div>}>
-                  <AnimeCard key={item.mal_id} data={item} />
-                </Suspense>
-              ))}
-            </section>
-            <LoadMore searchParams={searchParams} data={data} />
-          </>
-        ) : (
-          <NoResults />
-        )} */}
-
       {data.length > 0 ? (
-        <>
-          <AnimeInfiniteScrolling searchParams={searchParams} initialData={data} />
-        </>
+        <AnimeInfiniteScrolling searchParams={searchParams} initialData={data} />
       ) : (
         <NoResults />
       )}

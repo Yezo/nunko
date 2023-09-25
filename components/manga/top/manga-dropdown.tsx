@@ -40,7 +40,7 @@ export function MangaFilterDropdown({ title, type, data, scrollable }: MangaFilt
       </DropdownMenuTrigger>
 
       {/* fix dropdown widths later */}
-      <DropdownMenuContent className="min-h-fit w-[200px]">
+      <DropdownMenuContent className="min-h-fit w-[200px] 2xl:w-[230px]">
         <DropdownMenuGroup>
           {scrollable ? (
             <ScrollArea className="h-64 pr-4">

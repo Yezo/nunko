@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
-import { EditAnimeTableForm } from "@/components/datatable/anime/edit-entry"
+import { EditAnimeTableForm } from "@/components/datatable/anime/edit-anime-form"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import Image from "next/image"
@@ -34,8 +34,8 @@ export const EditEntry = ({ data }: EditEntryProps) => {
                 </div>
               </div>
             </DialogTrigger>
-            <DialogContent className="flex min-w-[650px] gap-4">
-              <DialogHeader className="relative min-h-full min-w-[210px]">
+            <DialogContent className="flex gap-4">
+              <DialogHeader className="relative hidden min-h-full min-w-[210px] sm:block">
                 <Image
                   src={data?.image as string}
                   alt={data?.mal_id.toString() as string}

@@ -45,8 +45,8 @@ export const MangaListFeatureButton = ({
           <p className="text-center text-xs text-muted-foreground">{title}</p>
         </div>
       </DialogTrigger>
-      <DialogContent className="flex min-w-[650px] gap-4">
-        <DialogHeader className="relative min-h-full min-w-[210px]">
+      <DialogContent className="flex gap-4">
+        <DialogHeader className="relative hidden min-h-full min-w-[210px] sm:block">
           <Image
             src={data.images.webp.image_url}
             alt={data.mal_id.toString()}

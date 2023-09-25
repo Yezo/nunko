@@ -22,7 +22,7 @@ export const EditMangaTable = ({ data }: EditMangaTableProps) => {
   return (
     <HoverCard openDelay={0} closeDelay={0}>
       <HoverCardTrigger asChild>
-        <div className="group flex min-w-[580px] items-center gap-4 px-4 font-medium text-muted-foreground transition-colors hover:text-foreground">
+        <div className="group flex items-center gap-4 px-4 font-medium text-muted-foreground transition-colors hover:text-foreground">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <div>
@@ -35,8 +35,8 @@ export const EditMangaTable = ({ data }: EditMangaTableProps) => {
                 </div>
               </div>
             </DialogTrigger>
-            <DialogContent className="flex min-w-[650px] gap-4">
-              <DialogHeader className="relative min-h-full min-w-[210px]">
+            <DialogContent className="flex gap-4">
+              <DialogHeader className="relative hidden min-h-full min-w-[210px] sm:block">
                 <Image
                   src={data?.image as string}
                   alt={data?.mal_id.toString() as string}

@@ -45,7 +45,7 @@ export const AnimeFilterInput = () => {
       <Input
         placeholder={calculatePlaceholderText(searchParams, BASE_TYPE)}
         type="text"
-        className="text-xs capitalize placeholder:text-xs placeholder:capitalize"
+        className="pr-12 text-sm capitalize placeholder:text-sm placeholder:capitalize"
         defaultValue={""}
         onChange={(e) => debounced(e.target.value)}
       />

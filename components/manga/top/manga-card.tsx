@@ -18,7 +18,7 @@ export const MangaCard = ({ data }: MangaCardProps) => {
       <HoverCardTrigger asChild>
         <Link href={`/manga/${data.mal_id}`}>
           <div className="space-y-2">
-            <div className="relative h-[295px] w-[215px]">
+            <div className="relative h-[240px] sm:h-[295px] ">
               <Image
                 src={data.images.webp.large_image_url}
                 alt={data.mal_id.toString()}
@@ -40,7 +40,7 @@ export const MangaCard = ({ data }: MangaCardProps) => {
         sideOffset={0}
         align="start"
         alignOffset={30}
-        className="w-[350px] border-2 shadow-sm"
+        className="w-[350px] border-2 p-4 shadow-sm"
       >
         <div className="flex justify-between">
           <div>

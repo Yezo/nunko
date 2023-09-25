@@ -43,16 +43,16 @@ export default async function Home() {
         <div className="py-20">
           <div className="grid items-start justify-center gap-8">
             <div className="group relative">
-              <div className="animate-tilt absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-blue-600 dark:to-blue-200"></div>
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
-                src="/door.webp"
-                height={1100}
+                src="/hero.png"
+                height={500}
                 width={1100}
                 className="relative rounded-xl object-cover "
                 alt="Picture of greek statue"
                 quality={100}
                 priority
-              ></Image>
+              />
             </div>
           </div>
         </div>
@@ -66,13 +66,39 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="min-h-[400px] rounded-md bg-slate-800 p-4"></div>
+          <div className="min-h-[400px] rounded-md p-4">
+            <div className="group relative">
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
+              <Image
+                src="/anime.png"
+                height={1100}
+                width={1100}
+                className="relative rounded-xl object-cover "
+                alt="Picture of greek statue"
+                quality={100}
+                priority
+              />
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-12">
-          <div className="min-h-[400px] rounded-md bg-slate-800 p-4"></div>
+          <div className="min-h-[400px] rounded-md p-4">
+            <div className="group relative">
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
+              <Image
+                src="/profile.png"
+                height={500}
+                width={1100}
+                className="relative rounded-xl object-cover "
+                alt="Picture of greek statue"
+                quality={100}
+                priority
+              />
+            </div>
+          </div>
           <div className="grid place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
-              Track your favorite anime and manga by adding them to your collection
+              Track your favorite anime and manga by adding them to your collections
             </h2>
           </div>
         </div>
@@ -84,11 +110,37 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="min-h-[400px] rounded-md bg-slate-800 p-4"></div>
+          <div className="min-h-[400px] rounded-md p-4">
+            <div className="group relative">
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
+              <Image
+                src="/stats.png"
+                height={500}
+                width={1100}
+                className="relative rounded-xl object-cover "
+                alt="Picture of greek statue"
+                quality={100}
+                priority
+              />
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-12">
-          <div className="min-h-[400px] rounded-md bg-slate-800 p-4"></div>
+          <div className="min-h-[400px] rounded-md p-4">
+            <div className="group relative">
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
+              <Image
+                src="/feed.png"
+                height={500}
+                width={1100}
+                className="relative rounded-xl object-cover "
+                alt="Picture of greek statue"
+                quality={100}
+                priority
+              />
+            </div>
+          </div>
           <div className="grid place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Find out what the rest of the world is up to with our global activity feed
