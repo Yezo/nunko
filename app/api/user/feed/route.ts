@@ -2,6 +2,7 @@ import startDB from "@/lib/db"
 import AnimeModel from "@/models/animeModel"
 import MangaModel from "@/models/mangaModel"
 import UserModel from "@/models/userModel"
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 
 export async function GET(req: Request) {
@@ -62,16 +63,8 @@ export async function GET(req: Request) {
 
     const entries = await getAllPublicEntries()
     if (!entries) throw new Error("Failed to find all public entries.")
-    //   let user = await UserModel.find({ privacy: "public" }).collation({
-    //     locale: "en",
-    //     strength: 2,
-    //   })
-    //   if (!user) throw new Error("Failed to find a user with this username.")
 
-    //   let animes = await AnimeModel.find({ user_id: user._id.toString() }).collation({
-    //     locale: "en",
-    //     strength: 2,
-    //   })
+    revalidatePath("/feed")
     return NextResponse.json({ entries })
   }
 }
