@@ -3,19 +3,17 @@ import { ChevronRightIcon, FaceIcon } from "@radix-ui/react-icons"
 import { Footer } from "@/components/footer/footer"
 import Link from "next/link"
 import Image from "next/image"
+import { HeroBadge } from "@/components/ui/hero-badge"
 
 export default async function Home() {
   return (
     <Main>
       <section className="grid place-items-center space-y-12 py-12 pb-10 sm:py-20">
         <div className="grid place-items-center gap-8 sm:gap-5">
-          <Link
-            href="/signup"
-            className="flex select-none items-center gap-2 rounded-full border border-blue-500/10 bg-blue-600/10 px-3 py-1 text-xs font-medium leading-5 text-blue-500 dark:border-sky-300/10 dark:bg-sky-400/10 dark:text-sky-300"
-          >
+          <HeroBadge url="/signup">
             <FaceIcon />
             Nunko 1.0 is finally here.
-          </Link>
+          </HeroBadge>
 
           <h1 className="max-w-[600px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-5xl font-medium leading-tight tracking-tight text-transparent">
             The new standard to discover, enjoy and track your favorite titles
@@ -59,84 +57,101 @@ export default async function Home() {
       </section>
 
       <section className="space-y-40 py-10" id="features">
-        <div className="flex flex-col gap-12 md:flex-row ">
-          <div className="grid flex-1 place-items-center ">
-            <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
-              Discover existing and new titles with your own filtering
-            </h2>
-          </div>
+        <FeatureItem
+          imageURL="/anime.png"
+          imageALT="An image of Nunko's anime and manga search page"
+          headline="Discover existing and new titles with your own filtering"
+        />
 
-          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
-              <Image
-                src="/anime.png"
-                height={1100}
-                width={1100}
-                className="relative rounded-xl object-cover "
-                alt="Picture of greek statue"
-                quality={100}
-                priority
-              />
-            </div>
-          </div>
+        <FeatureItem
+          imageURL="/profile.png"
+          imageALT="An image of Nunko's user profile page"
+          headline="Track your favorite anime and manga by adding them to your collections"
+          reverse={true}
+        />
+
+        <FeatureItem
+          imageURL="/stats.png"
+          imageALT="An image of Nunko's statistics page"
+          headline="Personal statistics to show your daily, weekly, and lifetime progress"
+        />
+
+        <FeatureItem
+          imageURL="/feed.png"
+          imageALT="An image of Nunko's activity feed page"
+          headline="Find out what the rest of the world is up to with our global activity feed"
+          reverse={true}
+        />
+      </section>
+
+      <section className="grid place-items-center space-y-12 py-12 pb-10 sm:pt-40">
+        <div className="grid place-items-center gap-8 sm:gap-5">
+          <HeroBadge url="/signup">
+            <FaceIcon />
+            Join Nunko today - enjoy forever
+          </HeroBadge>
+
+          <h2 className="max-w-[650px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-5xl font-medium leading-tight tracking-tight text-transparent">
+            The next generational platform for all things anime and manga
+          </h2>
         </div>
 
-        <div className="flex flex-col-reverse gap-12 md:flex-row">
-          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
-              <Image
-                src="/profile.png"
-                height={500}
-                width={1100}
-                className="relative rounded-xl object-cover "
-                alt="Picture of greek statue"
-                quality={100}
-                priority
-              />
-            </div>
-          </div>
-          <div className="grid flex-1 place-items-center ">
+        <Link
+          href="/signup"
+          className="flex items-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+        >
+          Sign up for free <ChevronRightIcon />
+        </Link>
+      </section>
+
+      <Footer />
+    </Main>
+  )
+}
+
+type FeatureItemProps = {
+  imageURL: string
+  imageALT: string
+  headline: string
+  reverse?: boolean
+}
+
+const FeatureItem = ({ imageURL, imageALT, headline, reverse }: FeatureItemProps) => {
+  return (
+    <div className={`flex gap-12 md:flex-row ${reverse ? "flex-col" : "flex-col-reverse"}`}>
+      {reverse ? (
+        <>
+          <div className="grid flex-1 place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
-              Track your favorite anime and manga by adding them to your collections
+              {headline}
             </h2>
           </div>
-        </div>
-
-        <div className="flex flex-col gap-12 md:flex-row">
-          <div className="grid flex-1 place-items-center ">
-            <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
-              Personal statistics to show your daily, weekly, and lifetime progress
-            </h2>
-          </div>
-
-          <div className="min-h-[400px] flex-1 rounded-md  p-4 ">
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
-              <Image
-                src="/stats.png"
-                height={500}
-                width={1100}
-                className="relative rounded-xl object-cover "
-                alt="Picture of greek statue"
-                quality={100}
-                priority
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col-reverse gap-12 md:flex-row">
           <div className="min-h-[400px] flex-1 rounded-md p-4">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
               <Image
-                src="/feed.png"
+                src={imageURL}
                 height={500}
                 width={1100}
-                className="relative rounded-xl object-cover "
-                alt="Picture of greek statue"
+                className="relative rounded-xl object-cover"
+                alt={imageALT}
+                quality={100}
+                priority
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="min-h-[400px] flex-1 rounded-md p-4">
+            <div className="group relative">
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
+              <Image
+                src={imageURL}
+                height={500}
+                width={1100}
+                className="relative rounded-xl object-cover"
+                alt={imageALT}
                 quality={100}
                 priority
               />
@@ -144,37 +159,11 @@ export default async function Home() {
           </div>
           <div className="grid flex-1 place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
-              Find out what the rest of the world is up to with our global activity feed
+              {headline}
             </h2>
           </div>
-        </div>
-      </section>
-
-      <section className="grid place-items-center space-y-12 py-12 pb-10 sm:pt-40">
-        <div className="grid place-items-center gap-8 sm:gap-5">
-          <Link
-            href="/signup"
-            className="bg:b flex select-none items-center gap-2 rounded-full border border-blue-500/10 bg-blue-600/10 px-3 py-1 text-xs font-medium leading-5 text-blue-500 dark:border-sky-300/10 dark:bg-sky-400/10 dark:text-sky-300"
-          >
-            Join Nunko today - enjoy forever
-          </Link>
-
-          <h2 className="max-w-[650px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-5xl font-medium leading-tight tracking-tight text-transparent">
-            The next generational platform for all things anime and manga
-          </h2>
-        </div>
-
-        <div className="flex gap-4">
-          <Link
-            href="/signup"
-            className="flex items-center rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-          >
-            Sign up for free <ChevronRightIcon />
-          </Link>
-        </div>
-      </section>
-
-      <Footer />
-    </Main>
+        </>
+      )}
+    </div>
   )
 }
