@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <html lang="en" suppressHydrationWarning className={`${inter.variable} ${domine.variable}`}>
         <body className="min-h-screen bg-background font-inter antialiased">
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <MobileNavbar />
+            <MobileNavbar username={user?.name} />
             {!session && <NavbarDesktop />}
             <div className="flex">
               {session && <Sidebar username={user?.name} />}

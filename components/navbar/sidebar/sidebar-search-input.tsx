@@ -3,10 +3,14 @@
 import { Input } from "@/components/ui/input"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
-export const SidebarSearchInput = () => {
+type SidebarSearchInputProps = {
+  setOpen?: Dispatch<SetStateAction<boolean>>
+}
+
+export const SidebarSearchInput = ({ setOpen }: SidebarSearchInputProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const queryParam = searchParams.get("q")
@@ -16,11 +20,18 @@ export const SidebarSearchInput = () => {
     setValue(value)
   }, 1500)
 
+  const handleClose = useCallback(() => {
+    if (setOpen) {
+      setOpen(false)
+    }
+  }, [setOpen])
+
   useEffect(() => {
     if (value) {
+      handleClose()
       router.push(`/search?q=${value}`)
     }
-  }, [router, value])
+  }, [router, value, handleClose])
 
   return (
     <div className="mb-4 mt-8 flex items-center">

@@ -2,14 +2,13 @@
 
 import {
   SIDEBAR_EXPLORE_NAV_LINKS,
-  SIDEBAR_LIBRARY_NAV_LINKS,
   SIDEBAR_MAIN_NAV_LINKS,
 } from "@/components/navbar/sidebar/sidebar-data"
 import { SidebarSearchInput } from "@/components/navbar/sidebar/sidebar-search-input"
 import { ProfileDropdown } from "@/components/profile/profile-dropdown"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { CrumpledPaperIcon, LaptopIcon, PersonIcon, ReaderIcon } from "@radix-ui/react-icons"
+import { LaptopIcon, PersonIcon, ReaderIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -22,7 +21,6 @@ export const Sidebar = ({ username }: Props) => {
   const session = useSession()
   let pathname = usePathname() || "/"
   if (pathname.includes("/anime/")) pathname = "/anime"
-  if (pathname.includes("/search/anime/top-100")) pathname = "/anime"
 
   return (
     <aside className="sticky top-0 hidden min-h-screen w-56  self-start border-r lg:grid">

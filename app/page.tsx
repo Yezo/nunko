@@ -59,7 +59,7 @@ export default async function Home() {
       </section>
 
       <section className="space-y-40 py-10" id="features">
-        <div className="grid grid-cols-2 gap-12">
+        <div className="flex flex-col gap-12 md:flex-row">
           <div className="grid place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Discover existing and new titles with your own filtering
@@ -81,7 +81,8 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-12">
+
+        <div className="flex flex-col-reverse gap-12 md:flex-row">
           <div className="min-h-[400px] rounded-md p-4">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
@@ -103,7 +104,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-12">
+        <div className="flex flex-col gap-12 md:flex-row">
           <div className="grid place-items-center">
             <h2 className="max-w-[400px] bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-center text-4xl font-medium leading-tight tracking-tight text-transparent">
               Personal statistics to show your daily, weekly, and lifetime progress
@@ -126,7 +127,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-12">
+        <div className="flex flex-col-reverse gap-12 md:flex-row">
           <div className="min-h-[400px] rounded-md p-4">
             <div className="group relative">
               <div className="absolute -inset-1 rounded-lg bg-gradient-to-bl from-blue-600 to-blue-400 opacity-50 blur transition duration-1000 group-hover:opacity-80 group-hover:duration-200 dark:from-sky-600 dark:to-sky-200"></div>
