@@ -1,5 +1,7 @@
 import { Anime, IAnimes } from "@/app/anime/[id]/layout"
 import { IMangas, Manga } from "@/app/manga/[id]/layout"
+import { BirdSVG } from "@/assets/icons"
+
 import { Dummy } from "@/components/dummy"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { handleResponseError } from "@/lib/fetchJikan"
@@ -136,7 +138,21 @@ export default async function UserOverviewPage({ params }: { params: { username:
                 </StatsCard>
               </div>
             </>
-          ) : null}
+          ) : (
+            <div className="mt-8 grid min-h-[300px] place-items-center rounded border">
+              <div className="flex flex-col items-center justify-center gap-4">
+                <BirdSVG />
+                <div className="text-center">
+                  <div className="text-lg font-medium tracking-tight text-foreground">
+                    No stats yet!
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Try adding an anime or manga to your list.
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
         <section className="basis-3/5">
           <h2 className="mb-4 text-[15px] font-medium">Activity</h2>
@@ -176,11 +192,12 @@ export default async function UserOverviewPage({ params }: { params: { username:
           ) : (
             <div className="mt-8 grid min-h-[300px] place-items-center rounded border">
               <div className="flex flex-col items-center justify-center gap-4">
+                <BirdSVG />
                 <div className="text-center">
                   <div className="text-lg font-medium tracking-tight text-foreground">
-                    No activity!
+                    No activity yet!
                   </div>
-                  <div className="text-center text-sm text-muted-foreground">
+                  <div className="text-sm text-muted-foreground">
                     Try adding an anime or manga to your list.
                   </div>
                 </div>

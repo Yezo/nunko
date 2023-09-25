@@ -1,6 +1,7 @@
 import { Anime } from "@/app/anime/[id]/layout"
 import { Manga } from "@/app/manga/[id]/layout"
 import { Dummy } from "@/components/dummy"
+import { Footer } from "@/components/footer/footer"
 import { Main } from "@/components/layout/main"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { handleResponseError } from "@/lib/fetchJikan"
@@ -51,7 +52,7 @@ function sortByUpdatedDate(data: MixedData[]) {
 //Fetch to MongoDB and grab a list of all the user's anime entries
 async function fetchFeed(): Promise<MixedDataFeed> {
   const url = `http://nunko-amber.vercel.app/api/user/feed`
-  const res = await fetch(url, { next: { revalidate: 30 } })
+  const res = await fetch(url, { cache: "no-store" })
   handleResponseError(res)
   return res.json()
 }
@@ -156,6 +157,7 @@ export default async function FeedPage() {
           </div>
         )}
       </section>
+      <Footer />
     </main>
   )
 }

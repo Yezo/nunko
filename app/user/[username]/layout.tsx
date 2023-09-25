@@ -4,6 +4,7 @@ import { Main } from "@/components/layout/main"
 import { UserProfileNavigation } from "@/components/navbar/tabs/tab"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Footer } from "@/components/footer/footer"
 
 export default async function IndividualAnimePageLayout({
   params,
@@ -26,6 +27,7 @@ export default async function IndividualAnimePageLayout({
 
       <UserProfileNavigation username={params.username} />
       <Suspense fallback={<Loading />}>{children}</Suspense>
+      <Footer />
     </main>
   )
 }

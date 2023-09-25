@@ -10,6 +10,7 @@ import {
 import { CaretRightIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 import Image from "next/image"
+import { Footer } from "@/components/footer/footer"
 
 export default async function IndividualAnimePage({ params }: { params: { id: string } }) {
   const { data } = await getIndividualAnime(params)

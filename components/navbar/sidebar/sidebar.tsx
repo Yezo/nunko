@@ -28,13 +28,7 @@ export const Sidebar = ({ username }: Props) => {
     <aside className="sticky top-0 hidden min-h-screen w-56  self-start border-r lg:grid">
       <div className="flex flex-col justify-between px-6 py-8">
         <div>
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-domine text-xl font-semibold tracking-tight"
-          >
-            <div className="rounded-full border border-muted/80 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-600 via-gray-800 to-black p-1.5 text-foreground shadow-sm">
-              <CrumpledPaperIcon />
-            </div>
+          <Link href="/" className="text-xl font-semibold tracking-tighter">
             Nunko.
           </Link>
 
@@ -61,7 +55,7 @@ export const Sidebar = ({ username }: Props) => {
             })} */}
             <Link
               href={`/user/${session.data?.user?.name?.toLowerCase()}`}
-              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+              className="group/list-item flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize text-muted-foreground transition-colors  hover:text-foreground dark:text-slate-300 dark:hover:text-white"
             >
               <LinkIcon>
                 <PersonIcon />
@@ -71,7 +65,7 @@ export const Sidebar = ({ username }: Props) => {
 
             <Link
               href={`/user/${session.data?.user?.name?.toLowerCase()}/animelist`}
-              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+              className="group/list-item flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize text-muted-foreground transition-colors  hover:text-foreground dark:text-slate-300 dark:hover:text-white"
             >
               <LinkIcon>
                 <LaptopIcon />
@@ -81,7 +75,7 @@ export const Sidebar = ({ username }: Props) => {
 
             <Link
               href={`/user/${session.data?.user?.name?.toLowerCase()}/mangalist`}
-              className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm  capitalize transition-colors hover:text-white dark:text-slate-300"
+              className="group/list-item flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize text-muted-foreground transition-colors  hover:text-foreground dark:text-slate-300 dark:hover:text-white"
             >
               <LinkIcon>
                 <ReaderIcon />
@@ -127,7 +121,7 @@ export const LinkItem = ({ url, icon, name }: { url: string; icon: JSX.Element; 
   return (
     <Link
       href={url}
-      className="group/list-item hover:text-slate-0 flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize transition-colors hover:text-white dark:text-slate-300"
+      className="group/list-item flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize text-muted-foreground transition-colors  hover:text-foreground dark:text-slate-300 dark:hover:text-white"
     >
       <LinkIcon>{icon}</LinkIcon>
       {name}

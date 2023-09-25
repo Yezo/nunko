@@ -115,11 +115,9 @@ export default async function UsernameAnimeListPage({
         <section className="mt-8 grid min-h-[625px] place-items-center rounded border">
           <div className="flex flex-col items-center justify-center gap-4">
             <BirdSVG />
-            <div className="text-center">
-              <div className="text-lg font-medium tracking-tight text-foreground">No results!</div>
-              <div className="text-center text-sm text-muted-foreground">
-                There may be too many filters applied.
-              </div>
+
+            <div className="text-center text-lg font-medium tracking-tight text-foreground">
+              No results!
             </div>
           </div>
         </section>

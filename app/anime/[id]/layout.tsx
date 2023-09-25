@@ -9,6 +9,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from "next-auth"
 import { editAnimeStatus } from "@/lib/actions/anime-entry/editAnimeStatus"
 import Image from "next/image"
+import { Footer } from "@/components/footer/footer"
 
 export interface IAnimes {
   animes: Anime[]
@@ -72,7 +73,9 @@ export default async function IndividualAnimePageLayout({
             </div>
           </div>
 
-          <FeatureContainer data={data} user={userData} editAnimeStatus={editAnimeStatusAction} />
+          {session && session?.user?.id ? (
+            <FeatureContainer data={data} user={userData} editAnimeStatus={editAnimeStatusAction} />
+          ) : null}
         </div>
 
         {data.images.webp.image_url && (
@@ -96,6 +99,8 @@ export default async function IndividualAnimePageLayout({
 
         <AnimeDetailsContainer data={data} />
       </section>
+
+      <Footer />
     </Main>
   )
 }

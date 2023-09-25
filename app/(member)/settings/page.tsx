@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { Footer } from "@/components/footer/footer"
 import { DeleteAccountButton } from "@/components/forms/delete-account-button"
 import { EditUserForm } from "@/components/forms/edit-user-form"
 import { SignOutButton } from "@/components/forms/signout-button"
