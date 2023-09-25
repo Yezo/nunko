@@ -9,6 +9,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { navConfig } from "@/config/nav"
 
 export const NavbarDesktop = () => {
   return (
@@ -21,8 +22,9 @@ export const NavbarDesktop = () => {
 
           <NavigationMenu>
             <NavigationMenuList>
-              <NavLinkStandalone title="Anime" url="/search/anime" />
-              <NavLinkStandalone title="Manga" url="/search/manga" />
+              {navConfig.desktopNav.map((item) => (
+                <NavLinkStandalone title={item.title} url={item.href} key={item.title} />
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
         </div>

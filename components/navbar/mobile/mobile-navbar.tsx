@@ -23,6 +23,7 @@ import {
   PersonIcon,
   ReaderIcon,
 } from "@radix-ui/react-icons"
+import { navConfig } from "@/config/nav"
 
 type MobileNavbarProps = {
   username: string
@@ -57,14 +58,14 @@ export const MobileNavbar = ({ username }: MobileNavbarProps) => {
                 <SidebarSearchInput setOpen={setOpen} />
                 <nav className="flex flex-col gap-2">
                   <p className="font-medium">Explore</p>
-                  <LinkItem url={`/`} name="Home" icon={<HomeIcon />} />
-                  <LinkItem url={`/search/anime`} name="Anime" icon={<DesktopIcon />} />
-                  <LinkItem url={`/search/manga`} name="Manga" icon={<ImageIcon />} />
+
+                  {navConfig.mobileNav.map((item) => (
+                    <LinkItem url={item.href} name={item.title} icon={item.icon} key={item.title} />
+                  ))}
 
                   <Separator className="my-2" />
                   {session.status === "authenticated" && (
                     <>
-                      {" "}
                       <p className="font-medium">Library</p>
                       <LinkItem
                         url={`/user/${session.data?.user?.name?.toLowerCase()}`}

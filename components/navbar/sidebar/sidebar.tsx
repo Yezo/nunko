@@ -48,9 +48,6 @@ export const Sidebar = ({ username }: Props) => {
             <Separator className="my-2" />
 
             <p className="font-medium">Library</p>
-            {/* {Object.entries(SIDEBAR_LIBRARY_NAV_LINKS).map(([path, { name, icon }]) => {
-              return <LinkItem url={path} key={path} name={name} icon={icon} />
-            })} */}
             <Link
               href={`/user/${session.data?.user?.name?.toLowerCase()}`}
               className="group/list-item flex h-9 w-full flex-row items-center justify-start gap-2 truncate rounded-md text-sm capitalize text-muted-foreground transition-colors  hover:text-foreground dark:text-slate-300 dark:hover:text-white"
