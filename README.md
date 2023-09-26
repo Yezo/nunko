@@ -1,34 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- https://github.com/tpacun/Best-README-Template -->
+<!-- IMAGE LINK -->
+<div align="center"> <img src="https://kevin.vo/me/nunko.png" data-canonical-src="https://kevin.vo/me/nunko.png" height="420" /></div>
 
-## Getting Started
+<!-- HEADER INFORMATION -->
+<br />
+<div align="center"><strong>Nunko</strong></div>
+<div align="center">New generational standard for animanga enthusiasts</div>
+<br />
+<div align="center">
+<a href="https://nunko-amber.vercel.app/">Website</a> 
+<span><strong> · </strong></span>
+<a href="https://github.com/Yezo/nunko">GitHub</a> 
+<span><strong>·</strong></span>
+<a href="https://kevinvo.me/">Developer</a>
+</div>
 
-First, run the development server:
+<!-- PROJECT INFORMATION -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Introduction
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Nunko is the next generational standard for anime and manga enthusiasts, delivering a comprehensive platform that combines social interactions with tracking and management capabiltiies. This application enables users to join the community, create personalized accounts, and dive straight into the world of anime and manga. With a rich filtering system, users can sift through an extensive library of entries and curate their own collections.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Landing Page
+- Desktop/mobile navigation
+- Dark and light mode
+- Users can create accounts and log in
+- Users passwords are hashed for increased security
+- Users can search for any anime and manga
+- Users can use multi-level filtering to find specifci anime and manga
+- Users can view detailed information on a title including synopsis, details, charactres, reviews, recommendations, and staff
+- Users can add a title to their personal collection and mark it as Watching/Reading, Planned, Completed and more
+- Users can edit and remove a title
+- Users can change their username to a unique username
+- Users can set their account to private to hide from the global activity feed
+- Global activity feed showcasing what other users in the community are up to
+- Personal user profile highlighting their current progress with anime and manga
+- Personal statistics on how much anime and manga they've consumed
+- Profiles are sharable via link through URL query parameters
 
-## Learn More
+## Built With
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js](https://nextjs.org/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose](https://mongoosejs.com/docs/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Shadcn/ui](https://ui.shadcn.com/)
+- [Zod](https://github.com/colinhacks/zod)
+- [Recharts](https://recharts.org/en-US/)
+- [TanStack Tables](https://tanstack.com/table/v8)
+- [React Hook Forms](https://www.react-hook-form.com/)
+- [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [Vercel](https://vercel.com)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [ ] Add favorites to user profile
+- [ ] Add more detailed stats to user profile
+- [ ] Add custom collections to user profile
+- [ ] Add ability to add users as friends
+- [ ] Add recommendation algorithm for users
+- [ ] Add a changelog
+- [ ] Add a blog for updates
