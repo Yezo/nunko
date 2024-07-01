@@ -38,6 +38,7 @@ export const EditMangaTable = ({ data }: EditMangaTableProps) => {
             <DialogContent className="flex gap-4">
               <DialogHeader className="relative hidden min-h-full min-w-[210px] sm:block">
                 <Image
+                  unoptimized
                   src={data?.image as string}
                   alt={data?.mal_id.toString() as string}
                   fill
@@ -74,6 +75,7 @@ export const EditMangaTable = ({ data }: EditMangaTableProps) => {
       >
         <div className="relative min-h-[225px] min-w-full">
           <Image
+            unoptimized
             src={data?.image as string}
             alt={data?.mal_id.toString() as string}
             fill

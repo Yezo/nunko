@@ -44,6 +44,7 @@ export const AnimeListFeatureButton = ({
       <DialogContent className="flex gap-4">
         <DialogHeader className="relative hidden min-h-full min-w-[210px] sm:block">
           <Image
+            unoptimized
             src={data.images.webp.image_url}
             alt={data.mal_id.toString()}
             fill

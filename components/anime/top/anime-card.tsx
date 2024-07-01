@@ -20,6 +20,7 @@ export const AnimeCard = ({ data }: AnimeCardProps) => {
           <div className="space-y-2">
             <div className="relative h-[240px] sm:h-[295px] ">
               <Image
+                unoptimized
                 src={data.images.webp.large_image_url}
                 alt={data.mal_id.toString()}
                 fill

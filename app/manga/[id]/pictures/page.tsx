@@ -12,6 +12,7 @@ export default async function MangaPicturesPage({ params }: { params: { id: stri
           {pictures.map((item, index) => (
             <div className="relative h-60 w-full md:h-[295px] md:w-[215px]" key={index}>
               <Image
+                unoptimized
                 src={item.webp.large_image_url.toString()}
                 alt={`Manga Picture: ${index}`}
                 fill

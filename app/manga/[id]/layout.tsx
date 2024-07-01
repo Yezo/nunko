@@ -82,6 +82,7 @@ export default async function IndividualMangaPageLayout({
         {data.images.webp.image_url && (
           <div className="relative h-60 w-full md:h-[295px] md:w-[215px]">
             <Image
+              unoptimized
               src={data.images.webp.image_url.toString()}
               alt={data.title?.toString()}
               fill

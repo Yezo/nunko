@@ -146,6 +146,7 @@ export default async function IndividualAnimePage({ params }: { params: { id: st
                   <Link href={`/anime/${item.entry.mal_id}`}>
                     {item && (
                       <Image
+                        unoptimized
                         src={item.entry.images.webp.large_image_url.toString()}
                         alt={item.entry.title}
                         width={500}
