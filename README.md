@@ -1,18 +1,18 @@
 <!-- https://github.com/tpacun/Best-README-Template -->
 <!-- IMAGE LINK -->
-<div align="center"> <img src="https://kevin.vo/me/nunko.png" data-canonical-src="https://kevin.vo/me/nunko.png" height="420" /></div>
+<div align="center"> <img src="https://kevinvo.me/nunko.png" data-canonical-src="https://kevinvo.me/nunko.png" height="420" /></div>
 
 <!-- HEADER INFORMATION -->
 <br />
 <div align="center"><strong>Nunko</strong></div>
-<div align="center">New generational standard for animanga enthusiasts</div>
+<div align="center">New generational standard for anime and manga enthusiasts</div>
 <br />
 <div align="center">
 <a href="https://nunko-amber.vercel.app/">Website</a> 
 <span><strong> · </strong></span>
 <a href="https://github.com/Yezo/nunko">GitHub</a> 
 <span><strong>·</strong></span>
-<a href="https://kevinvo.me/">Developer</a>
+<a href="https://kevinvo.me">Developer</a>
 </div>
 
 <!-- PROJECT INFORMATION -->
